@@ -50,17 +50,6 @@ input[type="checkbox"]:checked ~ .checkmarking::after {
   height: 17px;
   color: white;
 }
-.forgot-password {
-  text-align: right;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-.forgot-password a {
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: none;
-  color: #61764b;
-}
 .submit {
   width: 100%;
   margin-bottom: 30px;
@@ -93,25 +82,26 @@ input[type="checkbox"]:checked ~ .checkmarking::after {
   text-align: center;
   font-weight: bold;
 }
-.sign-with {
-  text-align: center;
-  font-size: 15px;
-  margin-bottom: 10px;
+.people > img {
+  max-width: 500px;
+  height: auto;
+  -webkit-mask-image: linear-gradient(
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0)
+  );
+  mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.1));
 }
-.sign-btn {
-  display: flex;
-  justify-content: center;
+.active {
+  border: 3px solid #ff8900;
+  border-radius: 16px;
+  color: #ff8900;
 }
-.btn-google button,
-.btn-facebook button {
-  width: 90px;
-  height: 45px;
-  background: unset;
-  border: 1px solid #61764b;
-  border-radius: 5px;
-}
-.btn-google {
-  margin-right: 20px;
+.active:after {
+  content: "\2022";
+  position: absolute;
+  font-size: 20px;
+  bottom: -8px;
 }
 
 /* Responsive 460px */
@@ -132,5 +122,8 @@ input[type="checkbox"]:checked ~ .checkmarking::after {
   }
   .submit button {
     width: 100%;
+  }
+  .people > img {
+    max-width: 200px;
   }
 }
