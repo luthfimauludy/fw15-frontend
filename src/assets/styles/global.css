@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+.dissolve {
+  position: absolute;
+  min-width: 400px;
+  min-height: 150px;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(51, 102, 255, 0) 10%, #61764b 75%);
+}
+.toggleable-password {
+  width: 300px;
+  position: relative;
+}
+.toggleable-password button {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: unset;
+  border: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkbox {
+  margin: 20px 0px;
+  font-size: 15px;
+}
+input[type="checkbox"] {
+  display: none;
+}
+.checkmarking {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #61764b;
+  border-radius: 4px;
+  position: relative;
+}
+input[type="checkbox"]:checked ~ .checkmarking {
+  background-color: #61764b;
+}
+input[type="checkbox"]:checked ~ .checkmarking::after {
+  position: absolute;
+  top: -3px;
+  left: 1px;
+  content: "\2713";
+  width: 17px;
+  height: 17px;
+  color: white;
+}
+.forgot-password {
+  text-align: right;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.forgot-password a {
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #61764b;
+}
+.submit {
+  width: 100%;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+.submit a {
+  min-width: 300px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: #61764b;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0px 8px 10px rgba(70, 128, 16, 0.3);
+}
+.submit button {
+  min-width: 300px;
+  height: 55px;
+  font-size: 16px;
+  background-color: #61764b;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0px 8px 10px rgba(70, 128, 16, 0.3);
+}
+#alert {
+  text-align: center;
+  font-weight: bold;
+}
+.sign-with {
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.sign-btn {
+  display: flex;
+  justify-content: center;
+}
+.btn-google button,
+.btn-facebook button {
+  width: 90px;
+  height: 45px;
+  background: unset;
+  border: 1px solid #61764b;
+  border-radius: 5px;
+}
+.btn-google {
+  margin-right: 20px;
+}
+
+/* Responsive 460px */
+@media screen and (max-width: 460px) {
+  .wrapper {
+    margin-bottom: 20px;
+  }
+  .img-section {
+    display: none;
+  }
+  .form-section {
+    width: 100%;
+    justify-content: start;
+    padding: 0 10px;
+  }
+  .toggleable-password {
+    width: 100%;
+  }
+  .submit button {
+    width: 100%;
+  }
+}

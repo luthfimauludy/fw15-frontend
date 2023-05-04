@@ -1,10 +1,7 @@
-import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
 import toyFaces from "../assets/images/toyFaces.png";
 import logo from "../assets/images/logo-wetick.png";
 
-const Login = () => {
+const ForgotPassword = () => {
   return (
     <div className="flex h-screen">
       <div className="flex-1 hidden md:flex justify-center items-center bg-[#61764b]">
@@ -22,9 +19,11 @@ const Login = () => {
               <span className="text-[#ff3d71]">tick</span>
             </div>
           </div>
-          <div className="text-neutral font-semibold text-2xl">Sign in</div>
+          <div className="text-neutral font-semibold text-2xl">
+            Forgot Password
+          </div>
           <div className="text-neutral mb-5 text-sm">
-            Hi, Welcome back to Urticket!
+            You’ll get mail soon on your email
           </div>
           <div>
             <input
@@ -34,33 +33,9 @@ const Login = () => {
               name="email"
             />
           </div>
-          <div>
-            <input
-              placeholder="Password"
-              className="input input-bordered input-base-100 w-full"
-              type="password"
-              name="password"
-            />
-          </div>
-          <div className="text-right font-semibold text-sm mb-4">
-            <Link className="text-primary" to="/forgot-password">
-              Forgot Password?
-            </Link>
-          </div>
-          <div className="mb-8">
+          <div className="mt-4">
             <button className="btn btn-primary btn-block text-base font-semibold normal-case">
-              Sign In
-            </button>
-          </div>
-          <div className="text-center text-neutral text-sm">
-            or sign in with
-          </div>
-          <div className="flex justify-center gap-5">
-            <button className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
-              <FcGoogle size={25} />
-            </button>
-            <button className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
-              <FaFacebook size={25} color="#426782" />
+              Send
             </button>
           </div>
         </form>
@@ -69,4 +44,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
