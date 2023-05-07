@@ -1,4 +1,47 @@
+import React from "react";
+import axios from "axios";
+import moment from "moment";
+import { Link } from "react-router-dom";
+import { CiSearch } from "react-icons/ci";
+import { FiMapPin } from "react-icons/fi";
+
 const Home = () => {
+  const [events, setEvents] = React.useState([]);
+  React.useEffect(() => {
+    async function getData() {
+      const { data } = await axios.get("http://localhost:8888/events");
+      setEvents(data.results);
+    }
+    getData();
+  }, []);
+
+  const [cities, setCities] = React.useState([]);
+  React.useEffect(() => {
+    async function getData() {
+      const { data } = await axios.get("http://localhost:8888/cities");
+      setCities(data.results);
+    }
+    getData();
+  }, []);
+
+  const [categories, setCategories] = React.useState([]);
+  React.useEffect(() => {
+    async function getData() {
+      const { data } = await axios.get("http://localhost:8888/categories");
+      setCategories(data.results);
+    }
+    getData();
+  }, []);
+
+  const [partners, setPartners] = React.useState([]);
+  React.useEffect(() => {
+    async function getData() {
+      const { data } = await axios.get("http://localhost:8888/partners");
+      setPartners(data.results);
+    }
+    getData();
+  }, []);
+
   return (
     <>
       <header className="flex max-h-[720px] flex-col">
@@ -6,12 +49,12 @@ const Home = () => {
         <nav className="flex md:flex-row flex-col md:h-24 px-8 font-semibold">
           <div className="flex md:justify-center justify-between items-center">
             <div className="flex justify-center items-center text-2xl">
-              <img src="/assets/img/logo.png" alt="logo" />
+              <img src="./assets/images/logo-wetick.png" alt="logo" />
               <div className="text-2xl">
-                <a href="/index.html">
+                <Link to="/">
                   <span className="text-[#61764B]">We</span>
                   <span className="text-[#FF3D71]">tick</span>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="md:hidden flex items-center border rounded-lg p-1 bg-[#61764B]">
@@ -79,13 +122,13 @@ const Home = () => {
             </p>
             <form className="block md:w-full">
               <div className="inline-flex items-center md:min-w-[500px] h-16 py-2 px-3 bg-white border rounded-xl">
-                <i className="text-[#C1C5D0]" data-feather="search"></i>
+                <CiSearch size={25} />
                 <input
                   className="h-8 text-xs px-3 outline-none w-[100px] md:min-w-[250px]"
                   type="text"
                   placeholder="Search Event"
                 />
-                <i className="text-[#C1C5D0] ml-3" data-feather="map-pin"></i>
+                <FiMapPin size={25} />
                 <select className="h-8 outline-none px-3 appearance-none text-xs md:min-w-[150px]">
                   <option disabled selected>
                     Where?
@@ -101,7 +144,7 @@ const Home = () => {
           </div>
           <div>
             <div className="people">
-              <img src="/assets/img/toyFaces.png" alt="People" />
+              <img src="./assets/images/toyFaces.png" alt="People" />
             </div>
           </div>
         </section>
@@ -158,221 +201,56 @@ const Home = () => {
         </section>
         <section className="overflow-x-scroll md:ml-[120px] ml-2.5 md:pr-[120px] pr-2.5">
           <div id="eventWrapper" className="inline-flex gap-5">
-            <div className="relative w-[260px] h-[376px] rounded-3xl overflow-hidden">
-              <img
-                className="w-auto h-full object-cover"
-                src="/assets/img/event-banner.png"
-                alt="banner1"
-              />
-              <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.1)] to-[rgba(0,0,0,0.5)]">
-                <div>Wed, 15 Nov, 4:00 PM</div>
-                <div className="font-semibold text-2xl tracking-wide">
-                  <a href="/event.html">Sights & Sounds Exhibition</a>
-                </div>
-                <div className="flex ml-2">
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile1.jpg"
-                      alt="profile 1"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile2.jpg"
-                      alt="profile 2"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile3.jpg"
-                      alt="profile 3"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile4.jpg"
-                      alt="profile 4"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative w-[260px] h-[376px] rounded-3xl overflow-hidden">
-              <img
-                className="w-auto h-full object-cover"
-                src="/assets/img/event-banner2.png"
-                alt="banner1"
-              />
-              <div className="absolute bottom-0 text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.1)] to-[rgba(0,0,0,0.5)]">
-                <div>Thu, 16 Nov, 7:00 PM</div>
-                <div className="font-bold text-2xl tracking-wide">
-                  <a href="/event.html">See it in Gold className</a>
-                </div>
-                <div className="flex ml-2">
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile1.jpg"
-                      alt="profile 1"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile2.jpg"
-                      alt="profile 2"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile3.jpg"
-                      alt="profile 3"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile4.jpg"
-                      alt="profile 4"
-                    />
+            {events.map((event) => {
+              return (
+                <div
+                  className="relative w-64 h-[376px] rounded-3xl overflow-hidden"
+                  key={event.id}
+                >
+                  <img
+                    className="w-auto h-full object-cover"
+                    src={`http://localhost:8888/uploads/${event.picture}`}
+                    alt="banner1"
+                  />
+                  <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
+                    <div>{moment(event.date).format("MM-DD-YYYY")}</div>
+                    <div className="font-semibold text-2xl tracking-widest">
+                      <Link to="/event.html">{event.title}</Link>
+                    </div>
+                    {/* <div className="flex ml-2">
+                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                        <img
+                          className="object-cover w-full h-full"
+                          src="/assets/img/profile1.jpg"
+                          alt="profile 1"
+                        />
+                      </div>
+                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                        <img
+                          className="object-cover w-full h-full"
+                          src="/assets/img/profile2.jpg"
+                          alt="profile 2"
+                        />
+                      </div>
+                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                        <img
+                          className="object-cover w-full h-full"
+                          src="/assets/img/profile3.jpg"
+                          alt="profile 3"
+                        />
+                      </div>
+                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                        <img
+                          className="object-cover w-full h-full"
+                          src="/assets/img/profile4.jpg"
+                          alt="profile 4"
+                        />
+                      </div>
+                    </div> */}
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="relative w-[260px] h-[376px] rounded-3xl overflow-hidden">
-              <img
-                className="w-auto h-full object-cover"
-                src="/assets/img/event-banner.png"
-                alt="banner1"
-              />
-              <div className="absolute bottom-0 text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.1)] to-[rgba(0,0,0,0.5)]">
-                <div>Wed, 15 Nov, 4:00 PM</div>
-                <div className="font-bold text-2xl tracking-wide">
-                  <a href="/event.html">Sights & Sounds Exhibition</a>
-                </div>
-                <div className="flex ml-2">
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile1.jpg"
-                      alt="profile 1"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile2.jpg"
-                      alt="profile 2"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile3.jpg"
-                      alt="profile 3"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile4.jpg"
-                      alt="profile 4"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative w-[260px] h-[376px] rounded-3xl overflow-hidden">
-              <img
-                className="w-auto h-full object-cover"
-                src="/assets/img/event-banner2.png"
-                alt="banner1"
-              />
-              <div className="absolute bottom-0 text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.1)] to-[rgba(0,0,0,0.5)]">
-                <div>Thu, 16 Nov, 7:00 PM</div>
-                <div className="font-bold text-2xl tracking-wide">
-                  <a href="/event.html">See it in Gold className</a>
-                </div>
-                <div className="flex ml-2">
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile1.jpg"
-                      alt="profile 1"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile2.jpg"
-                      alt="profile 2"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile3.jpg"
-                      alt="profile 3"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile4.jpg"
-                      alt="profile 4"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative w-[260px] h-[376px] rounded-3xl overflow-hidden">
-              <img
-                className="w-auto h-full object-cover"
-                src="/assets/img/event-banner.png"
-                alt="banner1"
-              />
-              <div className="absolute bottom-0 text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.1)] to-[rgba(0,0,0,0.5)]">
-                <div>Wed, 15 Nov, 4:00 PM</div>
-                <div className="font-bold text-2xl tracking-wide">
-                  <a href="/event.html">Sights & Sounds Exhibition</a>
-                </div>
-                <div className="flex ml-2">
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile1.jpg"
-                      alt="profile 1"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile2.jpg"
-                      alt="profile 2"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile3.jpg"
-                      alt="profile 3"
-                    />
-                  </div>
-                  <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="/assets/img/profile4.jpg"
-                      alt="profile 4"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </section>
         <div className="flex justify-center items-center gap-3 my-5 mb-24">
@@ -385,47 +263,30 @@ const Home = () => {
         </div>
         {/* Event Content End */}
         {/* Location Content Start */}
-        <section className="m-14 bg-[#61764B] rounded-xl bg-center bg-[url(/assets/img/accent-location.png)] bg-cover bg-no-repeat md:p-24 p-8">
+        <section className="m-14 bg-[#61764B] rounded-xl bg-center bg-[url(./assets/images/accent-location.png)] bg-cover bg-no-repeat md:p-24 p-8">
           <div className="py-2 px-5 rounded-full inline-flex items-center gap-2 text-white bg-gray-400">
             <div className="w-8 border-t-sm border border-white"></div>
             <p className="text-xs font-semibold tracking-[3px]">LOCATION</p>
           </div>
-          <div className="flex md:flex-row flex-col gap-5 md:gap-0 text-white mt-5">
-            <div className="text-xl md:text-5xl font-semibold flex-1">
+          <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5 md:gap-2 text-white mt-5">
+            <div className="text-xl md:text-5xl sm:text-5xl px-3 font-semibold flex-1">
               Discover Events Near Your
             </div>
-            <div className="flex-1 flex flex-col items-center">
-              <img src="/assets/img/city1.png" alt="Jakarta City" />
-              Jakarta
-            </div>
-            <div className="flex-1 flex flex-col items-center">
-              <img src="/assets/img/city2.png" alt="Bandung City" />
-              Bandung
-            </div>
-            <div className="flex-1 flex flex-col items-center">
-              <img src="/assets/img/city3.png" alt="Bali City" />
-              Bali
-            </div>
+            {cities.map((city) => {
+              return (
+                <div
+                  className="flex-1 flex flex-col items-center"
+                  key={city.id}
+                >
+                  <img
+                    src={`http://localhost:8888/uploads/${city.picture}`}
+                    alt="Jakarta City"
+                  />
+                  {city.name}
+                </div>
+              );
+            })}
           </div>
-          <div className="md:flex hidden text-white mt-5">
-            <div className="flex-1 flex flex-col items-center">
-              <img src="/assets/img/city4.png" alt="Aceh City" />
-              Aceh
-            </div>
-            <div className="flex-1 flex flex-col items-center">
-              <img src="/assets/img/city5.png" alt="Solo City" />
-              Solo
-            </div>
-            <div className="flex-1 flex flex-col items-center">
-              <img src="/assets/img/city6.png" alt="Yogyakarta City" />
-              Yogyakarta
-            </div>
-            <div className="flex-1 flex flex-col items-center">
-              <img src="/assets/img/city7.png" alt="Semarang City" />
-              Semarang
-            </div>
-          </div>
-          <div id="newCity" className="flex justify-center text-center"></div>
           <div className="flex justify-center mt-12">
             <div>
               <a
@@ -451,66 +312,21 @@ const Home = () => {
           </p>
           <div className="flex md:flex-row flex-col flex-1 gap-3">
             <div className="flex">
-              <div className="flex justify-center items-center min-w-[100px]">
-                <a
-                  className="text-[#61764B] pb-1 border-b border-[#61764B] font-semibold"
-                  href="#"
-                >
-                  Music
-                </a>
-              </div>
-              <div className="flex justify-center items-center min-w-[100px]">
-                <a
-                  className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
-                  href="#"
-                >
-                  Arts
-                </a>
-              </div>
-              <div className="flex justify-center items-center min-w-[100px]">
-                <a
-                  className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
-                  href="#"
-                >
-                  Outdoors
-                </a>
-              </div>
-            </div>
-            <div className="flex">
-              <div className="flex justify-center items-center min-w-[100px]">
-                <a
-                  className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
-                  href="#"
-                >
-                  Workshop
-                </a>
-              </div>
-              <div className="flex justify-center items-center min-w-[100px]">
-                <a
-                  className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
-                  href="#"
-                >
-                  Sport
-                </a>
-              </div>
-              <div className="flex justify-center items-center min-w-[100px]">
-                <a
-                  className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
-                  href="#"
-                >
-                  Festival
-                </a>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="flex justify-center items-center min-w-[100px]">
-                <a
-                  className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
-                  href="#"
-                >
-                  Fashion
-                </a>
-              </div>
+              {categories.map((category) => {
+                return (
+                  <div
+                    className="flex justify-center items-center min-w-[100px]"
+                    key={category.id}
+                  >
+                    <a
+                      className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
+                      href="#"
+                    >
+                      {category.name}
+                    </a>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -522,147 +338,60 @@ const Home = () => {
               </button>
             </div>
             <div className="inline-flex gap-5">
-              <div className="w-[300px] h-[350px] overflow-hidden rounded-3xl flex flex-col">
-                <div className="flex-2 overflow-hidden">
-                  <img
-                    className="w-full h-full object-cover"
-                    src="/assets/img/event-banner.png"
-                    alt="banner1"
-                  />
-                </div>
-                <div className="flex flex-col justify-end flex-1 min-h-[161px] text-white p-8 bg-[#61764B] relative">
-                  <div className="flex absolute -top-5 ml-2">
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+              {events.map((event) => {
+                return (
+                  <div
+                    className="w-[300px] h-[350px] overflow-hidden rounded-3xl flex flex-col"
+                    key={event.id}
+                  >
+                    <div className="flex-2 overflow-hidden">
                       <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile1.jpg"
-                        alt="profile 1"
+                        className="w-full h-full object-cover"
+                        src={`http://localhost:8888/uploads/${event.picture}`}
+                        alt="banner1"
                       />
                     </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile2.jpg"
-                        alt="profile 2"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile3.jpg"
-                        alt="profile 3"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile4.jpg"
-                        alt="profile 4"
-                      />
-                    </div>
-                  </div>
-                  <div className="text-sm font-medium">
-                    Wed, 15 Nov, 4:00 PM
-                  </div>
-                  <div className="text-2xl font-bold tracking-wide">
-                    Sights & Sounds Exhibition
-                  </div>
-                </div>
-              </div>
-              <div className="w-[300px] h-[350px] overflow-hidden rounded-3xl flex flex-col">
-                <div className="flex-2 overflow-hidden -ml-6">
-                  <img
-                    className="w-full h-full object-cover"
-                    src="/assets/img/event-banner2.png"
-                    alt="banner1"
-                  />
-                </div>
-                <div className="flex relative flex-col justify-end flex-1 min-h-[161px] text-white p-8 bg-[#61764B]">
-                  <div className="flex absolute -top-5 ml-2">
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile1.jpg"
-                        alt="profile 1"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile2.jpg"
-                        alt="profile 2"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile3.jpg"
-                        alt="profile 3"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile4.jpg"
-                        alt="profile 4"
-                      />
+                    <div className="flex flex-col justify-end flex-1 min-h-[161px] text-white p-8 bg-[#61764B] relative">
+                      {/* <div className="flex absolute -top-5 ml-2">
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile1.jpg"
+                            alt="profile 1"
+                          />
+                        </div>
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile2.jpg"
+                            alt="profile 2"
+                          />
+                        </div>
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile3.jpg"
+                            alt="profile 3"
+                          />
+                        </div>
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile4.jpg"
+                            alt="profile 4"
+                          />
+                        </div>
+                      </div> */}
+                      <div className="text-sm font-medium">
+                        {moment(event.date).format("MM-DD-YYYY")}
+                      </div>
+                      <div className="text-2xl font-bold tracking-wide">
+                        {event.title}
+                      </div>
                     </div>
                   </div>
-                  <div className="text-sm font-medium">
-                    Thu, 16 Nov, 7:00 PM
-                  </div>
-                  <div className="text-2xl font-bold tracking-wide">
-                    See it in Gold className
-                  </div>
-                </div>
-              </div>
-              <div className="w-[300px] h-[350px] overflow-hidden rounded-3xl flex flex-col">
-                <div className="flex-2 overflow-hidden">
-                  <img
-                    className="w-full h-full object-cover"
-                    src="/assets/img/event-banner.png"
-                    alt="banner1"
-                  />
-                </div>
-                <div className="flex relative flex-col justify-end flex-1 min-h-[161px] text-white p-8 bg-[#61764B]">
-                  <div className="flex absolute -top-5 ml-2">
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile1.jpg"
-                        alt="profile 1"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile2.jpg"
-                        alt="profile 2"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile3.jpg"
-                        alt="profile 3"
-                      />
-                    </div>
-                    <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                      <img
-                        className="object-cover w-full h-full"
-                        src="/assets/img/profile4.jpg"
-                        alt="profile 4"
-                      />
-                    </div>
-                  </div>
-                  <div className="text-sm font-medium">
-                    Wed, 15 Nov, 4:00 PM
-                  </div>
-                  <div className="text-2xl font-bold tracking-wide">
-                    Sights & Sounds Exhibition
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
             <div className="hidden md:block">
               <button className="w-11 h-11 bg-[#61764B] text-white border rounded-[10px]">
@@ -673,31 +402,29 @@ const Home = () => {
         </section>
         {/* Category Content End */}
         {/* Partner Content End */}
-        <div className="bg-[#373A42] py-24 p-5 md:py-24 text-white bg-cover bg-no-repeat bg-[url(/assets/img/accent-partner.png)]">
+        <div className="bg-[#373A42] py-24 p-5 md:py-10 text-white bg-cover bg-no-repeat bg-[url(./assets/images/accent-partner.png)]">
           <section className="flex gap-8 flex-col items-center my-10">
             <div className="flex bg-gray-400 gap-2.5 py-1.5 px-2.5 items-center rounded-full">
               <div className="w-8 h-0 rounded-t-sm border border-white"></div>
               <p className="text-xs font-semibold tracking-[3px]">PARTNER</p>
             </div>
-            <p className="text-4xl text-center font-semibold mb-4">
+            <p className="text-4xl text-center font-semibold">
               Our Trusted Partners
             </p>
-            <p className="text-xs text-[#C1C5D0] font-normal mb-12">
+            <p className="text-xs text-[#C1C5D0] font-normal mb-5">
               By companies like :
             </p>
-            <div className="flex md:flex-row flex-col gap-16">
-              <div className="flex gap-16">
-                <img src="/assets/img/partner-pic1.png" alt="Sponsor" />
-                <img src="/assets/img/partner-pic2.png" alt="Sponsor" />
-              </div>
-              <div className="flex gap-16">
-                <img src="/assets/img/partner-pic3.png" alt="Sponsor" />
-                <img src="/assets/img/partner-pic4.png" alt="Sponsor" />
-              </div>
-              <div className="flex gap-16">
-                <img src="/assets/img/partner-pic5.png" alt="Sponsor" />
-                <img src="/assets/img/partner-pic6.png" alt="Sponsor" />
-              </div>
+            <div className="flex md:flex-row flex-col items-center gap-10">
+              {partners.map((partner) => {
+                return (
+                  <div key={partner.id}>
+                    <img
+                      src={`http://localhost:8888/uploads/${partner.picture}`}
+                      alt="Sponsor"
+                    />
+                  </div>
+                );
+              })}
             </div>
           </section>
         </div>
