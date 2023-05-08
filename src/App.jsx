@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Event from "./pages/Event";
 import Booking from "./pages/Booking";
 import Profile from "./pages/Profile";
+import Payment from "./pages/Payment";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/event" element={<Event />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
