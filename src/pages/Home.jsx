@@ -72,28 +72,28 @@ const Home = () => {
           >
             <ul className="flex justify-center md:flex-row flex-col flex-1 gap-3">
               <li className="flex justify-center items-center min-w-[100px]">
-                <a
+                <Link
                   className="text-[#61764B] pb-2.5 border-b border-[#61764B]"
-                  href="#home"
+                  to="/"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li className="flex justify-center items-center min-w-[100px]">
-                <a
+                <Link
                   className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
-                  href="/create-event.html"
+                  to="/create-event"
                 >
                   Create Event
-                </a>
+                </Link>
               </li>
               <li className="flex justify-center items-center min-w-[100px]">
-                <a
+                <Link
                   className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
-                  href="/event.html"
+                  to="/event"
                 >
                   Location
-                </a>
+                </Link>
               </li>
             </ul>
             <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
