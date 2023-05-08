@@ -48,9 +48,11 @@ const Login = () => {
             </Link>
           </div>
           <div className="mb-8">
-            <button className="btn btn-primary btn-block text-base font-semibold normal-case">
-              Sign In
-            </button>
+            <Link to="/">
+              <button className="btn btn-primary btn-block text-base font-semibold normal-case">
+                Sign In
+              </button>
+            </Link>
           </div>
           <div className="text-center text-neutral text-sm">
             or sign in with

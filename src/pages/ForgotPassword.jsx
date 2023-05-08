@@ -1,5 +1,6 @@
 import toyFaces from "../assets/images/toyFaces.png";
 import logo from "../assets/images/logo-wetick.png";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   return (
@@ -34,9 +35,11 @@ const ForgotPassword = () => {
             />
           </div>
           <div className="mt-4">
-            <button className="btn btn-primary btn-block text-base font-semibold normal-case">
-              Send
-            </button>
+            <Link to="/login">
+              <button className="btn btn-primary btn-block text-base font-semibold normal-case">
+                Send
+              </button>
+            </Link>
           </div>
         </form>
       </div>
