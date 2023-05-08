@@ -188,9 +188,9 @@ const ManageEvent = () => {
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
                     <div className="flex gap-3.5 text-xs text-[#61764B]">
-                      <a href="/detail-event.html">Detail</a>
-                      <a href="/update-event.html">Update</a>
-                      <a href="#">Delete</a>
+                      <Link to="/event">Detail</Link>
+                      <Link to="/update-event">Update</Link>
+                      <Link to="">Delete</Link>
                     </div>
                   </div>
                 </div>
@@ -210,9 +210,9 @@ const ManageEvent = () => {
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
                     <div className="flex gap-3.5 text-xs text-[#61764B]">
-                      <a href="/detail-event.html">Detail</a>
-                      <a href="/update-event.html">Update</a>
-                      <a href="#">Delete</a>
+                      <Link to="/event">Detail</Link>
+                      <Link to="/update-event">Update</Link>
+                      <Link to="">Delete</Link>
                     </div>
                   </div>
                 </div>
@@ -232,9 +232,9 @@ const ManageEvent = () => {
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
                     <div className="flex gap-3.5 text-xs text-[#61764B]">
-                      <a href="/detail-event.html">Detail</a>
-                      <a href="/update-event.html">Update</a>
-                      <a href="#">Delete</a>
+                      <Link to="/event">Detail</Link>
+                      <Link to="/update-event">Update</Link>
+                      <Link to="">Delete</Link>
                     </div>
                   </div>
                 </div>
@@ -254,9 +254,9 @@ const ManageEvent = () => {
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
                     <div className="flex gap-3.5 text-xs text-[#61764B]">
-                      <a href="/detail-event.html">Detail</a>
-                      <a href="/update-event.html">Update</a>
-                      <a href="#">Delete</a>
+                      <Link to="/event">Detail</Link>
+                      <Link to="/update-event">Update</Link>
+                      <Link to="">Delete</Link>
                     </div>
                   </div>
                 </div>
@@ -276,9 +276,9 @@ const ManageEvent = () => {
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
                     <div className="flex gap-3.5 text-xs text-[#61764B]">
-                      <a href="/detail-event.html">Detail</a>
-                      <a href="/update-event.html">Update</a>
-                      <a href="#">Delete</a>
+                      <Link to="/event">Detail</Link>
+                      <Link to="/update-event">Update</Link>
+                      <Link to="">Delete</Link>
                     </div>
                   </div>
                 </div>
