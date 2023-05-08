@@ -14,7 +14,7 @@ import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import wetick from "../assets/images/logo-wetick.png";
 import profile from "../assets/images/profile3.jpg";
 
-const ManageEvent = () => {
+const MyBooking = () => {
   return (
     <>
       {/* Navbar Start */}
@@ -353,4 +353,4 @@ const ManageEvent = () => {
   );
 };
 
-export default ManageEvent;
+export default MyBooking;
