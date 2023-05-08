@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import { FiHeart } from "react-icons/fi";
-import {
-  FaWhatsapp,
-  FaFacebook,
-  FaInstagram,
-  FaTwitter,
-  FaHeart,
-} from "react-icons/fa";
+import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import wetick from "../assets/images/logo-wetick.png";
 import profile from "../assets/images/profile3.jpg";
 
