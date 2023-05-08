@@ -1,3 +1,20 @@
+import { Link } from "react-router-dom";
+import {
+  FiUser,
+  FiCreditCard,
+  FiEdit3,
+  FiLock,
+  FiPlusCircle,
+  FiList,
+  FiHeart,
+  FiSettings,
+  FiLogOut,
+} from "react-icons/fi";
+import { IoIosArrowDown } from "react-icons/io";
+import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import wetick from "../assets/images/logo-wetick.png";
+import profile from "../assets/images/profile3.jpg";
+
 const Profile = () => {
   return (
     <>
@@ -5,12 +22,12 @@ const Profile = () => {
       <nav className="flex md:flex-row flex-col md:h-24 px-8 bg-white font-semibold">
         <div className="flex md:justify-center justify-between items-center">
           <div className="flex justify-center items-center text-2xl">
-            <img src="/assets/img/logo.png" alt="logo" />
+            <img src={wetick} alt="logo" />
             <div className="text-2xl">
-              <a href="/index.html">
+              <Link to="/">
                 <span className="text-[#61764B]">We</span>
                 <span className="text-[#FF3D71]">tick</span>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="md:hidden flex items-center border rounded-lg p-1 bg-[#61764B]">
@@ -23,42 +40,42 @@ const Profile = () => {
           id="menu"
           className="hidden md:flex md:flex-row flex-col flex-1 md:pl-8 mb-5 md:mb-0 text-sm"
         >
-          <ul className="flex justify-center md:flex-row flex-col flex-1 gap-3">
+          <ul className="flex justify-center md:flex-row flex-col flex-1 gap-3 text-black">
             <li className="flex justify-center items-center min-w-[100px]">
-              <a
+              <Link
                 className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
-                href="/index.html"
+                to="/"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li className="flex justify-center items-center min-w-[100px]">
-              <a
+              <Link
                 className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
-                href="/create-event.html"
+                to="/create-event"
               >
                 Create Event
-              </a>
+              </Link>
             </li>
             <li className="flex justify-center items-center min-w-[100px]">
-              <a
+              <Link
                 className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
-                href="/event.html"
+                to="/event"
               >
                 Location
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="flex justify-center gap-3 items-center text-sm font-semibold">
             <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
               <img
                 className="w-11 h-11 object-cover rounded-full border-2 border-white"
-                src="/assets/img/profile3.jpg"
+                src={profile}
                 alt="Profile"
               />
             </div>
-            <div>
-              <a href="/profile.html">John Tomson</a>
+            <div className="text-black">
+              <Link to="/profile">John Tomson</Link>
             </div>
           </div>
         </div>
@@ -73,72 +90,71 @@ const Profile = () => {
               <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
                 <img
                   className="w-11 h-11 object-cover rounded-full border-2 border-white"
-                  src="/assets/img/profile3.jpg"
+                  src={profile}
                   alt="Profile"
                 />
               </div>
             </div>
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col justify-between text-black">
               <div className="text-sm font-semibold">Jhon Tomson</div>
               <div className="text-xs">Entrepreneur, ID</div>
             </div>
           </div>
-          <ul className="text-sm font-semibold">
-            <li>
-              <a className="flex gap-7 mb-8" href="">
-                <i className="text-[#C1C5D0]" data-feather="user"></i>Profile
-              </a>
+          <ul className="text-sm text-black font-semibold">
+            <li className="flex gap-7 mb-8">
+              <FiUser size={25} color="#C1C5D0" />
+              Profile
             </li>
             <li>
               <ul className="ml-12">
                 <li className="flex gap-7 mb-8 relative">
-                  <i className="text-[#C1C5D0]" data-feather="credit-card"></i>
+                  <FiCreditCard size={25} color="#C1C5D0" />
                   Card
                   <div className="absolute w-28 border border-black top-2"></div>
                 </li>
                 <li>
-                  <a
-                    className="flex gap-7 mb-8 text-[#61764b]"
-                    href="/profile.html"
-                  >
-                    <i data-feather="edit-3"></i>Edit Profile
-                  </a>
+                  <Link className="flex gap-7 mb-8 text-primary" to="/profile">
+                    <FiEdit3 size={25} />
+                    Edit Profile
+                  </Link>
                 </li>
                 <li>
-                  <a className="flex gap-7 mb-8" href="/change-password.html">
-                    <i className="text-[#C1C5D0]" data-feather="lock"></i>Change
-                    Password
-                  </a>
+                  <Link className="flex gap-7 mb-8" to="/change-password">
+                    <FiLock size={25} color="#C1C5D0" />
+                    Change Password
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <a className="flex gap-7 mb-8" href="/manage-event.html">
-                <i className="text-[#C1C5D0]" data-feather="plus-circle"></i>
+              <Link className="flex gap-7 mb-8" to="/manage-event">
+                <FiPlusCircle size={25} color="#C1C5D0" />
                 Create Event
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="flex gap-7 mb-8" href="/my-booking.html">
-                <i className="text-[#C1C5D0]" data-feather="list"></i>My Booking
-              </a>
+              <Link className="flex gap-7 mb-8" to="/my-booking">
+                <FiList size={25} color="#C1C5D0" />
+                My Booking
+              </Link>
             </li>
             <li>
-              <a className="flex gap-7 mb-8" href="/my-wishlist.html">
-                <i className="text-[#C1C5D0]" data-feather="heart"></i>My
-                Wishlist
-              </a>
+              <Link className="flex gap-7 mb-8" href="/my-wishlist">
+                <FiHeart size={25} color="#C1C5D0" />
+                My Wishlist
+              </Link>
             </li>
             <li>
-              <a className="flex gap-7 mb-8" href="">
-                <i className="text-[#C1C5D0]" data-feather="settings"></i>
+              <Link className="flex gap-7 mb-8" to="">
+                <FiSettings size={25} color="#C1C5D0" />
                 Settings
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="flex gap-7 mb-8 text-[#F03800]" href="/index.html">
-                <i data-feather="log-out"></i>Logout
-              </a>
+              <Link className="flex gap-7 mb-8" to="/">
+                <FiLogOut size={25} color="#F03800" />
+                Logout
+              </Link>
             </li>
           </ul>
         </aside>
@@ -146,7 +162,7 @@ const Profile = () => {
         {/* Right Content Start */}
         <div className="flex-1">
           <div className="bg-white md:min-h-[825px] md:px-12 md:py-11 rounded-2xl">
-            <div className="text-xl font-semibold tracking-wide px-5 md:px-0 mb-12">
+            <div className="text-xl text-black font-semibold tracking-wide px-5 md:px-0 mb-12">
               Profile
             </div>
             <div className="flex flex-col-reverse md:flex-row px-5 md:px-0">
@@ -216,8 +232,8 @@ const Profile = () => {
                       <option>Programmer</option>
                       <option>Manager</option>
                     </select>
-                    <div className="absolute flex top-4 right-5">
-                      <img src="/assets/img/accordion.png" alt="Accordion" />
+                    <div className="absolute flex top-5 right-5">
+                      <IoIosArrowDown />
                     </div>
                   </div>
                 </div>
@@ -231,8 +247,8 @@ const Profile = () => {
                       <option>Saudi Arabia</option>
                       <option>Australia</option>
                     </select>
-                    <div className="absolute flex top-4 right-5">
-                      <img src="/assets/img/accordion.png" alt="Accordion" />
+                    <div className="absolute flex top-5 right-5">
+                      <IoIosArrowDown />
                     </div>
                   </div>
                 </div>
@@ -270,7 +286,7 @@ const Profile = () => {
                   <div className="inline-block ml-14 mb-12 rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
                     <img
                       className="w-[137px] h-[137px] object-cover rounded-full border-8 border-white"
-                      src="/assets/img/profile3.jpg"
+                      src={profile}
                       alt="Profile"
                     />
                   </div>
@@ -291,35 +307,37 @@ const Profile = () => {
       {/* Main Content End */}
       {/* Footer Start */}
       <footer>
-        <div className="flex flex-col md:items-center p-2.5 md:p-0 gap-12 md:gap-20 md:bg-[#E9EDC9]">
+        <div className="flex flex-col md:items-center p-2.5 md:p-0 gap-12 md:gap-20 bg-[#E9EDC9]">
           <div className="flex md:flex-row flex-col md:justify-center gap-14 md:gap-32">
             <div>
               <div className="flex items-center text-2xl mb-4 md:mb-8 font-semibold">
-                <img src="/assets/img/logo.png" alt="logo" />
+                <img src={wetick} alt="logo" />
                 <a href="/index.html">
                   <span className="text-[#61764B]">We</span>
                   <span className="text-[#FF3D71]">tick</span>
                 </a>
               </div>
-              <div className="text-sm mb-4">Find events you love with our</div>
+              <div className="text-sm text-black mb-4">
+                Find events you love with our
+              </div>
               <div className="flex gap-4 text-[#C1C5D0]">
                 <a href="https://www.facebook.com">
-                  <i data-feather="facebook"></i>
+                  <FaFacebook />
                 </a>
                 <a href="https://www.whatsapp.com">
-                  <img src="/assets/img/whatsapp.png" alt="Whatsapp Icon" />
+                  <FaWhatsapp />
                 </a>
                 <a href="https://www.instagram.com">
-                  <i data-feather="instagram"></i>
+                  <FaInstagram />
                 </a>
                 <a href="https://www.twitter.com">
-                  <i data-feather="twitter"></i>
+                  <FaTwitter />
                 </a>
               </div>
             </div>
             <div>
               <ul className="flex flex-col gap-4">
-                <li className="font-semibold">Wetick</li>
+                <li className="text-black font-semibold">Wetick</li>
                 <li className="text-sm text-[#C1C5D0]">
                   <a href="#">About Us</a>
                 </li>
@@ -339,7 +357,7 @@ const Profile = () => {
             </div>
             <div>
               <ul className="flex flex-col gap-4">
-                <li className="font-semibold">Features</li>
+                <li className="text-black font-semibold">Features</li>
                 <li className="text-sm text-[#C1C5D0]">
                   <a href="#">Booking</a>
                 </li>
@@ -356,7 +374,7 @@ const Profile = () => {
             </div>
             <div>
               <ul className="flex flex-col gap-4">
-                <li className="font-semibold">Company</li>
+                <li className="text-black font-semibold">Company</li>
                 <li className="text-sm text-[#C1C5D0]">
                   <a href="#">Partnership</a>
                 </li>
