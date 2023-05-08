@@ -9,6 +9,7 @@ import {
   FiHeart,
   FiSettings,
   FiLogOut,
+  FiCalendar,
 } from "react-icons/fi";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import wetick from "../assets/images/logo-wetick.png";
@@ -165,7 +166,7 @@ const MyBooking = () => {
               <p>My Booking</p>
             </div>
             <div className="flex w-32 h-12 justify-center items-center rounded-2xl text-[#61764B] gap-4 bg-[#E9EDC9]">
-              <i data-feather="calendar"></i>
+              <FiCalendar size={25} />
               <p>March</p>
             </div>
           </div>
@@ -183,9 +184,9 @@ const MyBooking = () => {
                     </p>
                     <p className="text-xs">Jakarta, Indonesia</p>
                     <p className="text-xs my-2">Wed, 15 Nov, 4:00 PM</p>
-                    <a className="text-xs text-[#61764B]" href="/event.html">
+                    <Link className="text-xs text-[#61764B]" to="/event">
                       Detail
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -203,9 +204,9 @@ const MyBooking = () => {
                     </p>
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                    <a className="text-xs text-[#61764B]" href="/event.html">
+                    <Link className="text-xs text-[#61764B]" to="/event">
                       Detail
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -223,9 +224,9 @@ const MyBooking = () => {
                     </p>
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                    <a className="text-xs text-[#61764B]" href="/event.html">
+                    <Link className="text-xs text-[#61764B]" to="/event">
                       Detail
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -243,9 +244,9 @@ const MyBooking = () => {
                     </p>
                     <p className="text-xs mb-2">Jakarta, Indonesia</p>
                     <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                    <a className="text-xs text-[#61764B]" href="/event.html">
+                    <Link className="text-xs text-[#61764B]" to="/event">
                       Detail
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
