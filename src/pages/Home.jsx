@@ -4,6 +4,9 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FiMapPin } from "react-icons/fi";
+import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import header from "../assets/images/toyFaces.png";
+import wetick from "../assets/images/logo-wetick.png";
 
 const Home = () => {
   const [events, setEvents] = React.useState([]);
@@ -49,7 +52,7 @@ const Home = () => {
         <nav className="flex md:flex-row flex-col md:h-24 px-8 font-semibold">
           <div className="flex md:justify-center justify-between items-center">
             <div className="flex justify-center items-center text-2xl">
-              <img src="./assets/images/logo-wetick.png" alt="logo" />
+              <img src={wetick} alt="logo" />
               <div className="text-2xl">
                 <Link to="/">
                   <span className="text-[#61764B]">We</span>
@@ -95,20 +98,20 @@ const Home = () => {
             </ul>
             <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
               <div className="w-full">
-                <a
+                <Link
                   className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl"
-                  href="/signin.html"
+                  to="/login"
                 >
                   Login
-                </a>
+                </Link>
               </div>
               <div className="w-full">
-                <a
+                <Link
                   className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl text-white shadow-lg shadow-[#61764B] bg-[#61764B] hover:bg-green-800"
-                  href="/signup.html"
+                  to="/signup"
                 >
                   Sign Up
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -144,7 +147,7 @@ const Home = () => {
           </div>
           <div>
             <div className="people">
-              <img src="./assets/images/toyFaces.png" alt="People" />
+              <img src={header} alt="People" />
             </div>
           </div>
         </section>
@@ -215,7 +218,7 @@ const Home = () => {
                   <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
                     <div>{moment(event.date).format("MM-DD-YYYY")}</div>
                     <div className="font-semibold text-2xl tracking-widest">
-                      <Link to="/event.html">{event.title}</Link>
+                      <Link to="/DetailEvent">{event.title}</Link>
                     </div>
                     {/* <div className="flex ml-2">
                       <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
@@ -436,7 +439,7 @@ const Home = () => {
           <div className="flex md:flex-row flex-col md:justify-center gap-14 md:gap-32">
             <div>
               <div className="flex items-center text-2xl mb-4 md:mb-8 font-semibold">
-                <img src="/assets/img/logo.png" alt="logo" />
+                <img src={wetick} alt="logo" />
                 <a href="/index.html">
                   <span className="text-[#61764B]">We</span>
                   <span className="text-[#FF3D71]">tick</span>
@@ -445,16 +448,16 @@ const Home = () => {
               <div className="text-sm mb-4">Find events you love with our</div>
               <div className="flex gap-4 text-[#C1C5D0]">
                 <a href="https://www.facebook.com">
-                  <i data-feather="facebook"></i>
+                  <FaFacebook />
                 </a>
                 <a href="https://www.whatsapp.com">
-                  <img src="/assets/img/whatsapp.png" alt="Whatsapp Icon" />
+                  <FaWhatsapp />
                 </a>
                 <a href="https://www.instagram.com">
-                  <i data-feather="instagram"></i>
+                  <FaInstagram />
                 </a>
                 <a href="https://www.twitter.com">
-                  <i data-feather="twitter"></i>
+                  <FaTwitter />
                 </a>
               </div>
             </div>
