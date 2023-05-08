@@ -159,7 +159,7 @@ const Home = () => {
               EVENT
             </p>
           </div>
-          <p className="text-4xl font-semibold">Events For You</p>
+          <p className="text-4xl text-black font-semibold">Events For You</p>
           <div className="flex md:gap-12 mt-10">
             <div className="pt-4">
               <button className="w-11 h-11 bg-white text-[#C1C5D0] border rounded-[10px]">
@@ -307,7 +307,7 @@ const Home = () => {
               CATEGORY
             </p>
           </div>
-          <p className="text-4xl text-center font-semibold">
+          <p className="text-4xl text-center text-black font-semibold">
             Browse Event By Category
           </p>
           <div className="flex md:flex-row flex-col flex-1 gap-3">
