@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ManageEvent from "./pages/ManageEvent";
+import MyBooking from "./pages/MyBooking";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/manage-event" element={<ManageEvent />} />
+        <Route path="/my-booking" element={<MyBooking />} />
       </Routes>
     </BrowserRouter>
   );
