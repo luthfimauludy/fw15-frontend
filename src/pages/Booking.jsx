@@ -118,9 +118,13 @@ const Booking = () => {
                     </p>
                   </div>
                   <div className="flex justify-evenly items-center">
-                    <button className="btn border-color-qty">-</button>
+                    <button className="btn btn-sm btn-square btn-outline">
+                      -
+                    </button>
                     <p className="text-black ml-2.5">0</p>
-                    <button className="ml-2.5 btn border-color-qty">+</button>
+                    <button className="ml-2.5 btn btn-sm btn-square btn-outline">
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
@@ -155,9 +159,13 @@ const Booking = () => {
                     </p>
                   </div>
                   <div className="flex justify-evenly items-center">
-                    <button className="btn border-color-qty">-</button>
+                    <button className="btn btn-sm btn-square btn-outline">
+                      -
+                    </button>
                     <p className="text-black ml-2.5">2</p>
-                    <button className="ml-2.5 btn">+</button>
+                    <button className="ml-2.5 btn btn-sm btn-square btn-outline">
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
@@ -192,9 +200,13 @@ const Booking = () => {
                     </p>
                   </div>
                   <div className="flex justify-evenly items-center">
-                    <button className="btn border-color-qty">-</button>
+                    <button className="btn btn-sm btn-square btn-outline">
+                      -
+                    </button>
                     <p className="text-black ml-2.5">0</p>
-                    <button className="ml-2.5 btn border-color-qty">+</button>
+                    <button className="ml-2.5 btn btn-sm btn-square btn-outline">
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
@@ -212,11 +224,9 @@ const Booking = () => {
               <p className="mb-4">$70</p>
             </div>
           </div>
-          <div className="max-w-72">
-            <button className="flex justify-center items-center h-14 text-base font-semibold rounded-lg shadow-lg shadow-[#61764B] bg-[#61764B] text-white">
-              Checkout
-            </button>
-          </div>
+          <button className="flex w-72 justify-center items-center h-14 text-base font-semibold rounded-lg shadow-lg shadow-[#61764B] bg-[#61764B] text-white">
+            Checkout
+          </button>
         </div>
       </div>
       {/* Main Content End */}
