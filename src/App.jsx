@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import DetailEvent from "./pages/DetailEvent";
+import Event from "./pages/Event";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -11,7 +11,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/details" element={<DetailEvent />} />
+        <Route path="/event" element={<Event />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
