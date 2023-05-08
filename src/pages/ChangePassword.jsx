@@ -141,7 +141,7 @@ const ChangePassword = () => {
               </Link>
             </li>
             <li>
-              <Link className="flex gap-7 mb-8" href="/my-wishlist">
+              <Link className="flex gap-7 mb-8" to="/my-wishlist">
                 <FiHeart size={25} color="#C1C5D0" />
                 My Wishlist
               </Link>
