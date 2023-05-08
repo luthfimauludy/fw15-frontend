@@ -10,6 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ManageEvent from "./pages/ManageEvent";
 import MyBooking from "./pages/MyBooking";
+import MyWishlist from "./pages/MyWishlist";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/manage-event" element={<ManageEvent />} />
         <Route path="/my-booking" element={<MyBooking />} />
+        <Route path="/my-wishlist" element={<MyWishlist />} />
       </Routes>
     </BrowserRouter>
   );
