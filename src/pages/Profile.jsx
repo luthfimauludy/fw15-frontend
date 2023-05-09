@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiUser,
   FiCreditCard,
@@ -14,8 +14,28 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import wetick from "../assets/images/logo-wetick.png";
 import profile from "../assets/images/profile3.jpg";
+import React from "react";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const [token, setToken] = React.useState("");
+  const [initToken, setInitToken] = React.useState(false);
+  React.useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+      setToken(window.localStorage.getItem("token"));
+    }
+    setInitToken(true);
+  }, []);
+  React.useEffect(() => {
+    if (initToken) {
+      if (!token) {
+        navigate("/login", {
+          state: { warningMessage: "You have to login first" },
+        });
+      }
+    }
+  }, [token, initToken, navigate]);
+
   return (
     <>
       {/* Navbar Start */}
