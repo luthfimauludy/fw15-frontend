@@ -226,52 +226,54 @@ const Home = () => {
           <div id="eventWrapper" className="inline-flex gap-5">
             {events.map((event) => {
               return (
-                <div
-                  className="relative w-64 h-[376px] rounded-3xl overflow-hidden"
-                  key={event.id}
+                <Link
+                  to={`/detail-event/${event.id}`}
+                  key={`event-${event.id}`}
                 >
-                  <img
-                    className="w-auto h-full object-cover"
-                    src={`http://localhost:8888/uploads/${event.picture}`}
-                    alt="banner1"
-                  />
-                  <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
-                    <div>{moment(event.date).format("MM-DD-YYYY")}</div>
-                    <div className="font-semibold text-2xl tracking-widest">
-                      <Link to="/DetailEvent">{event.title}</Link>
+                  <div className="relative w-64 h-[376px] rounded-3xl overflow-hidden">
+                    <img
+                      className="w-auto h-full object-cover"
+                      src={`http://localhost:8888/uploads/${event.picture}`}
+                      alt="banner1"
+                    />
+                    <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
+                      <div>{moment(event.date).format("MM-DD-YYYY")}</div>
+                      <div className="font-semibold text-2xl tracking-widest">
+                        <Link to="/DetailEvent">{event.title}</Link>
+                      </div>
+                      {/* <div className="flex ml-2">
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile1.jpg"
+                            alt="profile 1"
+                          />
+                        </div>
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile2.jpg"
+                            alt="profile 2"
+                          />
+                        </div>
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile3.jpg"
+                            alt="profile 3"
+                          />
+                        </div>
+                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                          <img
+                            className="object-cover w-full h-full"
+                            src="/assets/img/profile4.jpg"
+                            alt="profile 4"
+                          />
+                        </div>
+                      </div> */}
                     </div>
-                    {/* <div className="flex ml-2">
-                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                        <img
-                          className="object-cover w-full h-full"
-                          src="/assets/img/profile1.jpg"
-                          alt="profile 1"
-                        />
-                      </div>
-                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                        <img
-                          className="object-cover w-full h-full"
-                          src="/assets/img/profile2.jpg"
-                          alt="profile 2"
-                        />
-                      </div>
-                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                        <img
-                          className="object-cover w-full h-full"
-                          src="/assets/img/profile3.jpg"
-                          alt="profile 3"
-                        />
-                      </div>
-                      <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                        <img
-                          className="object-cover w-full h-full"
-                          src="/assets/img/profile4.jpg"
-                          alt="profile 4"
-                        />
-                      </div>
-                    </div> */}
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
