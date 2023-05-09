@@ -8,13 +8,16 @@ import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import header from "../assets/images/toyFaces.png";
 import wetick from "../assets/images/logo-wetick.png";
 import http from "../helpers/http";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [events, setEvents] = React.useState([]);
   const [profile, setProfile] = React.useState({});
   const [cities, setCities] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
   const [partners, setPartners] = React.useState([]);
+  const [token, setToken] = React.useState("");
   React.useEffect(() => {
     async function getDataEvents() {
       const { data } = await axios.get("http://localhost:8888/events");
@@ -42,7 +45,15 @@ const Home = () => {
       setPartners(data.results);
     }
     getDataPartners();
+    if (window.localStorage.getItem("token")) {
+      setToken(window.localStorage.getItem("token"));
+    }
   }, []);
+
+  const doLogout = () => {
+    window.localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -96,23 +107,33 @@ const Home = () => {
               </li>
             </ul>
             <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
-              <div>{profile?.fullName}</div>
-              <div className="w-full">
-                <Link
-                  className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl"
-                  to="/login"
-                >
-                  Login
-                </Link>
-              </div>
-              <div className="w-full">
-                <Link
-                  className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl text-white shadow-lg shadow-[#61764B] bg-[#61764B] hover:bg-green-800"
-                  to="/signup"
-                >
-                  Sign Up
-                </Link>
-              </div>
+              {token ? (
+                <div className="text-black flex items-center gap-3">
+                  <Link to="/profile">{profile?.fullName}</Link>
+                  <button onClick={doLogout} className="btn btn-primary">
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
+                  <div className="w-full">
+                    <Link
+                      className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl hover:text-primary"
+                      to="/login"
+                    >
+                      Login
+                    </Link>
+                  </div>
+                  <div className="w-full">
+                    <Link
+                      className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl text-white shadow-lg shadow-primary bg-primary hover:bg-green-800"
+                      to="/signup"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </nav>
