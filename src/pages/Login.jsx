@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import toyFaces from "../assets/images/toyFaces.png";
 import logo from "../assets/images/logo-wetick.png";
 import React from "react";
@@ -9,11 +8,16 @@ import http from "../helpers/http";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [errorMessage, setErrorMessage] = React.useState("");
+  const [warningMessage, setWarningMessage] = React.useState(
+    location.state?.warningMessage
+  );
   const [token, setToken] = React.useState("");
   const doLogin = async (event) => {
     event.preventDefault();
     setErrorMessage("");
+    setWarningMessage("");
     try {
       const { value: email } = event.target.email;
       const { value: password } = event.target.password;
@@ -67,8 +71,14 @@ const Login = () => {
               {errorMessage}
             </div>
           )}
+          {warningMessage && (
+            <div className="alert alert-warning shadow-lg flex justify-center">
+              {warningMessage}
+            </div>
+          )}
           <div>
             <input
+              onFocus={() => setWarningMessage("")}
               placeholder="Email"
               className="input input-bordered border-neutral-300 w-full"
               type="email"
@@ -77,6 +87,7 @@ const Login = () => {
           </div>
           <div>
             <input
+              onFocus={() => setWarningMessage("")}
               placeholder="Password"
               className="input input-bordered border-neutral-300 w-full"
               type="password"
@@ -89,7 +100,7 @@ const Login = () => {
             </Link>
           </div>
           <div className="mb-8">
-            <button className="btn btn-primary btn-block text-base font-semibold normal-case">
+            <button className="btn btn-primary rounded-xl btn-block text-base font-semibold normal-case">
               Sign In
             </button>
           </div>
@@ -97,12 +108,12 @@ const Login = () => {
             or sign in with
           </div>
           <div className="flex justify-center gap-5">
-            <button className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
+            <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
               <FcGoogle size={25} />
-            </button>
-            <button className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
+            </Link>
+            <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
               <FaFacebook size={25} color="#426782" />
-            </button>
+            </Link>
           </div>
         </form>
       </div>
