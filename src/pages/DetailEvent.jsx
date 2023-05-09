@@ -157,8 +157,9 @@ const DetailEvent = () => {
                 Event Detail
               </p>
               <p className="text-xs text-[rgba(55, 58, 66, 0.75)] mb-2.5">
-                After his controversial art exhibition "Tear and Consume" back
-                in November 2018, in which guests were invited to tear up…
+                After his controversial art exhibition &quot;Tear and
+                Consume&quot; back in November 2018, in which guests were
+                invited to tear up…
               </p>
               <div className="text-xs font-medium text-[#61764B] mb-6">
                 <a href="#">Read More</a>
