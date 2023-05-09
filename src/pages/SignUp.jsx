@@ -22,20 +22,23 @@ const SignUp = () => {
           </div>
           <div className="text-neutral font-semibold text-2xl">Sign Up</div>
           <div className="text-neutral mb-5 text-sm">
-            Already have an account? <Link to="/login">Log in</Link>
+            Already have an account?{" "}
+            <Link className="text-primary font-semibold" to="/login">
+              Log in
+            </Link>
           </div>
           <div>
             <input
               placeholder="Full Name"
-              className="input input-bordered input-base-100 w-full"
-              type="email"
-              name="email"
+              className="input input-bordered border-neutral-300 w-full"
+              type="text"
+              name="fullName"
             />
           </div>
           <div>
             <input
               placeholder="Email"
-              className="input input-bordered input-base-100 w-full"
+              className="input input-bordered border-neutral-300 w-full"
               type="email"
               name="email"
             />
@@ -43,7 +46,7 @@ const SignUp = () => {
           <div>
             <input
               placeholder="Password"
-              className="input input-bordered input-base-100 w-full"
+              className="input input-bordered border-neutral-300 w-full"
               type="password"
               name="password"
             />
@@ -51,13 +54,13 @@ const SignUp = () => {
           <div>
             <input
               placeholder="Confirm Password"
-              className="input input-bordered input-base-100 w-full"
+              className="input input-bordered border-neutral-300 w-full"
               type="password"
               name="password"
             />
           </div>
           <div className="my-5 text-base text-black">
-            <label>
+            <label className="flex items-center gap-2">
               <input name="checkBox" type="checkbox" />
               <span className="checkmarking"></span>
               Accept terms and condition
