@@ -1,14 +1,13 @@
 import React from "react";
 import axios from "axios";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FiMapPin } from "react-icons/fi";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import header from "../assets/images/toyFaces.png";
 import wetick from "../assets/images/logo-wetick.png";
 import http from "../helpers/http";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
