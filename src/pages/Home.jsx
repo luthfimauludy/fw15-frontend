@@ -7,42 +7,41 @@ import { FiMapPin } from "react-icons/fi";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import header from "../assets/images/toyFaces.png";
 import wetick from "../assets/images/logo-wetick.png";
+import http from "../helpers/http";
 
 const Home = () => {
   const [events, setEvents] = React.useState([]);
+  const [profile, setProfile] = React.useState({});
+  const [cities, setCities] = React.useState([]);
+  const [categories, setCategories] = React.useState([]);
+  const [partners, setPartners] = React.useState([]);
   React.useEffect(() => {
-    async function getData() {
+    async function getDataEvents() {
       const { data } = await axios.get("http://localhost:8888/events");
       setEvents(data.results);
     }
-    getData();
-  }, []);
-
-  const [cities, setCities] = React.useState([]);
-  React.useEffect(() => {
-    async function getData() {
+    getDataEvents();
+    async function getDataProfile() {
+      const token = window.localStorage.getItem("token");
+      const { data } = await http(token).get("/profile");
+      setProfile(data.results);
+    }
+    getDataProfile();
+    async function getDataCities() {
       const { data } = await axios.get("http://localhost:8888/cities");
       setCities(data.results);
     }
-    getData();
-  }, []);
-
-  const [categories, setCategories] = React.useState([]);
-  React.useEffect(() => {
-    async function getData() {
+    getDataCities();
+    async function getDataCategories() {
       const { data } = await axios.get("http://localhost:8888/categories");
       setCategories(data.results);
     }
-    getData();
-  }, []);
-
-  const [partners, setPartners] = React.useState([]);
-  React.useEffect(() => {
-    async function getData() {
+    getDataCategories();
+    async function getDataPartners() {
       const { data } = await axios.get("http://localhost:8888/partners");
       setPartners(data.results);
     }
-    getData();
+    getDataPartners();
   }, []);
 
   return (
@@ -68,7 +67,7 @@ const Home = () => {
           </div>
           <div
             id="menu"
-            className="hidden md:flex md:flex-row flex-col flex-1 md:pl-8 mb-5 md:mb-0 text-sm"
+            className="hidden md:flex md:flex-row flex-col flex-1 md:pl-8 mb-5 md:mb-0 text-sm text-black"
           >
             <ul className="flex justify-center md:flex-row flex-col flex-1 gap-3">
               <li className="flex justify-center items-center min-w-[100px]">
@@ -97,6 +96,7 @@ const Home = () => {
               </li>
             </ul>
             <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
+              <div>{profile?.fullName}</div>
               <div className="w-full">
                 <Link
                   className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl"
