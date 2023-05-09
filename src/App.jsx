@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Event from "./pages/Event";
+import DetailEvent from "./pages/DetailEvent";
 import Booking from "./pages/Booking";
 import Profile from "./pages/Profile";
 import Payment from "./pages/Payment";
@@ -19,7 +19,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/event" element={<Event />} />
+        <Route path="/detail-event" element={<DetailEvent />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/payment" element={<Payment />} />
