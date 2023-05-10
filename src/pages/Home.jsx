@@ -8,9 +8,12 @@ import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import header from "../assets/images/toyFaces.png";
 import wetick from "../assets/images/logo-wetick.png";
 import http from "../helpers/http";
+import { useDispatch } from "react-redux";
+import { logout as logoutAction } from "../redux/reducers/auth";
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [events, setEvents] = React.useState([]);
   const [profile, setProfile] = React.useState({});
   const [cities, setCities] = React.useState([]);
@@ -22,6 +25,7 @@ const Home = () => {
       const { data } = await axios.get("http://localhost:8888/events");
       setEvents(data.results);
     }
+
     getDataEvents();
     async function getDataProfile() {
       const token = window.localStorage.getItem("token");
@@ -29,21 +33,25 @@ const Home = () => {
       setProfile(data.results);
     }
     getDataProfile();
+
     async function getDataCities() {
       const { data } = await axios.get("http://localhost:8888/cities");
       setCities(data.results);
     }
     getDataCities();
+
     async function getDataCategories() {
       const { data } = await axios.get("http://localhost:8888/categories");
       setCategories(data.results);
     }
     getDataCategories();
+
     async function getDataPartners() {
       const { data } = await axios.get("http://localhost:8888/partners");
       setPartners(data.results);
     }
     getDataPartners();
+
     if (window.localStorage.getItem("token")) {
       setToken(window.localStorage.getItem("token"));
     }
@@ -51,6 +59,7 @@ const Home = () => {
 
   const doLogout = () => {
     window.localStorage.removeItem("token");
+    dispatch(logoutAction(""));
     navigate("/login");
   };
 
