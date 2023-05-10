@@ -5,42 +5,169 @@ import toyFaces from "../assets/images/toyFaces.png";
 import logo from "../assets/images/logo-wetick.png";
 import React from "react";
 import http from "../helpers/http";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import propTypes from "prop-types";
+
+const validationSchema = Yup.object({
+  email: Yup.string().email("Email is not valid"),
+  password: Yup.string().required("Password is not valid"),
+});
+
+const FormLogin = ({
+  values,
+  errors,
+  touched,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  isSubmitting,
+  warningMessage,
+  errorMessage,
+}) => {
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="w-[80%] text-black flex flex-col gap-2"
+    >
+      <div className="flex items-center mb-4">
+        <img className="h-12" src={logo} alt="logo" />
+        <div className="text-2xl font-semibold">
+          <span className="text-primary">We</span>
+          <span className="text-[#ff3d71]">tick</span>
+        </div>
+      </div>
+      <div className="text-neutral font-semibold text-2xl">Sign in</div>
+      <div className="text-neutral mb-5 text-sm">
+        Hi, Welcome back to Urticket!
+      </div>
+      {errorMessage && (
+        <div className="alert alert-error shadow-lg flex justify-center">
+          {errorMessage}
+        </div>
+      )}
+      {warningMessage && (
+        <div className="alert alert-warning shadow-lg flex justify-center">
+          {warningMessage}
+        </div>
+      )}
+      <div className="form-control">
+        <input
+          placeholder="Email"
+          className={`input input-bordered border-neutral-300 w-full ${
+            errors.email && touched.email && "input-error"
+          }`}
+          type="email"
+          name="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+        />
+        {errors.email && touched.email && (
+          <label className="label">
+            <span className="label-text-alt text-error">{errors.email}</span>
+          </label>
+        )}
+      </div>
+      <div className="form-control">
+        <input
+          placeholder="Password"
+          className={`input input-bordered border-neutral-300 w-full ${
+            errors.password && touched.password && "input-error"
+          }`}
+          type="password"
+          name="password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
+        />
+        {errors.password && touched.password && (
+          <label className="label">
+            <span className="label-text-alt text-error">{errors.password}</span>
+          </label>
+        )}
+      </div>
+      <div className="text-right font-semibold text-sm mb-4">
+        <Link className="text-primary" to="/forgot-password">
+          Forgot Password?
+        </Link>
+      </div>
+      <div className="mb-8">
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="btn btn-primary rounded-xl btn-block text-base font-semibold normal-case"
+        >
+          Sign In
+        </button>
+      </div>
+      <div className="text-center text-neutral text-sm">or sign in with</div>
+      <div className="flex justify-center gap-5">
+        <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
+          <FcGoogle size={25} />
+        </Link>
+        <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
+          <FaFacebook size={25} color="#426782" />
+        </Link>
+      </div>
+    </form>
+  );
+};
+
+FormLogin.propTypes = {
+  values: propTypes.objectOf(propTypes.string),
+  errors: propTypes.objectOf(propTypes.string),
+  touched: propTypes.objectOf(propTypes.bool),
+  handleBlur: propTypes.func,
+  handleChange: propTypes.func,
+  handleSubmit: propTypes.func,
+  isSubmitting: propTypes.bool,
+  errorMessage: propTypes.string,
+  warningMessage: propTypes.string,
+};
 
 const Login = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const navigate = useNavigate();
   const [warningMessage, setWarningMessage] = React.useState(
     location.state?.warningMessage
   );
+  const [errorMessage, setErrorMessage] = React.useState("");
   const [token, setToken] = React.useState("");
-  const doLogin = async (event) => {
-    event.preventDefault();
-    setErrorMessage("");
-    setWarningMessage("");
-    try {
-      const { value: email } = event.target.email;
-      const { value: password } = event.target.password;
-      const body = new URLSearchParams({ email, password }).toString();
-      const { data } = await http().post(
-        "http://localhost:8888/auth/login",
-        body
-      );
-      window.localStorage.setItem("token", data.results.token);
-      setToken(data.results.token);
-    } catch (err) {
-      const message = err?.response?.data?.message;
-      if (message) {
-        setErrorMessage(message);
-      }
-    }
-  };
-
   React.useEffect(() => {
     if (token) {
       navigate("/");
     }
   }, [token, navigate]);
+
+  const doLogin = async (values, { setSubmitting, setErrors }) => {
+    setWarningMessage("");
+    setErrorMessage("");
+    try {
+      const { email, password } = values;
+      const body = new URLSearchParams({ email, password }).toString();
+      const { data } = await http().post("/auth/login", body);
+      window.localStorage.setItem("token", data.results.token);
+      setSubmitting(false);
+      setToken(data.results.token);
+    } catch (err) {
+      const message = err?.response?.data?.message;
+      if (message) {
+        if (err?.response?.data?.results) {
+          setErrors({
+            email: err.response.data.results.filter(
+              (item) => item.param === "email"
+            )[0].message,
+            password: err.response.data.results.filter(
+              (item) => item.param === "password"
+            )[0].message,
+          });
+        } else {
+          setErrorMessage(message);
+        }
+      }
+    }
+  };
 
   return (
     <div className="flex h-screen">
@@ -51,71 +178,22 @@ const Login = () => {
         </div>
       </div>
       <div className="max-w-md w-full flex justify-center items-center">
-        <form
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={validationSchema}
           onSubmit={doLogin}
-          className="w-[80%] text-black flex flex-col gap-2"
         >
-          <div className="flex items-center mb-4">
-            <img className="h-12" src={logo} alt="logo" />
-            <div className="text-2xl font-semibold">
-              <span className="text-primary">We</span>
-              <span className="text-[#ff3d71]">tick</span>
-            </div>
-          </div>
-          <div className="text-neutral font-semibold text-2xl">Sign in</div>
-          <div className="text-neutral mb-5 text-sm">
-            Hi, Welcome back to Urticket!
-          </div>
-          {errorMessage && (
-            <div className="alert alert-error shadow-lg flex justify-center">
-              {errorMessage}
-            </div>
-          )}
-          {warningMessage && (
-            <div className="alert alert-warning shadow-lg flex justify-center">
-              {warningMessage}
-            </div>
-          )}
-          <div>
-            <input
-              onFocus={() => setWarningMessage("")}
-              placeholder="Email"
-              className="input input-bordered border-neutral-300 w-full"
-              type="email"
-              name="email"
+          {(props) => (
+            <FormLogin
+              {...props}
+              warningMessage={warningMessage}
+              errorMessage={errorMessage}
             />
-          </div>
-          <div>
-            <input
-              onFocus={() => setWarningMessage("")}
-              placeholder="Password"
-              className="input input-bordered border-neutral-300 w-full"
-              type="password"
-              name="password"
-            />
-          </div>
-          <div className="text-right font-semibold text-sm mb-4">
-            <Link className="text-primary" to="/forgot-password">
-              Forgot Password?
-            </Link>
-          </div>
-          <div className="mb-8">
-            <button className="btn btn-primary rounded-xl btn-block text-base font-semibold normal-case">
-              Sign In
-            </button>
-          </div>
-          <div className="text-center text-neutral text-sm">
-            or sign in with
-          </div>
-          <div className="flex justify-center gap-5">
-            <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
-              <FcGoogle size={25} />
-            </Link>
-            <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
-              <FaFacebook size={25} color="#426782" />
-            </Link>
-          </div>
-        </form>
+          )}
+        </Formik>
       </div>
     </div>
   );
