@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import http from "../helpers/http";
 import {
   FiUser,
   FiCreditCard,
@@ -13,28 +14,21 @@ import {
 import { IoIosArrowDown } from "react-icons/io";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import wetick from "../assets/images/logo-wetick.png";
-import profile from "../assets/images/profile3.jpg";
+import avatar from "../assets/images/profile3.jpg";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const navigate = useNavigate();
-  const [token, setToken] = React.useState("");
-  const [initToken, setInitToken] = React.useState(false);
+  const token = useSelector((state) => state.auth.token);
+  const [profile, setProfile] = React.useState({});
+
   React.useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-      setToken(window.localStorage.getItem("token"));
-    }
-    setInitToken(true);
+    const getProfile = async () => {
+      const { data } = await http(token).get("/profile");
+      setProfile(data.results);
+    };
+    getProfile();
   }, []);
-  React.useEffect(() => {
-    if (initToken) {
-      if (!token) {
-        navigate("/login", {
-          state: { warningMessage: "You have to login first" },
-        });
-      }
-    }
-  }, [token, initToken, navigate]);
 
   return (
     <>
@@ -90,12 +84,12 @@ const Profile = () => {
             <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
               <img
                 className="w-11 h-11 object-cover rounded-full border-2 border-white"
-                src={profile}
+                src={avatar}
                 alt="Profile"
               />
             </div>
             <div className="text-black">
-              <Link to="/profile">John Tomson</Link>
+              <Link to="/profile">{profile?.fullName}</Link>
             </div>
           </div>
         </div>
@@ -110,7 +104,7 @@ const Profile = () => {
               <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
                 <img
                   className="w-11 h-11 object-cover rounded-full border-2 border-white"
-                  src={profile}
+                  src={avatar}
                   alt="Profile"
                 />
               </div>
@@ -306,7 +300,7 @@ const Profile = () => {
                   <div className="inline-block ml-14 mb-12 rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
                     <img
                       className="w-[137px] h-[137px] object-cover rounded-full border-8 border-white"
-                      src={profile}
+                      src={avatar}
                       alt="Profile"
                     />
                   </div>
