@@ -4,12 +4,11 @@ import { FaFacebook } from "react-icons/fa";
 import toyFaces from "../assets/images/toyFaces.png";
 import logo from "../assets/images/logo-wetick.png";
 import React from "react";
-import http from "../helpers/http";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import propTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { clearMessage, setErrorMessage } from "../redux/reducers/auth";
+import { clearMessage } from "../redux/reducers/auth";
 import { asyncLoginAction } from "../redux/actions/auth";
 
 const validationSchema = Yup.object({
