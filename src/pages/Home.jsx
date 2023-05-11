@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
@@ -8,53 +7,61 @@ import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import header from "../assets/images/toyFaces.png";
 import wetick from "../assets/images/logo-wetick.png";
 import http from "../helpers/http";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [events, setEvents] = React.useState([]);
+  const [eventCategories, setEventCategories] = React.useState([]);
   const [profile, setProfile] = React.useState({});
   const [cities, setCities] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
   const [partners, setPartners] = React.useState([]);
-  const [token, setToken] = React.useState("");
+  const token = useSelector((state) => state.auth.token);
+
+  async function getEventCategories(name) {
+    const { data } = await http().get("/events", {
+      params: { category: name },
+    });
+    setEventCategories(data.results);
+  }
+
   React.useEffect(() => {
-    async function getDataEvents() {
-      const { data } = await axios.get("http://localhost:8888/events");
+    async function getData() {
+      const { data } = await http().get("/events");
       setEvents(data.results);
     }
+    getData();
 
-    getDataEvents();
-    async function getDataProfile() {
-      const token = window.localStorage.getItem("token");
+    getEventCategories();
+
+    async function getProfileData() {
       const { data } = await http(token).get("/profile");
       setProfile(data.results);
     }
-    getDataProfile();
+    getProfileData();
 
-    async function getDataCities() {
-      const { data } = await axios.get("http://localhost:8888/cities");
+    async function getCitiesData() {
+      const { data } = await http(token).get("/cities");
       setCities(data.results);
     }
-    getDataCities();
+    getCitiesData();
 
-    async function getDataCategories() {
-      const { data } = await axios.get("http://localhost:8888/categories");
+    async function getCategoriesData() {
+      const { data } = await http(token).get("/categories", {
+        params: { limit: 1000 },
+      });
       setCategories(data.results);
     }
-    getDataCategories();
+    getCategoriesData();
 
-    async function getDataPartners() {
-      const { data } = await axios.get("http://localhost:8888/partners");
+    async function getPartnersData() {
+      const { data } = await http(token).get("/partners");
       setPartners(data.results);
     }
-    getDataPartners();
-
-    if (window.localStorage.getItem("token")) {
-      setToken(window.localStorage.getItem("token"));
-    }
+    getPartnersData();
   }, []);
 
   const doLogout = () => {
@@ -118,7 +125,10 @@ const Home = () => {
               {token ? (
                 <div className="text-black flex items-center gap-3">
                   <Link to="/profile">{profile?.fullName}</Link>
-                  <button onClick={doLogout} className="btn btn-primary">
+                  <button
+                    onClick={doLogout}
+                    className="btn btn-primary normal-case"
+                  >
                     Logout
                   </button>
                 </div>
@@ -344,21 +354,17 @@ const Home = () => {
           <p className="text-4xl text-center text-black font-semibold">
             Browse Event By Category
           </p>
-          <div className="flex md:flex-row flex-col flex-1 gap-3">
-            <div className="flex">
+          <div className="flex md:flex-row flex-col flex-1">
+            <div className="flex gap-11">
               {categories.map((category) => {
                 return (
-                  <div
-                    className="flex justify-center items-center min-w-[100px]"
-                    key={category.id}
+                  <button
+                    onClick={() => getEventCategories(category.name)}
+                    className="flex justify-center items-center text-gray-400 hover:text-primary font-semibold border-b-2 border-transparent hover:border-primary"
+                    key={`category-${category.id}`}
                   >
-                    <a
-                      className="text-[#C1C5D0] hover:text-[#61764B] pb-1 border-b border-transparent hover:border-[#61764B] font-semibold"
-                      href="#"
-                    >
-                      {category.name}
-                    </a>
-                  </div>
+                    {category.name}
+                  </button>
                 );
               })}
             </div>
@@ -372,60 +378,63 @@ const Home = () => {
               </button>
             </div>
             <div className="inline-flex gap-5">
-              {events.map((event) => {
+              {eventCategories.map((event) => {
                 return (
-                  <div
-                    className="w-[300px] h-[350px] overflow-hidden rounded-3xl flex flex-col"
-                    key={event.id}
+                  <Link
+                    to={`/detail-event/${event.id}`}
+                    key={`event-category-${event.id}`}
                   >
-                    <div className="flex-2 overflow-hidden">
+                    <div className="relative w-64 h-52 rounded-3xl overflow-hidden">
                       <img
-                        className="w-full h-full object-cover"
+                        className="w-auto h-full object-cover"
                         src={`http://localhost:8888/uploads/${event.picture}`}
                         alt="banner1"
                       />
-                    </div>
-                    <div className="flex flex-col justify-end flex-1 min-h-[161px] text-white p-8 bg-[#61764B] relative">
-                      {/* <div className="flex absolute -top-5 ml-2">
-                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                          <img
-                            className="object-cover w-full h-full"
-                            src="/assets/img/profile1.jpg"
-                            alt="profile 1"
-                          />
+                      <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
+                        <div>{moment(event.date).format("MM-DD-YYYY")}</div>
+                        <div className="font-semibold text-2xl tracking-widest">
+                          <Link to="/DetailEvent">{event.title}</Link>
                         </div>
-                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                          <img
-                            className="object-cover w-full h-full"
-                            src="/assets/img/profile2.jpg"
-                            alt="profile 2"
-                          />
+                        <div className="flex ml-2">
+                          <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                            <img
+                              className="object-cover w-full h-full"
+                              src="/assets/img/profile1.jpg"
+                              alt="profile 1"
+                            />
+                          </div>
+                          <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                            <img
+                              className="object-cover w-full h-full"
+                              src="/assets/img/profile2.jpg"
+                              alt="profile 2"
+                            />
+                          </div>
+                          <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                            <img
+                              className="object-cover w-full h-full"
+                              src="/assets/img/profile3.jpg"
+                              alt="profile 3"
+                            />
+                          </div>
+                          <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
+                            <img
+                              className="object-cover w-full h-full"
+                              src="/assets/img/profile4.jpg"
+                              alt="profile 4"
+                            />
+                          </div>
                         </div>
-                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                          <img
-                            className="object-cover w-full h-full"
-                            src="/assets/img/profile3.jpg"
-                            alt="profile 3"
-                          />
-                        </div>
-                        <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
-                          <img
-                            className="object-cover w-full h-full"
-                            src="/assets/img/profile4.jpg"
-                            alt="profile 4"
-                          />
-                        </div>
-                      </div> */}
-                      <div className="text-sm font-medium">
-                        {moment(event.date).format("MM-DD-YYYY")}
-                      </div>
-                      <div className="text-2xl font-bold tracking-wide">
-                        {event.title}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
+              {eventCategories.length < 1 && (
+                <div className="text-center font-semibold text-3xl text-black">
+                  No data
+                </div>
+              )}
             </div>
             <div className="hidden md:block">
               <button className="w-11 h-11 bg-[#61764B] text-white border rounded-[10px]">
@@ -435,7 +444,7 @@ const Home = () => {
           </div>
         </section>
         {/* Category Content End */}
-        {/* Partner Content End */}
+        {/* Partner Content Start */}
         <div className="bg-[#373A42] py-24 p-5 md:py-10 text-white bg-cover bg-no-repeat bg-[url(./assets/images/accent-partner.png)]">
           <section className="flex gap-8 flex-col items-center my-10">
             <div className="flex bg-gray-400 gap-2.5 py-1.5 px-2.5 items-center rounded-full">
