@@ -16,6 +16,7 @@ import MyBooking from "./pages/MyBooking";
 import MyWishlist from "./pages/MyWishlist";
 import CreateEvent from "./pages/CreateEvent";
 import UpdateEvent from "./pages/UpdateEvent";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   return (
@@ -25,7 +26,14 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/detail-event" element={<DetailEvent />} />
           <Route path="/booking" element={<Booking />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
           <Route path="/payment" element={<Payment />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />

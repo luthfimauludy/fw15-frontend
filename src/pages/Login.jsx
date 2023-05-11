@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import toyFaces from "../assets/images/toyFaces.png";
@@ -8,6 +8,9 @@ import http from "../helpers/http";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import propTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { clearMessage, setErrorMessage } from "../redux/reducers/auth";
+import { asyncLoginAction } from "../redux/actions/auth";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Email is not valid"),
@@ -22,9 +25,9 @@ const FormLogin = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
-  warningMessage,
-  errorMessage,
 }) => {
+  const errorMessage = useSelector((state) => state.auth.errorMessage);
+  const warningMessage = useSelector((state) => state.auth.warningMessage);
   return (
     <form
       onSubmit={handleSubmit}
@@ -122,18 +125,14 @@ FormLogin.propTypes = {
   handleChange: propTypes.func,
   handleSubmit: propTypes.func,
   isSubmitting: propTypes.bool,
-  errorMessage: propTypes.string,
-  warningMessage: propTypes.string,
 };
 
 const Login = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const [warningMessage, setWarningMessage] = React.useState(
-    location.state?.warningMessage
-  );
-  const [errorMessage, setErrorMessage] = React.useState("");
-  const [token, setToken] = React.useState("");
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const formError = useSelector((state) => state.auth.formError);
+
   React.useEffect(() => {
     if (token) {
       navigate("/");
@@ -141,32 +140,16 @@ const Login = () => {
   }, [token, navigate]);
 
   const doLogin = async (values, { setSubmitting, setErrors }) => {
-    setWarningMessage("");
-    setErrorMessage("");
-    try {
-      const { email, password } = values;
-      const body = new URLSearchParams({ email, password }).toString();
-      const { data } = await http().post("/auth/login", body);
-      window.localStorage.setItem("token", data.results.token);
-      setSubmitting(false);
-      setToken(data.results.token);
-    } catch (err) {
-      const message = err?.response?.data?.message;
-      if (message) {
-        if (err?.response?.data?.results) {
-          setErrors({
-            email: err.response.data.results.filter(
-              (item) => item.param === "email"
-            )[0].message,
-            password: err.response.data.results.filter(
-              (item) => item.param === "password"
-            )[0].message,
-          });
-        } else {
-          setErrorMessage(message);
-        }
-      }
+    dispatch(clearMessage());
+    dispatch(asyncLoginAction(values));
+    if (formError.length) {
+      setErrors({
+        email: formError.filter((item) => item.param === "email")[0].message,
+        password: formError.filter((item) => item.param === "password")[0]
+          .message,
+      });
     }
+    setSubmitting(false);
   };
 
   return (
@@ -186,13 +169,7 @@ const Login = () => {
           validationSchema={validationSchema}
           onSubmit={doLogin}
         >
-          {(props) => (
-            <FormLogin
-              {...props}
-              warningMessage={warningMessage}
-              errorMessage={errorMessage}
-            />
-          )}
+          {(props) => <FormLogin {...props} />}
         </Formik>
       </div>
     </div>
