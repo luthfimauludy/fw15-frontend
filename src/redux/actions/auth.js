@@ -14,6 +14,9 @@ export const asyncLoginAction = createAsyncThunk(
       if (results) {
         return rejectWithValue(results);
       }
+      if (err.code === "ERR_NETWORK") {
+        return rejectWithValue("Error: No Connection from backend!");
+      }
       return rejectWithValue(message);
     }
   }
