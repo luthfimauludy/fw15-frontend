@@ -197,7 +197,7 @@ const Home = () => {
                       alt="banner1"
                     />
                     <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
-                      <div>{moment(event.date).format("MM-DD-YYYY")}</div>
+                      <div>{moment(event.date).format("ddd, DD MMM, LT")}</div>
                       <div className="font-semibold text-2xl tracking-widest">
                         {event.title}
                       </div>
@@ -328,15 +328,19 @@ const Home = () => {
                     to={`/detail-event/${event.id}`}
                     key={`event-category-${event.id}`}
                   >
-                    <div className="relative w-64 h-52 rounded-3xl overflow-hidden">
-                      <img
-                        className="w-auto h-full object-cover"
-                        src={`http://localhost:8888/uploads/${event.picture}`}
-                        alt="banner1"
-                      />
-                      <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
-                        <div>{moment(event.date).format("MM-DD-YYYY")}</div>
-                        <div className="font-semibold text-2xl tracking-widest">
+                    <div className="w-72 h-80 rounded-3xl overflow-hidden flex flex-col">
+                      <div className="flex-2 overflow-hidden">
+                        <img
+                          className="w-full h-full object-cover"
+                          src={`http://localhost:8888/uploads/${event.picture}`}
+                          alt="banner1"
+                        />
+                      </div>
+                      <div className="w-full min-h-[160px] text-white flex flex-col justify-end gap-1 p-5 bg-primary">
+                        <div className="text-sm font-medium">
+                          {moment(event.date).format("ddd, DD MMM, LT")}
+                        </div>
+                        <div className="text-2xl font-semibold tracking-widest">
                           {event.title}
                         </div>
                         {/* <div className="flex ml-2">
