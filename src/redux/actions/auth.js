@@ -7,7 +7,7 @@ export const asyncLoginAction = createAsyncThunk(
     try {
       const body = new URLSearchParams(payload).toString();
       const { data } = await http().post("/auth/login", body);
-      return data.results;
+      return data.results.token;
     } catch (err) {
       const results = err?.response?.data?.results;
       const message = err?.response?.data?.message;
