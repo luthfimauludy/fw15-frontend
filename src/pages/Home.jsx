@@ -1,21 +1,17 @@
 import React from "react";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FiMapPin } from "react-icons/fi";
-import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import header from "../assets/images/toyFaces.png";
-import wetick from "../assets/images/logo-wetick.png";
 import http from "../helpers/http";
-import { useDispatch, useSelector } from "react-redux";
-import { logout as logoutAction } from "../redux/reducers/auth";
+import { useSelector } from "react-redux";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
-  const [profile, setProfile] = React.useState({});
   const [cities, setCities] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
   const [partners, setPartners] = React.useState([]);
@@ -36,12 +32,6 @@ const Home = () => {
     getData();
 
     getEventCategories();
-
-    async function getProfileData() {
-      const { data } = await http(token).get("/profile");
-      setProfile(data.results);
-    }
-    getProfileData();
 
     async function getCitiesData() {
       const { data } = await http(token).get("/cities");
@@ -64,100 +54,14 @@ const Home = () => {
     getPartnersData();
   }, []);
 
-  const doLogout = () => {
-    window.localStorage.removeItem("token");
-    dispatch(logoutAction(""));
-    navigate("/login");
-  };
-
   return (
     <>
       <header className="flex max-h-[720px] flex-col">
         {/* Navbar Start */}
-        <nav className="flex md:flex-row flex-col md:h-24 px-8 font-semibold">
-          <div className="flex md:justify-center justify-between items-center">
-            <div className="flex justify-center items-center text-2xl">
-              <img src={wetick} alt="logo" />
-              <div className="text-2xl">
-                <Link to="/">
-                  <span className="text-[#61764B]">We</span>
-                  <span className="text-[#FF3D71]">tick</span>
-                </Link>
-              </div>
-            </div>
-            <div className="md:hidden flex items-center border rounded-lg p-1 bg-[#61764B]">
-              <button id="btn-toggler">
-                <i className="text-white" data-feather="menu"></i>
-              </button>
-            </div>
-          </div>
-          <div
-            id="menu"
-            className="hidden md:flex md:flex-row flex-col flex-1 md:pl-8 mb-5 md:mb-0 text-sm text-black"
-          >
-            <ul className="flex justify-center md:flex-row flex-col flex-1 gap-3">
-              <li className="flex justify-center items-center min-w-[100px]">
-                <Link
-                  className="text-[#61764B] pb-2.5 border-b border-[#61764B]"
-                  to="/"
-                >
-                  Home
-                </Link>
-              </li>
-              <li className="flex justify-center items-center min-w-[100px]">
-                <Link
-                  className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
-                  to="/create-event"
-                >
-                  Create Event
-                </Link>
-              </li>
-              <li className="flex justify-center items-center min-w-[100px]">
-                <Link
-                  className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
-                  to="/event"
-                >
-                  Location
-                </Link>
-              </li>
-            </ul>
-            <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
-              {token ? (
-                <div className="text-black flex items-center gap-3">
-                  <Link to="/profile">{profile?.fullName}</Link>
-                  <button
-                    onClick={doLogout}
-                    className="btn btn-primary normal-case"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
-                  <div className="w-full">
-                    <Link
-                      className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl hover:text-primary"
-                      to="/login"
-                    >
-                      Login
-                    </Link>
-                  </div>
-                  <div className="w-full">
-                    <Link
-                      className="flex justify-center items-center font-semibold md:min-w-[180px] w-full tracking-widest h-12 rounded-xl text-white shadow-lg shadow-primary bg-primary hover:bg-green-800"
-                      to="/signup"
-                    >
-                      Sign Up
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </nav>
+        <Header />
         {/* Navbar End */}
         {/* Banner End */}
-        <section className="flex md:flex-row flex-col md:px-24 py-10 items-center md:flex-1 bg-[#61764B] bg-cover bg-no-repeat bg-[url(/assets/img/accent-heading.png)]">
+        <section className="flex md:flex-row flex-col md:px-24 py-10 items-center md:flex-1 bg-[#61764B] bg-cover bg-no-repeat bg-[url(./assets/images/accent-heading.png)]">
           <div className="md:flex-1 flex flex-col md:items-start items-center gap-5">
             <p className="text-xl md:text-5xl md:text-left text-center tracking-widest font-semibold max-w-[200px] md:max-w-[500px] text-white">
               Find events you love with our
@@ -307,7 +211,10 @@ const Home = () => {
         </div>
         {/* Event Content End */}
         {/* Location Content Start */}
-        <section className="m-14 bg-[#61764B] rounded-xl bg-center bg-[url(./assets/images/accent-location.png)] bg-cover bg-no-repeat md:p-24 p-8">
+        <section
+          id="cities"
+          className="m-14 bg-[#61764B] rounded-xl bg-center bg-[url(./assets/images/accent-location.png)] bg-cover bg-no-repeat md:p-24 p-8"
+        >
           <div className="py-2 px-5 rounded-full inline-flex items-center gap-2 text-white bg-gray-400">
             <div className="w-8 border-t-sm border border-white"></div>
             <p className="text-xs font-semibold tracking-[3px]">LOCATION</p>
@@ -395,7 +302,7 @@ const Home = () => {
                         <div className="font-semibold text-2xl tracking-widest">
                           <Link to="/DetailEvent">{event.title}</Link>
                         </div>
-                        <div className="flex ml-2">
+                        {/* <div className="flex ml-2">
                           <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                             <img
                               className="object-cover w-full h-full"
@@ -424,7 +331,7 @@ const Home = () => {
                               alt="profile 4"
                             />
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </Link>
@@ -474,96 +381,7 @@ const Home = () => {
         {/* Partner Content End */}
       </main>
       {/* Footer Start */}
-      <footer className="py-24">
-        <div className="flex flex-col md:items-center p-2.5 md:p-0 gap-12 md:gap-20 bg-white">
-          <div className="flex md:flex-row flex-col md:justify-center gap-14 md:gap-32">
-            <div>
-              <div className="flex items-center text-2xl mb-4 md:mb-8 font-semibold">
-                <img src={wetick} alt="logo" />
-                <a href="/index.html">
-                  <span className="text-[#61764B]">We</span>
-                  <span className="text-[#FF3D71]">tick</span>
-                </a>
-              </div>
-              <div className="text-sm mb-4">Find events you love with our</div>
-              <div className="flex gap-4 text-[#C1C5D0]">
-                <a href="https://www.facebook.com">
-                  <FaFacebook />
-                </a>
-                <a href="https://www.whatsapp.com">
-                  <FaWhatsapp />
-                </a>
-                <a href="https://www.instagram.com">
-                  <FaInstagram />
-                </a>
-                <a href="https://www.twitter.com">
-                  <FaTwitter />
-                </a>
-              </div>
-            </div>
-            <div>
-              <ul className="flex flex-col gap-4">
-                <li className="font-semibold">Wetick</li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">About Us</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Features</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Blog</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Payments</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Mobile App</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul className="flex flex-col gap-4">
-                <li className="font-semibold">Features</li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Booking</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Create Event</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Discover</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Register</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul className="flex flex-col gap-4">
-                <li className="font-semibold">Company</li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Partnership</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Help</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Term of Service</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Privacy Policy</a>
-                </li>
-                <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Sitemap</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <p className="text-base font-semibold text-[#5A7184] md:w-[860px]">
-            © 2020 Wetick All Rights Reserved
-          </p>
-        </div>
-      </footer>
+      <Footer />
       {/* Footer End */}
     </>
   );
