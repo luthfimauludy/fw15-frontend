@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FiMapPin } from "react-icons/fi";
 import header from "../assets/images/toyFaces.png";
@@ -8,8 +8,11 @@ import http from "../helpers/http";
 import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Formik } from "formik";
 
 const Home = () => {
+  const navigate = useNavigate();
+  // const [searchParams, setSearchParams] = useSearchParams;
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [cities, setCities] = React.useState([]);
@@ -54,6 +57,12 @@ const Home = () => {
     getPartnersData();
   }, []);
 
+  const onSearch = (values) => {
+    const qs = new URLSearchParams(values).toString();
+    navigate(`/search?${qs}`);
+    // setSearchParams(values, "/search");
+  };
+
   return (
     <>
       <header className="flex max-h-[720px] flex-col">
@@ -66,27 +75,55 @@ const Home = () => {
             <p className="text-xl md:text-5xl md:text-left text-center tracking-widest font-semibold max-w-[200px] md:max-w-[500px] text-white">
               Find events you love with our
             </p>
-            <form className="block md:w-full">
-              <div className="inline-flex items-center md:min-w-[500px] h-16 py-2 px-3 bg-white border rounded-xl">
-                <CiSearch size={25} />
-                <input
-                  className="h-8 text-xs px-3 outline-none w-[100px] md:min-w-[250px]"
-                  type="text"
-                  placeholder="Search Event"
-                />
-                <FiMapPin size={25} />
-                <select className="h-8 outline-none px-3 appearance-none text-xs md:min-w-[150px]">
-                  <option disabled selected>
-                    Where?
-                  </option>
-                  <option>Bogor</option>
-                  <option>Jakarta</option>
-                </select>
-                <button className="w-8 h-8 bg-[#FF3D71] text-white border rounded-lg">
-                  &rarr;
-                </button>
-              </div>
-            </form>
+            <Formik
+              initialValues={{ search: "", city: "" }}
+              onSubmit={onSearch}
+            >
+              {({ handleBlur, handleChange, handleSubmit }) => (
+                <form onSubmit={handleSubmit} className="block md:w-full">
+                  <div className="inline-flex items-center md:min-w-[500px] h-16 py-2 px-3 bg-white border rounded-xl">
+                    <div className="flex items-center">
+                      <CiSearch color="black" size={25} />
+                      <input
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        name="search"
+                        className="h-8 text-xs px-3 outline-none w-[100px] md:min-w-[250px]"
+                        type="text"
+                        placeholder="Search Event"
+                      />
+                    </div>
+                    <div className="flex items-center">
+                      <FiMapPin color="black" size={25} />
+                      <select
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        name="city"
+                        className="h-8 text-black outline-none px-3 appearance-none text-xs md:min-w-[150px]"
+                      >
+                        <option value="">All location</option>
+                        {cities.map((city) => {
+                          return (
+                            <option
+                              key={`cities-select=${city.id}`}
+                              value={city.name}
+                            >
+                              {city.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-8 h-8 bg-[#FF3D71] text-white border rounded-lg"
+                    >
+                      &rarr;
+                    </button>
+                  </div>
+                </form>
+              )}
+            </Formik>
           </div>
           <div>
             <div className="people">
@@ -162,7 +199,7 @@ const Home = () => {
                     <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
                       <div>{moment(event.date).format("MM-DD-YYYY")}</div>
                       <div className="font-semibold text-2xl tracking-widest">
-                        <Link to="/DetailEvent">{event.title}</Link>
+                        {event.title}
                       </div>
                       {/* <div className="flex ml-2">
                         <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
@@ -300,7 +337,7 @@ const Home = () => {
                       <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
                         <div>{moment(event.date).format("MM-DD-YYYY")}</div>
                         <div className="font-semibold text-2xl tracking-widest">
-                          <Link to="/DetailEvent">{event.title}</Link>
+                          {event.title}
                         </div>
                         {/* <div className="flex ml-2">
                           <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
