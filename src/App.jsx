@@ -18,6 +18,7 @@ import MyWishlist from "./pages/MyWishlist";
 import CreateEvent from "./pages/CreateEvent";
 import UpdateEvent from "./pages/UpdateEvent";
 import PrivateRoute from "./components/PrivateRoute";
+import SearchResults from "./pages/SearchResults";
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/my-wishlist" element={<MyWishlist />} />
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/update-event" element={<UpdateEvent />} />
+            <Route path="/search" element={<SearchResults />} />
           </Routes>
         </BrowserRouter>
       </PersistGate>
