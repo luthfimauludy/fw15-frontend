@@ -35,9 +35,9 @@ const Profile = () => {
       {/* Navbar Start */}
       <Header />
       {/* Navbar End */}
-      <div className="md:bg-[#E9EDC9] md:pt-12">
-        {/* Main Content Start */}
-        <main className="flex mt-5 md:mt-0 mb-24 md:mx-16">
+      {/* Main Content Start */}
+      <main className="md:bg-[#E9EDC9] md:pt-12">
+        <div className="flex mt-5 md:mt-0 mb-24 md:mx-16">
           {/* Left Content Start */}
           <aside className="hidden md:inline pr-16 md:bg-[#E9EDC9]">
             <div className="flex gap-3.5 mb-14">
@@ -246,12 +246,12 @@ const Profile = () => {
             </div>
           </div>
           {/* Right Content End */}
-        </main>
+        </div>
         {/* Main Content End */}
         {/* Footer Start */}
         <Footer />
         {/* Footer End */}
-      </div>
+      </main>
     </>
   );
 };
