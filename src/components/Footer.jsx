@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <>
       <footer className="py-24">
-        <div className="flex flex-col md:items-center text-black p-2.5 md:p-0 gap-12 md:gap-20 bg-white">
+        <div className="flex flex-col md:items-center text-black p-2.5 md:p-0 gap-12 md:gap-20">
           <div className="flex md:flex-row flex-col md:justify-center gap-14 md:gap-32">
             <div>
               <div className="flex items-center text-2xl mb-4 md:mb-8 font-semibold">
