@@ -1,13 +1,14 @@
 import React from "react";
 import moment from "moment";
+import header from "../assets/images/toyFaces.png";
+import http from "../helpers/http";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import attendees from "../assets/images/profile3.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FiMapPin } from "react-icons/fi";
-import header from "../assets/images/toyFaces.png";
-import http from "../helpers/http";
 import { useSelector } from "react-redux";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { Formik } from "formik";
 
 const Home = () => {
@@ -29,7 +30,9 @@ const Home = () => {
 
   React.useEffect(() => {
     async function getData() {
-      const { data } = await http().get("/events");
+      const { data } = await http().get("/events", {
+        params: { limit: 1000 },
+      });
       setEvents(data.results);
     }
     getData();
@@ -133,7 +136,7 @@ const Home = () => {
         </section>
         {/* Banner End */}
       </header>
-      <main>
+      <main className="pb-24">
         {/* Event Content Start */}
         <section className="flex gap-8 flex-col items-center my-10">
           <div className="flex bg-rose-300 gap-2.5 py-1.5 px-2.5 items-center rounded-full">
@@ -201,36 +204,36 @@ const Home = () => {
                       <div className="font-semibold text-2xl tracking-widest">
                         {event.title}
                       </div>
-                      {/* <div className="flex ml-2">
+                      <div className="flex ml-2">
                         <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                           <img
                             className="object-cover w-full h-full"
-                            src="/assets/img/profile1.jpg"
+                            src={attendees}
                             alt="profile 1"
                           />
                         </div>
                         <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                           <img
                             className="object-cover w-full h-full"
-                            src="/assets/img/profile2.jpg"
+                            src={attendees}
                             alt="profile 2"
                           />
                         </div>
                         <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                           <img
                             className="object-cover w-full h-full"
-                            src="/assets/img/profile3.jpg"
+                            src={attendees}
                             alt="profile 3"
                           />
                         </div>
                         <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                           <img
                             className="object-cover w-full h-full"
-                            src="/assets/img/profile4.jpg"
+                            src={attendees}
                             alt="profile 4"
                           />
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -336,43 +339,43 @@ const Home = () => {
                           alt="banner1"
                         />
                       </div>
-                      <div className="w-full min-h-[160px] text-white flex flex-col justify-end gap-1 p-5 bg-primary">
+                      <div className="relative w-full min-h-[160px] text-white flex flex-col justify-end gap-1 p-5 bg-primary">
                         <div className="text-sm font-medium">
                           {moment(event.date).format("ddd, DD MMM, LT")}
                         </div>
                         <div className="text-2xl font-semibold tracking-widest">
                           {event.title}
                         </div>
-                        {/* <div className="flex ml-2">
+                        <div className="flex absolute -top-4 ml-2">
                           <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                             <img
                               className="object-cover w-full h-full"
-                              src="/assets/img/profile1.jpg"
+                              src={attendees}
                               alt="profile 1"
                             />
                           </div>
                           <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                             <img
                               className="object-cover w-full h-full"
-                              src="/assets/img/profile2.jpg"
+                              src={attendees}
                               alt="profile 2"
                             />
                           </div>
                           <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                             <img
                               className="object-cover w-full h-full"
-                              src="/assets/img/profile3.jpg"
+                              src={attendees}
                               alt="profile 3"
                             />
                           </div>
                           <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
                             <img
                               className="object-cover w-full h-full"
-                              src="/assets/img/profile4.jpg"
+                              src={attendees}
                               alt="profile 4"
                             />
                           </div>
-                        </div> */}
+                        </div>
                       </div>
                     </div>
                   </Link>
