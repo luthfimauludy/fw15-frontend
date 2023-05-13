@@ -4,6 +4,7 @@ import wetick from "../assets/images/logo-wetick.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
+import { FiMenu } from "react-icons/fi";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -87,13 +88,23 @@ const Header = () => {
                 <div>
                   <Link to="/profile">{profile?.fullName}</Link>
                 </div>
-                <div>
-                  <button
-                    onClick={doLogout}
-                    className="btn btn-primary normal-case"
+                <div className="dropdown dropdown-end">
+                  <div tabIndex={0} className="btn m-1 bg-primary">
+                    <FiMenu />
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
                   >
-                    Logout
-                  </button>
+                    <li>
+                      <button
+                        onClick={doLogout}
+                        className="btn btn-primary normal-case text-white"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
                 </div>
               </div>
             ) : (
