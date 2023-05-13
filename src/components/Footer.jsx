@@ -4,8 +4,8 @@ import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 const Footer = () => {
   return (
     <>
-      <footer className="py-24">
-        <div className="flex flex-col md:items-center text-black p-2.5 md:p-0 gap-12 md:gap-20">
+      <footer>
+        <div className="flex flex-col md:items-center text-[#373A42] p-2.5 md:p-0 gap-12 md:gap-20">
           <div className="flex md:flex-row flex-col md:justify-center gap-14 md:gap-32">
             <div>
               <div className="flex items-center text-2xl mb-4 md:mb-8 font-semibold">
@@ -18,16 +18,16 @@ const Footer = () => {
               <div className="text-sm mb-4">Find events you love with our</div>
               <div className="flex gap-4 text-[#C1C5D0]">
                 <a href="https://www.facebook.com">
-                  <FaFacebook />
+                  <FaFacebook size={25} />
                 </a>
                 <a href="https://www.whatsapp.com">
-                  <FaWhatsapp />
+                  <FaWhatsapp size={25} />
                 </a>
                 <a href="https://www.instagram.com">
-                  <FaInstagram />
+                  <FaInstagram size={25} />
                 </a>
                 <a href="https://www.twitter.com">
-                  <FaTwitter />
+                  <FaTwitter size={25} />
                 </a>
               </div>
             </div>
