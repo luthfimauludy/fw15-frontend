@@ -12,11 +12,13 @@ const Header = () => {
   const [profile, setProfile] = React.useState({});
   const token = useSelector((state) => state.auth.token);
 
-  async function getProfileData() {
-    const { data } = await http(token).get("/profile");
-    setProfile(data.results);
-  }
-  getProfileData();
+  React.useEffect(() => {
+    async function getProfileData() {
+      const { data } = await http(token).get("/profile");
+      setProfile(data.results);
+    }
+    getProfileData();
+  }, []);
 
   const doLogout = () => {
     window.localStorage.removeItem("token");
