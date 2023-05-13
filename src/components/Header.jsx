@@ -31,12 +31,12 @@ const Header = () => {
             <img src={wetick} alt="logo" />
             <div className="text-2xl">
               <Link to="/">
-                <span className="text-[#61764B]">We</span>
-                <span className="text-[#FF3D71]">tick</span>
+                <span className="text-primary">We</span>
+                <span className="text-secondary">tick</span>
               </Link>
             </div>
           </div>
-          <div className="md:hidden flex items-center border rounded-lg p-1 bg-[#61764B]">
+          <div className="md:hidden flex items-center border rounded-lg p-1 bg-primary">
             <button id="btn-toggler">
               <i className="text-white" data-feather="menu"></i>
             </button>
@@ -49,7 +49,7 @@ const Header = () => {
           <ul className="flex justify-center md:flex-row flex-col flex-1 gap-3">
             <li className="flex justify-center items-center min-w-[100px]">
               <Link
-                className="text-[#61764B] pb-2.5 border-b border-[#61764B]"
+                className="hover:text-primary pb-2.5 border-b border-transparent hover:border-primary"
                 to="/"
               >
                 Home
@@ -57,7 +57,7 @@ const Header = () => {
             </li>
             <li className="flex justify-center items-center min-w-[100px]">
               <Link
-                className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
+                className="hover:text-primary pb-2.5 border-b border-transparent hover:border-primary"
                 to="/create-event"
               >
                 Create Event
@@ -65,7 +65,7 @@ const Header = () => {
             </li>
             <li className="flex justify-center items-center min-w-[100px]">
               <a
-                className="hover:text-[#61764B] pb-2.5 border-b border-transparent hover:border-[#61764B]"
+                className="hover:text-primary pb-2.5 border-b border-transparent hover:border-primary"
                 href="#cities"
               >
                 Location
@@ -75,7 +75,7 @@ const Header = () => {
           <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
             {token ? (
               <div className="text-black flex items-center gap-3">
-                <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
+                <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-primary to-[#A0D995]">
                   {profile?.picture && (
                     <img
                       className="w-11 h-11 object-cover rounded-full border-2 border-white"
