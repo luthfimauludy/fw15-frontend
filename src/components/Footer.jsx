@@ -35,19 +35,19 @@ const Footer = () => {
               <ul className="flex flex-col gap-4">
                 <li className="font-semibold">Wetick</li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">About Us</a>
+                  <a>About Us</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Features</a>
+                  <a>Features</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Blog</a>
+                  <a>Blog</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Payments</a>
+                  <a>Payments</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Mobile App</a>
+                  <a>Mobile App</a>
                 </li>
               </ul>
             </div>
@@ -55,16 +55,16 @@ const Footer = () => {
               <ul className="flex flex-col gap-4">
                 <li className="font-semibold">Features</li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Booking</a>
+                  <a>Booking</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Create Event</a>
+                  <a>Create Event</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Discover</a>
+                  <a>Discover</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Register</a>
+                  <a>Register</a>
                 </li>
               </ul>
             </div>
@@ -72,19 +72,19 @@ const Footer = () => {
               <ul className="flex flex-col gap-4">
                 <li className="font-semibold">Company</li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Partnership</a>
+                  <a>Partnership</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Help</a>
+                  <a>Help</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Term of Service</a>
+                  <a>Term of Service</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Privacy Policy</a>
+                  <a>Privacy Policy</a>
                 </li>
                 <li className="text-sm text-[#C1C5D0]">
-                  <a href="#">Sitemap</a>
+                  <a>Sitemap</a>
                 </li>
               </ul>
             </div>
