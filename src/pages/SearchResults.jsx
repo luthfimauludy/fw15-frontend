@@ -21,7 +21,7 @@ const SearchResults = () => {
   return (
     <>
       <Header />
-      <div className="grid grid-cols-4 bg-primary">
+      <div className="grid grid-cols-4 bg-primary py-10">
         {searchResults.map((event) => {
           return (
             <Link to={`/detail-event/${event.id}`} key={`event-${event.id}`}>
