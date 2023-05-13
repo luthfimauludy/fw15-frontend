@@ -36,7 +36,7 @@ const FormLogin = ({
         <img className="h-12" src={logo} alt="logo" />
         <div className="text-2xl font-semibold">
           <span className="text-primary">We</span>
-          <span className="text-[#ff3d71]">tick</span>
+          <span className="text-secondary">tick</span>
         </div>
       </div>
       <div className="text-neutral font-semibold text-2xl">Sign in</div>
@@ -105,10 +105,10 @@ const FormLogin = ({
       </div>
       <div className="text-center text-neutral text-sm">or sign in with</div>
       <div className="flex justify-center gap-5">
-        <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
+        <Link className="btn btn-ghost hover:bg-primary border-primary hover:border-primary w-24">
           <FcGoogle size={25} />
         </Link>
-        <Link className="btn btn-secondary hover:bg-primary border-primary hover:border-primary w-24">
+        <Link className="btn btn-ghost hover:bg-primary border-primary hover:border-primary w-24">
           <FaFacebook size={25} color="#426782" />
         </Link>
       </div>
