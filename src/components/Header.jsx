@@ -47,7 +47,7 @@ const Header = () => {
         </div>
         <div
           id="menu"
-          className="hidden md:flex md:flex-row flex-col flex-1 md:pl-8 mb-5 md:mb-0 text-sm text-black"
+          className="hidden md:flex md:flex-row flex-col flex-1 md:pl-8 mb-5 md:mb-0 text-sm text-[#373A42]"
         >
           <ul className="flex justify-center md:flex-row flex-col flex-1 gap-3">
             <li className="flex justify-center items-center min-w-[100px]">
@@ -77,7 +77,7 @@ const Header = () => {
           </ul>
           <div className="flex md:flex-row flex-col gap-3 items-center text-sm font-semibold">
             {token ? (
-              <div className="text-black flex items-center gap-3">
+              <div className="text-[#373A42] flex items-center gap-3">
                 <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-primary to-[#A0D995]">
                   {profile?.picture && (
                     <img
