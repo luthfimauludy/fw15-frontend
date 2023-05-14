@@ -211,11 +211,11 @@ const MyBooking = () => {
           </div>
           {/* Right Content End */}
         </div>
-        {/* Main Content End */}
         {/* Footer Start */}
         <Footer />
         {/* Footer End */}
       </main>
+      {/* Main Content End */}
     </>
   );
 };
