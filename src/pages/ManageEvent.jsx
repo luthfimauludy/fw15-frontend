@@ -1,8 +1,9 @@
 import React from "react";
 import http from "../helpers/http";
+import moment from "moment";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiUser,
   FiCreditCard,
@@ -14,19 +15,37 @@ import {
   FiSettings,
   FiLogOut,
 } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout as logoutAction } from "../redux/reducers/auth";
 
 const ManageEvent = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const [events, setEvents] = React.useState([]);
   const [profile, setProfile] = React.useState({});
 
   React.useEffect(() => {
+    async function getData() {
+      const { data } = await http().get("/events", {
+        params: { limit: 1000 },
+      });
+      setEvents(data.results);
+    }
+    getData();
+
     const getProfile = async () => {
       const { data } = await http(token).get("/profile");
       setProfile(data.results);
     };
     getProfile();
   }, []);
+
+  const doLogout = () => {
+    window.localStorage.removeItem("token");
+    dispatch(logoutAction(""));
+    navigate("/login");
+  };
 
   return (
     <>
@@ -111,7 +130,7 @@ const ManageEvent = () => {
               <li>
                 <Link className="flex gap-7 mb-8" to="/">
                   <FiLogOut size={25} color="#F03800" />
-                  Logout
+                  <button onClick={doLogout}>Logout</button>
                 </Link>
               </li>
             </ul>
@@ -133,116 +152,36 @@ const ManageEvent = () => {
               </div>
             </div>
             <div className="flex flex-col gap-6">
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
+              {events.map((event) => {
+                return (
+                  <div className="flex" key={`event-${event.id}`}>
+                    <div className="flex flex-col items-center mr-8">
+                      <p className="text-sm text-[#FF8900] pt-3">
+                        {moment(event.date).format("DD")}
                       </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <Link to="/event">Detail</Link>
-                        <Link to="/update-event">Update</Link>
-                        <Link to="">Delete</Link>
+                      <p className="text-xs">
+                        {moment(event.date).format("ddd")}
+                      </p>
+                    </div>
+                    <div className="grow">
+                      <div>
+                        <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
+                          {event.title}
+                        </p>
+                        <p className="text-xs mb-2">{event.location}</p>
+                        <p className="text-xs mb-2">
+                          {moment(event.date).format("ddd, DD MMM, LT")}
+                        </p>
+                        <div className="flex gap-3.5 text-xs text-[#61764B]">
+                          <Link to="/event">Detail</Link>
+                          <Link to="/update-event">Update</Link>
+                          <Link to="">Delete</Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <Link to="/event">Detail</Link>
-                        <Link to="/update-event">Update</Link>
-                        <Link to="">Delete</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <Link to="/event">Detail</Link>
-                        <Link to="/update-event">Update</Link>
-                        <Link to="">Delete</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <Link to="/event">Detail</Link>
-                        <Link to="/update-event">Update</Link>
-                        <Link to="">Delete</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <Link to="/event">Detail</Link>
-                        <Link to="/update-event">Update</Link>
-                        <Link to="">Delete</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
           {/* Right Content End */}

@@ -2,7 +2,7 @@ import React from "react";
 import http from "../helpers/http";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiUser,
   FiCreditCard,
@@ -14,9 +14,12 @@ import {
   FiSettings,
   FiLogOut,
 } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout as logoutAction } from "../redux/reducers/auth";
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const [profile, setProfile] = React.useState({});
 
@@ -27,6 +30,12 @@ const ChangePassword = () => {
     };
     getProfile();
   }, []);
+
+  const doLogout = () => {
+    window.localStorage.removeItem("token");
+    dispatch(logoutAction(""));
+    navigate("/login");
+  };
 
   return (
     <>
@@ -111,7 +120,7 @@ const ChangePassword = () => {
               <li>
                 <Link className="flex gap-4 mb-8" to="/">
                   <FiLogOut size={25} color="#F03800" />
-                  Logout
+                  <button onClick={doLogout}>Logout</button>
                 </Link>
               </li>
             </ul>
