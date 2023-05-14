@@ -82,8 +82,12 @@ const Header = () => {
                   {profile?.picture && (
                     <img
                       className="w-11 h-11 object-cover rounded-full border-2 border-white"
-                      src={`http://localhost:8888/uploads/${profile?.picture}`}
-                      alt="Profile"
+                      src={
+                        profile.picture.startsWith("https")
+                          ? profile.picture
+                          : `http://localhost:8888/uploads/${profile.picture}`
+                      }
+                      alt={profile?.fullName}
                     />
                   )}
                 </div>
