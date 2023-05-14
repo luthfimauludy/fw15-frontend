@@ -12,28 +12,32 @@ const Booking = () => {
       {/* Navbar Start */}
       <Header />
       {/* Navbar End */}
-      <div className="bg-[#E9EDC9] md:pt-12">
+      <div className="md:bg-[#E9EDC9] md:pt-12">
         {/* Main Content Start */}
-        <div className="flex justify-center mx-[120px] mb-24 bg-white rounded-2xl pt-[70px] pr-12 pb-[67px] pl-12">
-          <div className="w-full flex justify-center items-center">
-            <img src={banner} alt="banner" />
+        <div className="flex flex-col md:flex-row justify-center m-0 md:mx-[120px] md:mb-24 bg-white rounded-2xl p-2 md:pt-[70px] md:px-12 md:pb-[67px]">
+          <div className="w-full max-h-[228px] md:max-h-[750px] rotate-45 md:rotate-0 flex justify-center items-center">
+            <img
+              className="max-w-[250px] md:max-w-[644px]"
+              src={banner}
+              alt="banner"
+            />
           </div>
-          <div className="min-w-[376px]">
-            <div className="h-12 flex justify-between items-center mb-14">
+          <div className="min-w-full mb-12 md:mb-0 md:min-w-[376px]">
+            <div className="h-12 flex justify-between items-center mb-5 md:mb-14">
               <div className="text-xl font-semibold text-black">Tickets</div>
               <div className="flex items-center">
                 <p className="text-xs font-semibold text-[#FC1055]">BY PRICE</p>
                 <BiSort className="w-12" color="blue" />
               </div>
             </div>
-            <div className="w-full">
-              <div className="flex mb-14">
+            <div className="min-w-[300px] md:w-full">
+              <div className="flex mb-6 md:mb-14">
                 <div className="mr-2.5 h-full justify-start">
                   <div>
                     <img className="w-11 h-11" src={ticket1} alt="Ticket 1" />
                   </div>
                 </div>
-                <div className="w-full">
+                <div className="min-w-[240px] md:w-full">
                   <div className="flex justify-between">
                     <div>
                       <p className="text-sm text-black font-semibold mb-[3px]">
@@ -68,13 +72,13 @@ const Booking = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex mb-14">
-                <div className="mr-2.5 h-full justify-start">
+              <div className="flex mb-6 md:mb-14">
+                <div className="mr-2.5 h-full justify-items-start">
                   <div>
                     <img className="w-11 h-11" src={ticket2} alt="Ticket 2" />
                   </div>
                 </div>
-                <div className="w-full">
+                <div className="min-w-[240px] md:w-full">
                   <div className="flex justify-between">
                     <div>
                       <p className="text-sm text-black font-semibold mb-[3px]">
@@ -115,7 +119,7 @@ const Booking = () => {
                     <img className="w-11 h-11" src={ticket3} alt="Ticket 3" />
                   </div>
                 </div>
-                <div className="w-full">
+                <div className="min-w-[240px] md:w-full">
                   <div className="flex justify-between">
                     <div>
                       <p className="text-sm text-black font-semibold mb-[3px]">
@@ -163,7 +167,7 @@ const Booking = () => {
                 <p className="mb-4">$70</p>
               </div>
             </div>
-            <button className="flex w-72 justify-center items-center h-14 text-base font-semibold rounded-lg shadow-lg shadow-[#61764B] bg-[#61764B] text-white">
+            <button className="flex w-full md:w-72 justify-center items-center h-14 text-base font-semibold rounded-lg shadow-lg shadow-[#61764B] bg-[#61764B] text-white">
               Checkout
             </button>
           </div>
