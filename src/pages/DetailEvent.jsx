@@ -1,12 +1,12 @@
 import React from "react";
 import moment from "moment";
-import { FiHeart, FiMapPin, FiClock } from "react-icons/fi";
 import attendees from "../assets/images/profile3.jpg";
 import maps from "../assets/images/maps.png";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useParams } from "react-router-dom";
 import http from "../helpers/http";
+import { useParams, Link } from "react-router-dom";
+import { FiHeart, FiMapPin, FiClock } from "react-icons/fi";
 
 const DetailEvent = () => {
   const { id } = useParams();
@@ -122,12 +122,12 @@ const DetailEvent = () => {
                 </p>
                 <img className="mb-12" src={maps} alt="Maps" />
                 <div className="max-w-[315px]">
-                  <a
+                  <Link
                     className="flex justify-center items-center h-14 text-base font-semibold rounded-lg shadow-lg shadow-[#61764B] bg-[#61764B] text-white"
-                    href="/booking.html"
+                    to="/booking"
                   >
                     Buy Tickets
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
