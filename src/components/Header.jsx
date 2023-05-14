@@ -41,7 +41,7 @@ const Header = () => {
           </div>
           <div className="md:hidden flex items-center border rounded-lg p-1 bg-primary">
             <button id="btn-toggler">
-              <i className="text-white" data-feather="menu"></i>
+              <FiMenu />
             </button>
           </div>
         </div>
