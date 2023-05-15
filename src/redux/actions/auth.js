@@ -23,11 +23,11 @@ export const asyncLoginAction = createAsyncThunk(
 );
 
 export const asyncSignUpAction = createAsyncThunk(
-  "auth/signup",
+  "auth/register",
   async (payload, { rejectWithValue }) => {
     try {
       const body = new URLSearchParams(payload).toString();
-      const { data } = await http().post("/auth/signup", body);
+      const { data } = await http().post("/auth/register", body);
       return data.message;
     } catch (err) {
       const results = err?.response?.data?.results;
