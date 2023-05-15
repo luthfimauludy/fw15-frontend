@@ -21,7 +21,7 @@ const SearchResults = () => {
   return (
     <>
       <Header />
-      <div className="grid grid-cols-4 bg-primary py-10">
+      <div className="grid grid-cols-4 bg-primary p-10 mb-20">
         {searchResults.map((event) => {
           return (
             <Link to={`/detail-event/${event.id}`} key={`event-${event.id}`}>
@@ -32,7 +32,7 @@ const SearchResults = () => {
                   alt="banner1"
                 />
                 <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
-                  <div>{moment(event.date).format("MM-DD-YYYY")}</div>
+                  <div>{moment(event.date).format("ddd, DD MMM, LT")}</div>
                   <div className="font-semibold text-2xl tracking-widest">
                     {event.title}
                   </div>
