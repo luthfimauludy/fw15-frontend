@@ -1,12 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
 import toyFaces from "../assets/images/toyFaces.png";
 import logo from "../assets/images/logo-wetick.png";
 import * as Yup from "yup";
 import propTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { clearMessage } from "../redux/reducers/auth";
+import { Formik } from "formik";
 
 const validationSchema = Yup.object({
-  fullName: Yup.string().required("Fullname is not valid"),
+  fullName: Yup.string().required("Full Name is not valid"),
   email: Yup.string().email("Email is not valid"),
   password: Yup.string().required("Password is not valid"),
 });
@@ -23,7 +26,7 @@ const FormSignup = ({
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const warningMessage = useSelector((state) => state.auth.warningMessage);
   return (
-    <form className="w-[80%] flex flex-col gap-2">
+    <form onSubmit={handleSubmit} className="w-[80%] flex flex-col gap-2">
       <div className="flex items-center mb-4">
         <img className="h-12" src={logo} alt="logo" />
         <div className="text-2xl font-semibold">
@@ -38,13 +41,31 @@ const FormSignup = ({
           Log in
         </Link>
       </div>
+      {errorMessage && (
+        <div className="alert alert-error shadow-lg flex justify-center">
+          {errorMessage}
+        </div>
+      )}
+      {warningMessage && (
+        <div className="alert alert-warning shadow-lg flex justify-center">
+          {warningMessage}
+        </div>
+      )}
       <div>
         <input
           placeholder="Full Name"
           className="input input-bordered border-neutral-300 w-full"
           type="text"
           name="fullName"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.fullName}
         />
+        {errors.fullName && touched.fullName && (
+          <label className="label">
+            <span className="label-text-alt text-error">{errors.fullName}</span>
+          </label>
+        )}
       </div>
       <div>
         <input
@@ -52,7 +73,15 @@ const FormSignup = ({
           className="input input-bordered border-neutral-300 w-full"
           type="email"
           name="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
         />
+        {errors.email && touched.email && (
+          <label className="label">
+            <span className="label-text-alt text-error">{errors.email}</span>
+          </label>
+        )}
       </div>
       <div>
         <input
@@ -60,7 +89,15 @@ const FormSignup = ({
           className="input input-bordered border-neutral-300 w-full"
           type="password"
           name="password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
         />
+        {errors.password && touched.password && (
+          <label className="label">
+            <span className="label-text-alt text-error">{errors.password}</span>
+          </label>
+        )}
       </div>
       <div>
         <input
@@ -68,7 +105,15 @@ const FormSignup = ({
           className="input input-bordered border-neutral-300 w-full"
           type="password"
           name="password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
         />
+        {errors.password && touched.password && (
+          <label className="label">
+            <span className="label-text-alt text-error">{errors.password}</span>
+          </label>
+        )}
       </div>
       <div className="my-5 text-base text-black">
         <label className="flex items-center gap-2">
@@ -78,14 +123,13 @@ const FormSignup = ({
         </label>
       </div>
       <div className="mb-8">
-        <Link to="/login">
-          <button
-            type="submit"
-            className="btn btn-primary btn-block text-base font-semibold normal-case"
-          >
-            Sign Up
-          </button>
-        </Link>
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="btn btn-primary btn-block text-base font-semibold normal-case"
+        >
+          Sign Up
+        </button>
       </div>
     </form>
   );
@@ -106,6 +150,24 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const formError = useSelector((state) => state.auth.formError);
 
+  React.useEffect(() => {
+    navigate("/login");
+  }, [navigate]);
+
+  const doSignup = async (values, { setSubmitting, setErrors }) => {
+    dispatch(clearMessage());
+    if (formError.length) {
+      setErrors({
+        fullName: formError.filter((item) => item.param === "fullName")[0]
+          .message,
+        email: formError.filter((item) => item.param === "email")[0].message,
+        password: formError.filter((item) => item.param === "password")[0]
+          .message,
+      });
+    }
+    setSubmitting(false);
+  };
+
   return (
     <div className="flex h-screen">
       <div className="flex-1 hidden md:flex justify-center items-center bg-[#61764b]">
@@ -114,7 +176,19 @@ const SignUp = () => {
           <div className="dissolve"></div>
         </div>
       </div>
-      <div className="max-w-md w-full flex justify-center items-center"></div>
+      <div className="max-w-md w-full flex justify-center items-center">
+        <Formik
+          initialValues={{
+            fullName: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={doSignup}
+        >
+          {(props) => <FormSignup {...props} />}
+        </Formik>
+      </div>
     </div>
   );
 };
