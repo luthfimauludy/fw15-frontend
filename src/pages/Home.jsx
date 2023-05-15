@@ -37,8 +37,6 @@ const Home = () => {
     }
     getData();
 
-    getEventCategories();
-
     async function getCitiesData() {
       const { data } = await http(token).get("/cities");
       setCities(data.results);
@@ -50,6 +48,7 @@ const Home = () => {
         params: { limit: 1000 },
       });
       setCategories(data.results);
+      getEventCategories(data?.results[0]?.name);
     }
     getCategoriesData();
 
