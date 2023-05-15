@@ -12,7 +12,7 @@ import { clearMessage } from "../redux/reducers/auth";
 import { asyncLoginAction } from "../redux/actions/auth";
 
 const validationSchema = Yup.object({
-  email: Yup.string().email("Email is not valid"),
+  email: Yup.string().required().email("Email is not valid"),
   password: Yup.string().required("Password is not valid"),
 });
 
@@ -25,6 +25,7 @@ const FormLogin = ({
   handleSubmit,
   isSubmitting,
 }) => {
+  const successMessage = useSelector((state) => state.auth.successMessage);
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const warningMessage = useSelector((state) => state.auth.warningMessage);
   return (
@@ -43,8 +44,16 @@ const FormLogin = ({
       </div>
       <div className="text-neutral font-semibold text-2xl">Sign in</div>
       <div className="text-neutral mb-5 text-sm">
-        Hi, Welcome back to Urticket!
+        Hi, Welcome back to Urticket!{" "}
+        <Link className="text-primary font-semibold" to="/signup">
+          Register here
+        </Link>
       </div>
+      {successMessage && (
+        <div className="alert alert-success shadow-lg flex justify-center">
+          {successMessage}
+        </div>
+      )}
       {errorMessage && (
         <div className="alert alert-error shadow-lg flex justify-center">
           {errorMessage}
