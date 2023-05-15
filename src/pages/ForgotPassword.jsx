@@ -16,8 +16,10 @@ const ForgotPassword = () => {
           <div className="flex items-center mb-4">
             <img className="h-12" src={logo} alt="logo" />
             <div className="text-2xl font-semibold">
-              <span className="text-primary">We</span>
-              <span className="text-[#ff3d71]">tick</span>
+              <Link to="/">
+                <span className="text-primary">We</span>
+                <span className="text-[#ff3d71]">tick</span>
+              </Link>
             </div>
           </div>
           <div className="text-neutral font-semibold text-2xl">
