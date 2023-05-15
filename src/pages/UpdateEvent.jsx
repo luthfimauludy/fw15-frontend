@@ -1,5 +1,6 @@
 import React from "react";
 import http from "../helpers/http";
+import moment from "moment";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
@@ -18,9 +19,18 @@ import { useSelector } from "react-redux";
 
 const UpdateEvent = () => {
   const token = useSelector((state) => state.auth.token);
+  const [events, setEvents] = React.useState([]);
   const [profile, setProfile] = React.useState({});
 
   React.useEffect(() => {
+    async function getData() {
+      const { data } = await http().get("/events", {
+        params: { limit: 1000 },
+      });
+      setEvents(data.results);
+    }
+    getData();
+
     const getProfile = async () => {
       const { data } = await http(token).get("/profile");
       setProfile(data.results);
@@ -30,7 +40,7 @@ const UpdateEvent = () => {
 
   return (
     <body className="relative">
-      <div className="absolute w-full min-h-screen h-full bg-[rgba(0,0,0,0.5)] flex justify-center items-center">
+      <div className="absolute z-10 w-full min-h-screen h-full bg-[rgba(0,0,0,0.5)] flex justify-center items-center">
         <div className="text-black bg-white min-w-[80%] min-h-[200px] rounded-xl p-10">
           <div className="mb-11 text-xl tracking-wider font-semibold">
             Update Event
@@ -121,8 +131,12 @@ const UpdateEvent = () => {
                   {profile?.picture && (
                     <img
                       className="w-11 h-11 object-cover rounded-full border-2 border-white"
-                      src={`http://localhost:8888/uploads/${profile?.picture}`}
-                      alt="Profile"
+                      src={
+                        profile.picture.startsWith("https")
+                          ? profile.picture
+                          : `http://localhost:8888/uploads/${profile.picture}`
+                      }
+                      alt={profile?.fullName}
                     />
                   )}
                 </div>
@@ -210,116 +224,36 @@ const UpdateEvent = () => {
               </div>
             </div>
             <div className="flex flex-col gap-6">
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
+              {events.map((event) => {
+                return (
+                  <div className="flex" key={`event-${event.id}`}>
+                    <div className="flex flex-col items-center mr-8">
+                      <p className="text-sm text-[#FF8900] pt-3">
+                        {moment(event.date).format("DD")}
                       </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <a href="/detail-event.html">Detail</a>
-                        <a href="/update-event.html">Update</a>
-                        <a href="#">Delete</a>
+                      <p className="text-xs">
+                        {moment(event.date).format("ddd")}
+                      </p>
+                    </div>
+                    <div className="grow">
+                      <div>
+                        <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
+                          {event.title}
+                        </p>
+                        <p className="text-xs mb-2">{event.location}</p>
+                        <p className="text-xs mb-2">
+                          {moment(event.date).format("ddd, DD MMM, LT")}
+                        </p>
+                        <div className="flex gap-3.5 text-xs text-[#61764B]">
+                          <Link to="/event">Detail</Link>
+                          <Link to="/update-event">Update</Link>
+                          <Link to="">Delete</Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <a href="/detail-event.html">Detail</a>
-                        <a href="/update-event.html">Update</a>
-                        <a href="#">Delete</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <a href="/detail-event.html">Detail</a>
-                        <a href="/update-event.html">Update</a>
-                        <a href="#">Delete</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <a href="/detail-event.html">Detail</a>
-                        <a href="/update-event.html">Update</a>
-                        <a href="#">Delete</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs mb-2">Wed, 15 Nov, 4:00 PM</p>
-                      <div className="flex gap-3.5 text-xs text-[#61764B]">
-                        <a href="/detail-event.html">Detail</a>
-                        <a href="/update-event.html">Update</a>
-                        <a href="#">Delete</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
           {/* Right Content End */}
