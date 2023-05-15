@@ -194,11 +194,17 @@ const Home = () => {
                   key={`event-${event.id}`}
                 >
                   <div className="relative w-64 h-[376px] rounded-3xl overflow-hidden">
-                    <img
-                      className="w-auto h-full object-cover"
-                      src={`http://localhost:8888/uploads/${event.picture}`}
-                      alt="banner1"
-                    />
+                    {event?.picture && (
+                      <img
+                        className="w-auto h-full object-cover"
+                        src={
+                          event.picture.startsWith("https")
+                            ? event.picture
+                            : `http://localhost:8888/uploads/${event.picture}`
+                        }
+                        alt={event.name}
+                      />
+                    )}
                     <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
                       <div>{moment(event.date).format("ddd, DD MMM, LT")}</div>
                       <div className="font-semibold text-2xl tracking-widest">
