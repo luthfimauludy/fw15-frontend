@@ -7,11 +7,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../redux/reducers/auth";
 import { Formik } from "formik";
+import { asyncSignUpAction } from "../redux/actions/auth";
 
 const validationSchema = Yup.object({
-  fullName: Yup.string().required("Full Name is not valid"),
-  email: Yup.string().email("Email is not valid"),
-  password: Yup.string().required("Password is not valid"),
+  fullName: Yup.string()
+    .required()
+    .min(3, "Name length is not valid, at least 3 characters"),
+  email: Yup.string().required().email("Email is not valid"),
+  password: Yup.string()
+    .required()
+    .min(
+      8,
+      "Password must be strong, at least 8 characters and must include capital letters, numbers and symbols"
+    ),
+  confirmPassword: Yup.string()
+    .required()
+    .oneOf([Yup.ref("password"), null], "Password must match"),
 });
 
 const FormSignup = ({
@@ -26,7 +37,10 @@ const FormSignup = ({
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const warningMessage = useSelector((state) => state.auth.warningMessage);
   return (
-    <form onSubmit={handleSubmit} className="w-[80%] flex flex-col gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="w-[80%] text-black flex flex-col gap-2"
+    >
       <div className="flex items-center mb-4">
         <img className="h-12" src={logo} alt="logo" />
         <div className="text-2xl font-semibold">
@@ -54,7 +68,9 @@ const FormSignup = ({
       <div>
         <input
           placeholder="Full Name"
-          className="input input-bordered border-neutral-300 w-full"
+          className={`input input-bordered border-neutral-300 w-full ${
+            errors.fullName && touched.fullName && "input-error"
+          }`}
           type="text"
           name="fullName"
           onChange={handleChange}
@@ -70,7 +86,9 @@ const FormSignup = ({
       <div>
         <input
           placeholder="Email"
-          className="input input-bordered border-neutral-300 w-full"
+          className={`input input-bordered border-neutral-300 w-full ${
+            errors.email && touched.email && "input-error"
+          }`}
           type="email"
           name="email"
           onChange={handleChange}
@@ -86,7 +104,9 @@ const FormSignup = ({
       <div>
         <input
           placeholder="Password"
-          className="input input-bordered border-neutral-300 w-full"
+          className={`input input-bordered border-neutral-300 w-full ${
+            errors.password && touched.password && "input-error"
+          }`}
           type="password"
           name="password"
           onChange={handleChange}
@@ -102,16 +122,20 @@ const FormSignup = ({
       <div>
         <input
           placeholder="Confirm Password"
-          className="input input-bordered border-neutral-300 w-full"
+          className={`input input-bordered border-neutral-300 w-full ${
+            errors.confirmPassword && touched.confirmPassword && "input-error"
+          }`}
           type="password"
-          name="password"
+          name="confirmPassword"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.password}
+          value={values.confirmPassword}
         />
-        {errors.password && touched.password && (
+        {errors.confirmPassword && touched.confirmPassword && (
           <label className="label">
-            <span className="label-text-alt text-error">{errors.password}</span>
+            <span className="label-text-alt text-error">
+              {errors.confirmPassword}
+            </span>
           </label>
         )}
       </div>
@@ -148,23 +172,28 @@ FormSignup.propTypes = {
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const formError = useSelector((state) => state.auth.formError);
+  // const token = useSelector((state) => state.auth.token);
+  const successMessage = useSelector((state) => state.auth.successMessage);
+  // const formError = useSelector((state) => state.auth.formError);
 
   React.useEffect(() => {
-    navigate("/login");
-  }, [navigate]);
-
-  const doSignup = async (values, { setSubmitting, setErrors }) => {
-    dispatch(clearMessage());
-    if (formError.length) {
-      setErrors({
-        fullName: formError.filter((item) => item.param === "fullName")[0]
-          .message,
-        email: formError.filter((item) => item.param === "email")[0].message,
-        password: formError.filter((item) => item.param === "password")[0]
-          .message,
-      });
+    if (successMessage) {
+      navigate("/login");
     }
+  }, [successMessage, navigate]);
+
+  const doSignup = async (values, { setSubmitting /*setErrors*/ }) => {
+    dispatch(clearMessage());
+    dispatch(asyncSignUpAction(values));
+    // if (formError.length) {
+    //   setErrors({
+    //     fullName: formError.filter((item) => item.param === "fullName")[0]
+    //       .message,
+    //     email: formError.filter((item) => item.param === "email")[0].message,
+    //     password: formError.filter((item) => item.param === "password")[0]
+    //       .message,
+    //   });
+    // }
     setSubmitting(false);
   };
 
@@ -182,6 +211,7 @@ const SignUp = () => {
             fullName: "",
             email: "",
             password: "",
+            confirmPassword: "",
           }}
           validationSchema={validationSchema}
           onSubmit={doSignup}
