@@ -144,6 +144,7 @@ const Login = () => {
   const formError = useSelector((state) => state.auth.formError);
 
   React.useEffect(() => {
+    dispatch(clearMessage());
     if (token) {
       navigate("/");
     }
