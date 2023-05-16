@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import http from "../helpers/http";
 import { useParams, Link } from "react-router-dom";
 import { FiHeart, FiMapPin, FiClock } from "react-icons/fi";
+import ScrollToTop from "../components/ScrollToTop";
 
 const DetailEvent = () => {
   const { id } = useParams();
@@ -138,6 +139,7 @@ const DetailEvent = () => {
         {/* Footer Start */}
         <Footer />
         {/* Footer End */}
+        <ScrollToTop />
       </div>
     </>
   );
