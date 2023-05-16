@@ -83,19 +83,19 @@ const Home = () => {
             >
               {({ handleBlur, handleChange, handleSubmit }) => (
                 <form onSubmit={handleSubmit} className="block md:w-full">
-                  <div className="inline-flex items-center md:min-w-[500px] h-16 py-2 px-3 bg-white border rounded-xl">
+                  <div className="inline-flex items-center md:min-w-[450px] h-16 py-2 px-3 bg-white border rounded-xl">
                     <div className="flex items-center">
                       <CiSearch color="black" size={25} />
                       <input
                         onChange={handleChange}
                         onBlur={handleBlur}
                         name="search"
-                        className="h-8 text-xs px-3 outline-none w-[100px] md:min-w-[250px]"
+                        className="h-8 text-xs px-3 outline-none w-[100px] md:min-w-[180px]"
                         type="text"
                         placeholder="Search Event"
                       />
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center border-l-2 pl-2">
                       <FiMapPin color="black" size={25} />
                       <select
                         onChange={handleChange}
@@ -127,10 +127,8 @@ const Home = () => {
               )}
             </Formik>
           </div>
-          <div>
-            <div className="people">
-              <img src={header} alt="People" />
-            </div>
+          <div className="people">
+            <img src={header} alt="People" />
           </div>
         </section>
         {/* Banner End */}
@@ -258,14 +256,14 @@ const Home = () => {
         {/* Location Content Start */}
         <section
           id="cities"
-          className="m-14 bg-[#61764B] rounded-xl bg-center bg-[url(./assets/images/accent-location.png)] bg-cover bg-no-repeat md:p-24 p-8"
+          className="m-14 bg-[#61764B] rounded-xl bg-center bg-[url(./assets/images/accent-location.png)] bg-cover bg-no-repeat md:py-24 md:px-20 p-8"
         >
           <div className="py-2 px-5 rounded-full inline-flex items-center gap-2 text-white bg-gray-400">
             <div className="w-8 border-t-sm border border-white"></div>
             <p className="text-xs font-semibold tracking-[3px]">LOCATION</p>
           </div>
           <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5 md:gap-2 text-white mt-5">
-            <div className="text-xl md:text-5xl sm:text-5xl px-3 font-semibold flex-1">
+            <div className="text-xl md:text-[45px] sm:text-5xl px-3 font-semibold flex-1">
               Discover Events Near Your
             </div>
             {cities.map((city) => {
@@ -306,8 +304,8 @@ const Home = () => {
           <p className="text-4xl text-center text-black font-semibold">
             Browse Event By Category
           </p>
-          <div className="flex md:flex-row flex-col flex-1">
-            <div className="flex gap-11">
+          <div className="flex flex-1">
+            <div className="grid grid-cols-3 md:flex md:flex-row gap-11">
               {categories.map((category) => {
                 return (
                   <button
