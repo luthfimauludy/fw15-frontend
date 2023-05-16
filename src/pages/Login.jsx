@@ -184,7 +184,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <div className="flex-1 hidden md:flex justify-center items-center bg-[#61764b]">
         <div className="relative">
           <img className="w-[400px]" src={toyFaces} alt="Toy Faces" />
