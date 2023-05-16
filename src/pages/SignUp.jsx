@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../redux/reducers/auth";
 import { Formik } from "formik";
 import { asyncSignUpAction } from "../redux/actions/auth";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const validationSchema = Yup.object({
   fullName: Yup.string()
@@ -36,6 +37,17 @@ const FormSignup = ({
 }) => {
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const warningMessage = useSelector((state) => state.auth.warningMessage);
+  const [passwordShown, setPasswordShown] = React.useState(false);
+  const [confirmPasswordShown, setConfirmPasswordShown] = React.useState(false);
+
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
+
+  const toggleConfirmPassword = () => {
+    setConfirmPasswordShown(!confirmPasswordShown);
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -103,36 +115,62 @@ const FormSignup = ({
           </label>
         )}
       </div>
-      <div>
+      <div className="form-control toggleable-password">
         <input
           placeholder="Password"
           className={`input input-bordered border-neutral-300 w-full ${
             errors.password && touched.password && "input-error"
           }`}
-          type="password"
+          type={passwordShown ? "text" : "password"}
           name="password"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password}
         />
+        <button onClick={togglePassword} type="button">
+          {passwordShown ? (
+            <FiEyeOff
+              className="absolute right-2 top-2 flex justify-center items-center"
+              size={20}
+            />
+          ) : (
+            <FiEye
+              className="absolute right-2 top-2 flex justify-center items-center"
+              size={20}
+            />
+          )}
+        </button>
         {errors.password && touched.password && (
           <label className="label">
             <span className="label-text-alt text-error">{errors.password}</span>
           </label>
         )}
       </div>
-      <div>
+      <div className="form-control toggleable-password">
         <input
           placeholder="Confirm Password"
           className={`input input-bordered border-neutral-300 w-full ${
             errors.confirmPassword && touched.confirmPassword && "input-error"
           }`}
-          type="password"
+          type={confirmPasswordShown ? "text" : "password"}
           name="confirmPassword"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.confirmPassword}
         />
+        <button onClick={toggleConfirmPassword} type="button">
+          {confirmPasswordShown ? (
+            <FiEyeOff
+              className="absolute right-2 top-2 flex justify-center items-center"
+              size={20}
+            />
+          ) : (
+            <FiEye
+              className="absolute right-2 top-2 flex justify-center items-center"
+              size={20}
+            />
+          )}
+        </button>
         {errors.confirmPassword && touched.confirmPassword && (
           <label className="label">
             <span className="label-text-alt text-error">
