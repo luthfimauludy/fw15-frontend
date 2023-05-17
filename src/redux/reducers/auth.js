@@ -22,6 +22,7 @@ const authSlice = createSlice({
     clearMessage: (state) => {
       state.errorMessage = "";
       state.warningMessage = "";
+      state.successMessage = "";
     },
     logout: () => {
       return initialState;
