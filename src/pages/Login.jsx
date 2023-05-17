@@ -164,11 +164,15 @@ const Login = () => {
   const formError = useSelector((state) => state.auth.formError);
 
   React.useEffect(() => {
-    dispatch(clearMessage());
+    // dispatch(clearMessage());
     if (token) {
       navigate("/");
     }
   }, [token, navigate]);
+
+  React.useEffect(() => {
+    dispatch(clearMessage());
+  }, []);
 
   const doLogin = async (values, { setSubmitting, setErrors }) => {
     dispatch(clearMessage());
