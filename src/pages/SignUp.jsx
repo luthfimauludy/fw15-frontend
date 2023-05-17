@@ -33,12 +33,18 @@ const FormSignup = ({
   handleChange,
   handleBlur,
   handleSubmit,
-  isSubmitting,
+  // isSubmitting,
 }) => {
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const warningMessage = useSelector((state) => state.auth.warningMessage);
   const [passwordShown, setPasswordShown] = React.useState(false);
   const [confirmPasswordShown, setConfirmPasswordShown] = React.useState(false);
+  const [isFilled, setIsFilled] = React.useState(false);
+  const isChecked = false;
+
+  const handleCheckbox = () => {
+    setIsFilled((current) => !current);
+  };
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -127,19 +133,11 @@ const FormSignup = ({
           onBlur={handleBlur}
           value={values.password}
         />
-        <button onClick={togglePassword} type="button">
-          {passwordShown ? (
-            <FiEyeOff
-              className="absolute right-2 top-2 flex justify-center items-center"
-              size={20}
-            />
-          ) : (
-            <FiEye
-              className="absolute right-2 top-2 flex justify-center items-center"
-              size={20}
-            />
-          )}
-        </button>
+        <div className="absolute right-2 top-2 flex justify-center items-center">
+          <button onClick={togglePassword} type="button">
+            {passwordShown ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+          </button>
+        </div>
         {errors.password && touched.password && (
           <label className="label">
             <span className="label-text-alt text-error">{errors.password}</span>
@@ -158,19 +156,15 @@ const FormSignup = ({
           onBlur={handleBlur}
           value={values.confirmPassword}
         />
-        <button onClick={toggleConfirmPassword} type="button">
-          {confirmPasswordShown ? (
-            <FiEyeOff
-              className="absolute right-2 top-2 flex justify-center items-center"
-              size={20}
-            />
-          ) : (
-            <FiEye
-              className="absolute right-2 top-2 flex justify-center items-center"
-              size={20}
-            />
-          )}
-        </button>
+        <div className="absolute right-2 top-2 flex justify-center items-center">
+          <button onClick={toggleConfirmPassword} type="button">
+            {confirmPasswordShown ? (
+              <FiEyeOff size={20} />
+            ) : (
+              <FiEye size={20} />
+            )}
+          </button>
+        </div>
         {errors.confirmPassword && touched.confirmPassword && (
           <label className="label">
             <span className="label-text-alt text-error">
@@ -179,16 +173,22 @@ const FormSignup = ({
           </label>
         )}
       </div>
-      <div className="my-5 text-base text-black">
+      <div className="w-fit my-5 text-base text-black">
         <label className="flex items-center gap-2">
-          <input name="checkBox" type="checkbox" />
+          <input
+            name="accept"
+            type="checkbox"
+            onChange={handleCheckbox}
+            value={isFilled}
+            checked={isChecked ? "checked" : null}
+          />
           <span className="checkmarking"></span>
           Accept terms and condition
         </label>
       </div>
       <div className="mb-8">
         <button
-          disabled={isSubmitting}
+          disabled={!isFilled}
           type="submit"
           className="btn btn-primary btn-block text-base font-semibold normal-case"
         >
@@ -206,7 +206,7 @@ FormSignup.propTypes = {
   handleBlur: propTypes.func,
   handleChange: propTypes.func,
   handleSubmit: propTypes.func,
-  isSubmitting: propTypes.bool,
+  // isSubmitting: propTypes.bool,
 };
 
 const SignUp = () => {
@@ -221,6 +221,10 @@ const SignUp = () => {
       navigate("/login");
     }
   }, [successMessage, navigate]);
+
+  React.useEffect(() => {
+    dispatch(clearMessage());
+  }, []);
 
   const doSignup = async (values, { setSubmitting /*setErrors*/ }) => {
     dispatch(clearMessage());
