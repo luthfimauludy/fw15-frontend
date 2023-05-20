@@ -29,7 +29,7 @@ const DetailEvent = () => {
       {/* Navbar End */}
       <div className="md:bg-[#E9EDC9] md:pt-12">
         {/* Main Content Start */}
-        <div className="flex md:flex-row flex-col justify-center gap-20 md:mx-[120px] md:mb-24 bg-white rounded-2xl md:py-24 py-5 relative">
+        <div className="flex md:flex-row flex-col justify-center gap-20 md:mx-[120px] mb-[450px] md:mb-24 bg-white rounded-2xl md:py-24 py-5 relative">
           {/* Left Content Start */}
           <aside className="relative md:px-0 px-3">
             <div className="rounded-3xl overflow-hidden md:w-[300px] h-[400px] mb-7 relative">
@@ -108,7 +108,7 @@ const DetailEvent = () => {
               </div>
             </div>
             <div className="md:px-0 px-3">
-              <div className="event-detail">
+              <div>
                 <p className="text-xl font-semibold text-[#373A42] mb-5">
                   Event Detail
                 </p>
@@ -124,8 +124,8 @@ const DetailEvent = () => {
                 <img className="mb-12" src={maps} alt="Maps" />
                 <div className="max-w-[315px]">
                   <Link
-                    className="flex justify-center items-center h-14 text-base font-semibold rounded-lg shadow-lg shadow-[#61764B] bg-[#61764B] text-white"
-                    to="/booking"
+                    className="btn btn-primary normal-case w-full"
+                    to={`/booking/${id}`}
                   >
                     Buy Tickets
                   </Link>
