@@ -33,7 +33,7 @@ export const asyncSignUpAction = createAsyncThunk(
       const results = err?.response?.data?.results;
       const message = err?.response?.data?.message;
       if (results) {
-        return rejectWithValue(results);
+        return rejectWithValue(err.response.data);
       }
       if (err.code === "ERR_NETWORK") {
         return rejectWithValue("Error: No Connection from backend!");
