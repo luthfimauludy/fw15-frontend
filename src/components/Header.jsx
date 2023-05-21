@@ -1,6 +1,6 @@
 import React from "react";
 import http from "../helpers/http";
-import wetick from "../assets/images/logo-wetick.png";
+import { HiTicket } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
@@ -30,12 +30,12 @@ const Header = () => {
     <>
       <nav className="flex md:flex-row flex-col md:h-24 px-8 font-semibold">
         <div className="flex md:justify-center justify-between items-center">
-          <div className="flex justify-center items-center text-2xl">
-            <img src={wetick} alt="logo" />
+          <div className="flex justify-center items-center gap-2 text-2xl">
+            <HiTicket className="text-primary" size={35} />
             <div className="text-2xl">
               <Link to="/">
-                <span className="text-primary">We</span>
-                <span className="text-secondary">tick</span>
+                <span className="text-primary">21</span>
+                <span className="text-secondary">Cinetix</span>
               </Link>
             </div>
           </div>

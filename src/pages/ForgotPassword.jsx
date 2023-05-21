@@ -1,6 +1,6 @@
 import toyFaces from "../assets/images/toyFaces.png";
-import logo from "../assets/images/logo-wetick.png";
 import { Link } from "react-router-dom";
+import { HiTicket } from "react-icons/hi";
 
 const ForgotPassword = () => {
   return (
@@ -13,12 +13,12 @@ const ForgotPassword = () => {
       </div>
       <div className="max-w-md w-full flex justify-center items-center">
         <form className="w-[80%] flex flex-col gap-2">
-          <div className="flex items-center mb-4">
-            <img className="h-12" src={logo} alt="logo" />
+          <div className="flex items-center gap-2 mb-4">
+            <HiTicket className="text-primary" size={35} />
             <div className="text-2xl font-semibold">
               <Link to="/">
-                <span className="text-primary">We</span>
-                <span className="text-[#ff3d71]">tick</span>
+                <span className="text-primary">21</span>
+                <span className="text-[#ff3d71]">Cinetix</span>
               </Link>
             </div>
           </div>

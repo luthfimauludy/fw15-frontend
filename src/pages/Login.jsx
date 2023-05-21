@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import toyFaces from "../assets/images/toyFaces.png";
-import logo from "../assets/images/logo-wetick.png";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -11,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../redux/reducers/auth";
 import { asyncLoginAction } from "../redux/actions/auth";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { HiTicket } from "react-icons/hi";
 
 const validationSchema = Yup.object({
   email: Yup.string().required().email("Email is not valid"),
@@ -40,12 +40,12 @@ const FormLogin = ({
       onSubmit={handleSubmit}
       className="w-[80%] text-black flex flex-col gap-2"
     >
-      <div className="flex items-center mb-4">
-        <img className="h-12" src={logo} alt="logo" />
+      <div className="flex items-center gap-2 mb-4">
+        <HiTicket className="text-primary" size={35} />
         <div className="text-2xl font-semibold">
           <Link to="/">
-            <span className="text-primary">We</span>
-            <span className="text-secondary">tick</span>
+            <span className="text-primary">21</span>
+            <span className="text-secondary">Cinetix</span>
           </Link>
         </div>
       </div>

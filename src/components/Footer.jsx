@@ -1,4 +1,4 @@
-import wetick from "../assets/images/logo-wetick.png";
+import { HiTicket } from "react-icons/hi";
 import { FaWhatsapp, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
@@ -8,11 +8,11 @@ const Footer = () => {
         <div className="flex flex-col md:items-center text-[#373A42] p-2.5 md:p-0 gap-12 md:gap-20">
           <div className="flex md:flex-row flex-col md:justify-center gap-14 md:gap-32">
             <div>
-              <div className="flex items-center text-2xl mb-4 md:mb-8 font-semibold">
-                <img src={wetick} alt="logo" />
+              <div className="flex items-center text-2xl mb-4 md:mb-8 gap-2 font-semibold">
+                <HiTicket className="text-primary" size={35} />
                 <a href="/index.html">
-                  <span className="text-[#61764B]">We</span>
-                  <span className="text-[#FF3D71]">tick</span>
+                  <span className="text-[#61764B]">21</span>
+                  <span className="text-[#FF3D71]">Cinetix</span>
                 </a>
               </div>
               <div className="text-sm mb-4">Find events you love with our</div>
@@ -33,7 +33,7 @@ const Footer = () => {
             </div>
             <div>
               <ul className="flex flex-col gap-4">
-                <li className="font-semibold">Wetick</li>
+                <li className="font-semibold">21Cinetix</li>
                 <li className="text-sm text-[#C1C5D0]">
                   <a>About Us</a>
                 </li>
@@ -90,7 +90,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="text-base font-semibold text-[#5A7184] md:w-[860px]">
-            © 2020 Wetick All Rights Reserved
+            © 2023 21Cinetix All Rights Reserved
           </p>
         </div>
       </footer>

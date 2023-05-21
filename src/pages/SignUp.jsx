@@ -1,6 +1,5 @@
 import React from "react";
 import toyFaces from "../assets/images/toyFaces.png";
-import logo from "../assets/images/logo-wetick.png";
 import * as Yup from "yup";
 import propTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +8,7 @@ import { clearMessage } from "../redux/reducers/auth";
 import { Formik } from "formik";
 import { asyncSignUpAction } from "../redux/actions/auth";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { HiTicket } from "react-icons/hi";
 
 const validationSchema = Yup.object({
   fullName: Yup.string()
@@ -59,12 +59,12 @@ const FormSignup = ({
       onSubmit={handleSubmit}
       className="w-[80%] text-black flex flex-col gap-2"
     >
-      <div className="flex items-center mb-4">
-        <img className="h-12" src={logo} alt="logo" />
+      <div className="flex items-center gap-2 mb-4">
+        <HiTicket className="text-primary" size={35} />
         <div className="text-2xl font-semibold">
           <Link to="/">
-            <span className="text-primary">We</span>
-            <span className="text-[#ff3d71]">tick</span>
+            <span className="text-primary">21</span>
+            <span className="text-[#ff3d71]">Cinetix</span>
           </Link>
         </div>
       </div>
@@ -87,10 +87,10 @@ const FormSignup = ({
       )}
       <div>
         <input
-          placeholder="Full Name"
           className={`input input-bordered border-neutral-300 w-full ${
             errors.fullName && touched.fullName && "input-error"
           }`}
+          placeholder="Full Name"
           type="text"
           name="fullName"
           onChange={handleChange}
@@ -212,9 +212,8 @@ FormSignup.propTypes = {
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const token = useSelector((state) => state.auth.token);
   const successMessage = useSelector((state) => state.auth.successMessage);
-  // const formError = useSelector((state) => state.auth.formError);
+  const formError = useSelector((state) => state.auth.formError);
 
   React.useEffect(() => {
     if (successMessage) {
@@ -226,18 +225,16 @@ const SignUp = () => {
     dispatch(clearMessage());
   }, []);
 
-  const doSignup = async (values, { setSubmitting /*setErrors*/ }) => {
+  const doSignup = async (values, { setSubmitting, setErrors }) => {
     dispatch(clearMessage());
     dispatch(asyncSignUpAction(values));
-    // if (formError.length) {
-    //   setErrors({
-    //     fullName: formError.filter((item) => item.param === "fullName")[0]
-    //       .message,
-    //     email: formError.filter((item) => item.param === "email")[0].message,
-    //     password: formError.filter((item) => item.param === "password")[0]
-    //       .message,
-    //   });
-    // }
+    if (formError.length) {
+      setErrors({
+        email: formError.filter((item) => item.param === "email")[0].message,
+        password: formError.filter((item) => item.param === "password")[0]
+          .message,
+      });
+    }
     setSubmitting(false);
   };
 
