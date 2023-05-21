@@ -28,7 +28,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/detail-event/:id" element={<DetailEvent />} />
-            <Route path="/booking" element={<Booking />} />
             <Route
               path="/profile"
               element={
@@ -37,13 +36,35 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            <Route path="/payment" element={<Payment />} />
+            <Route
+              path="/booking/:id"
+              element={
+                <PrivateRoute>
+                  <Booking />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/payment"
+              element={
+                <PrivateRoute>
+                  <Payment />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/my-booking"
+              element={
+                <PrivateRoute>
+                  <MyBooking />
+                </PrivateRoute>
+              }
+            />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/manage-event" element={<ManageEvent />} />
-            <Route path="/my-booking" element={<MyBooking />} />
             <Route path="/my-wishlist" element={<MyWishlist />} />
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/update-event" element={<UpdateEvent />} />
