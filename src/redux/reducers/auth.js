@@ -43,7 +43,8 @@ const authSlice = createSlice({
       if (typeof action.payload === "string") {
         state.errorMessage = action.payload;
       } else {
-        state.formError = action.payload;
+        state.formError = action.payload.results;
+        state.errorMessage = action.payload.message;
       }
     });
     builder.addCase(asyncSignUpAction.fulfilled, (state, action) => {
