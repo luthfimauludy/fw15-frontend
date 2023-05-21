@@ -17,11 +17,13 @@ import {
 } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
+import moment from "moment";
 
 const MyBooking = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const [histories, setHistories] = React.useState([]);
   const [profile, setProfile] = React.useState({});
 
   React.useEffect(() => {
@@ -30,6 +32,12 @@ const MyBooking = () => {
       setProfile(data.results);
     };
     getProfile();
+
+    const getHistoryData = async () => {
+      const { data } = await http(token).get("/my-booking");
+      setHistories(data.results);
+    };
+    getHistoryData();
   }, []);
 
   const doLogout = () => {
@@ -139,84 +147,46 @@ const MyBooking = () => {
                 <p>March</p>
               </div>
             </div>
-            <div className="flex flex-col gap-6">
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs">Jakarta, Indonesia</p>
-                      <p className="text-xs my-2">Wed, 15 Nov, 4:00 PM</p>
-                      <Link className="text-xs text-[#61764B]" to="/event">
-                        Detail
-                      </Link>
+            <div className="flex flex-col gap-6 mt-10">
+              {histories.map((history) => {
+                return (
+                  <div key={`history-list-${histories.id}`} className="flex">
+                    <div className="flex flex-col items-center mr-8">
+                      <p className="text-sm text-[#FF8900] pt-3">15</p>
+                      <p className="text-xs">Wed</p>
+                    </div>
+                    <div className="grow border-b">
+                      <div>
+                        <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
+                          {history.title}
+                        </p>
+                        <p className="text-xs">{history.location}</p>
+                        <p className="text-xs my-2">
+                          {moment(history.date).format("ddd, DD MMM, LT")}
+                        </p>
+                        <Link className="text-xs text-[#61764B]" to="/event">
+                          Detail
+                        </Link>
+                      </div>
                     </div>
                   </div>
+                );
+              })}
+              <div className="flex">
+                <div className="flex flex-col items-center mr-8">
+                  <p className="text-sm text-[#FF8900] pt-3">15</p>
+                  <p className="text-xs">Wed</p>
                 </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                      <Link className="text-xs text-[#61764B]" to="/event">
-                        Detail
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                      <Link className="text-xs text-[#61764B]" to="/event">
-                        Detail
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                      <Link className="text-xs text-[#61764B]" to="/event">
-                        Detail
-                      </Link>
-                    </div>
+                <div className="grow border-b">
+                  <div>
+                    <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
+                      Sights & Sounds Exhibition
+                    </p>
+                    <p className="text-xs">Jakarta, Indonesia</p>
+                    <p className="text-xs my-2">Wed, 15 Nov, 4:00 PM</p>
+                    <Link className="text-xs text-[#61764B]" to="/event">
+                      Detail
+                    </Link>
                   </div>
                 </div>
               </div>
