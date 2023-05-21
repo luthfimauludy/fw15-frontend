@@ -1,12 +1,69 @@
 import banner from "../assets/images/banner-booking.png";
 import ticket1 from "../assets/images/ticket1.png";
-import ticket2 from "../assets/images/ticket2.png";
-import ticket3 from "../assets/images/ticket3.png";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { BiSort } from "react-icons/bi";
+import React from "react";
+import http from "../helpers/http";
+import { useSelector } from "react-redux";
+import { FiPlus, FiMinus } from "react-icons/fi";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Booking = () => {
+  const { id: eventId } = useParams();
+  const navigate = useNavigate();
+  const [sections, setSections] = React.useState([]);
+  const [filledSection, setFilledSection] = React.useState({
+    id: 0,
+    quantity: 0,
+  });
+  const token = useSelector((state) => state.auth.token);
+
+  const increment = (id) => {
+    setFilledSection({
+      id,
+      quantity: filledSection.quantity + 1,
+    });
+  };
+
+  const decrement = (id) => {
+    setFilledSection({
+      id,
+      quantity: filledSection.quantity - 1,
+    });
+  };
+
+  React.useEffect(() => {
+    const getSections = async () => {
+      const { data } = await http(token).get("/sections");
+      setSections(data.results);
+    };
+    getSections();
+  }, []);
+
+  const doReservation = async () => {
+    const form = new URLSearchParams({
+      eventId,
+      sectionId: filledSection.id,
+      quantity: filledSection.quantity,
+    }).toString();
+    const { data } = await http(token).post("/reservations", form);
+
+    navigate("/payment", {
+      state: {
+        eventId,
+        eventName: data.results.events.title,
+        reservationId: data.results.id,
+        sectionName: data.results.sectionName,
+        quantity: data.results.quantity,
+        totalPayment: data.results.totalPrice,
+      },
+    });
+  };
+
+  const selectedSection =
+    filledSection && sections.filter((item) => item.id === filledSection.id)[0];
+
   return (
     <>
       {/* Navbar Start */}
@@ -15,14 +72,14 @@ const Booking = () => {
       <div className="md:bg-[#E9EDC9] md:pt-12">
         {/* Main Content Start */}
         <div className="flex flex-col md:flex-row justify-center m-0 md:mx-[120px] md:mb-24 bg-white rounded-2xl p-2 md:pt-[70px] md:px-12 md:pb-[67px]">
-          <div className="w-full max-h-[228px] md:max-h-[750px] rotate-45 md:rotate-0 flex justify-center items-center">
+          <div className="w-fit max-h-[228px] md:max-h-[750px] rotate-45 md:rotate-0 flex justify-center items-center">
             <img
-              className="max-w-[250px] md:max-w-[644px]"
+              className="max-w-[250px] md:max-w-[444px]"
               src={banner}
               alt="banner"
             />
           </div>
-          <div className="min-w-full mb-12 md:mb-0 md:min-w-[376px]">
+          <div className="max-w-full mb-12 md:mb-0 md:min-w-[376px]">
             <div className="h-12 flex justify-between items-center mb-5 md:mb-14">
               <div className="text-xl font-semibold text-black">Tickets</div>
               <div className="flex items-center">
@@ -31,129 +88,70 @@ const Booking = () => {
               </div>
             </div>
             <div className="min-w-[300px] md:w-full">
-              <div className="flex mb-6 md:mb-14">
-                <div className="mr-2.5 h-full justify-start">
-                  <div>
-                    <img className="w-11 h-11" src={ticket1} alt="Ticket 1" />
-                  </div>
-                </div>
-                <div className="min-w-[240px] md:w-full">
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-sm text-black font-semibold mb-[3px]">
-                        SECTION REG, ROW 1
-                      </p>
-                      <p className="text-xs mt-0 text-[BDC0C4]">
-                        12 Seats available
-                      </p>
+              {sections.map((item) => {
+                return (
+                  <div
+                    key={`section-${item.id}`}
+                    className="flex mb-6 md:mb-14"
+                  >
+                    <div className="mr-2.5 h-full justify-start">
+                      <div>
+                        <img
+                          className="w-11 h-11"
+                          src={ticket1}
+                          alt="Ticket 1"
+                        />
+                      </div>
                     </div>
-                    <div className="text-center">
-                      <p className="text-sm text-black font-semibold mb-[3px]">
-                        $15
-                      </p>
-                      <p className="text-xs mt-0 text-[BDC0C4]">per person</p>
-                    </div>
-                  </div>
-                  <div className="mt-[22px] flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-black font-semibold m-0">
-                        Quantity
-                      </p>
-                    </div>
-                    <div className="flex justify-evenly items-center">
-                      <button className="btn btn-sm btn-square btn-outline">
-                        -
-                      </button>
-                      <p className="text-black ml-2.5">0</p>
-                      <button className="ml-2.5 btn btn-sm btn-square btn-outline">
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex mb-6 md:mb-14">
-                <div className="mr-2.5 h-full justify-items-start">
-                  <div>
-                    <img className="w-11 h-11" src={ticket2} alt="Ticket 2" />
-                  </div>
-                </div>
-                <div className="min-w-[240px] md:w-full">
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-sm text-black font-semibold mb-[3px]">
-                        SECTION VIP, ROW 2
-                      </p>
-                      <p className="text-xs mt-0 text-[BDC0C4]">
-                        9 Seats available
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm text-black font-semibold mb-[3px]">
-                        $35
-                      </p>
-                      <p className="text-xs mt-0 text-[BDC0C4]">per person</p>
+                    <div className="min-w-[240px] md:w-full">
+                      <div className="flex justify-between">
+                        <div>
+                          <p className="text-sm text-black font-semibold mb-[3px]">
+                            SECTION {item.name}, ROW 1
+                          </p>
+                          <p className="text-xs mt-0 text-[BDC0C4]">
+                            12 Seats available
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-sm text-black font-semibold mb-[3px]">
+                            IDR {item.price}
+                          </p>
+                          <p className="text-xs mt-0 text-[BDC0C4]">
+                            per person
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-[22px] flex justify-between items-center">
+                        <div>
+                          <p className="text-xs text-black font-semibold m-0">
+                            Quantity
+                          </p>
+                        </div>
+                        <div className="flex justify-evenly items-center">
+                          <button
+                            onClick={() => decrement(item.id)}
+                            className="btn btn-sm btn-primary btn-square btn-outline"
+                          >
+                            <FiMinus />
+                          </button>
+                          <p className="text-black ml-2.5">
+                            {item.id === filledSection.id
+                              ? filledSection.quantity
+                              : 0}
+                          </p>
+                          <button
+                            onClick={() => increment(item.id)}
+                            className="ml-2.5 btn btn-sm btn-primary btn-square btn-outline"
+                          >
+                            <FiPlus />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-[22px] flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-black font-semibold m-0">
-                        Quantity
-                      </p>
-                    </div>
-                    <div className="flex justify-evenly items-center">
-                      <button className="btn btn-sm btn-square btn-outline">
-                        -
-                      </button>
-                      <p className="text-black ml-2.5">2</p>
-                      <button className="ml-2.5 btn btn-sm btn-square btn-outline">
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex border-b border-[#E0E4F3] pb-8">
-                <div className="mr-2.5 h-full justify-start">
-                  <div>
-                    <img className="w-11 h-11" src={ticket3} alt="Ticket 3" />
-                  </div>
-                </div>
-                <div className="min-w-[240px] md:w-full">
-                  <div className="flex justify-between">
-                    <div>
-                      <p className="text-sm text-black font-semibold mb-[3px]">
-                        SECTION VVIP, ROW 3
-                      </p>
-                      <p className="text-xs mt-0 text-[BDC0C4]">
-                        6 Seats available
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm text-black font-semibold mb-[3px]">
-                        $50
-                      </p>
-                      <p className="text-xs mt-0 text-[BDC0C4]">per person</p>
-                    </div>
-                  </div>
-                  <div className="mt-[22px] flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-black font-semibold m-0">
-                        Quantity
-                      </p>
-                    </div>
-                    <div className="flex justify-evenly items-center">
-                      <button className="btn btn-sm btn-square btn-outline">
-                        -
-                      </button>
-                      <p className="text-black ml-2.5">0</p>
-                      <button className="ml-2.5 btn btn-sm btn-square btn-outline">
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
             <div className="flex justify-between mt-6 mb-9">
               <div className="text-sm text-black font-semibold">
@@ -162,12 +160,17 @@ const Booking = () => {
                 <p className="mb-4">Total Payment</p>
               </div>
               <div className="text-sm text-primary font-semibold text-right text-[61764B]">
-                <p className="mb-4">VIP</p>
-                <p className="mb-4">2</p>
-                <p className="mb-4">$70</p>
+                <p className="mb-4">{selectedSection?.name || "-"}</p>
+                <p className="mb-4">{filledSection?.quantity}</p>
+                <p className="mb-4">
+                  IDR {selectedSection?.price * filledSection?.quantity || "0"}
+                </p>
               </div>
             </div>
-            <button className="flex w-full md:w-72 justify-center items-center h-14 text-base font-semibold rounded-lg shadow-lg shadow-[#61764B] bg-[#61764B] text-white">
+            <button
+              onClick={doReservation}
+              className="flex w-full md:w-72 btn btn-primary normal-case shadow-lg shadow-primary"
+            >
               Checkout
             </button>
           </div>
