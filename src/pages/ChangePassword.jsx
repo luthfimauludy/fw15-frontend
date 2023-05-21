@@ -13,6 +13,8 @@ import {
   FiHeart,
   FiSettings,
   FiLogOut,
+  FiEye,
+  FiEyeOff,
 } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
@@ -22,6 +24,29 @@ const ChangePassword = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const [profile, setProfile] = React.useState({});
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [successMessage, setSuccessMessage] = React.useState("");
+  const [eyeOld, setEyeOld] = React.useState(false);
+  const [oldPassword, setOldPassword] = React.useState(false);
+  const [eyeNewPassword, setEyeNewPassword] = React.useState(false);
+  const [newPassword, setNewPassword] = React.useState(false);
+  const [eyeConfirmPassword, setEyeConfirmPassword] = React.useState(false);
+  const [confirmPassword, setConfirmPassword] = React.useState(false);
+
+  const handleOldPassword = () => {
+    setEyeOld(!oldPassword);
+    setOldPassword(!eyeOld);
+  };
+
+  const handleNewPassword = () => {
+    setEyeNewPassword(!newPassword);
+    setNewPassword(!eyeNewPassword);
+  };
+
+  const handleConfirmPassword = () => {
+    setEyeConfirmPassword(!confirmPassword);
+    setConfirmPassword(!eyeConfirmPassword);
+  };
 
   React.useEffect(() => {
     const getProfile = async () => {
@@ -30,6 +55,38 @@ const ChangePassword = () => {
     };
     getProfile();
   }, []);
+
+  const doChangePassword = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+    try {
+      const { value: oldPassword } = e.target.oldPassword;
+      const { value: newPassword } = e.target.newPassword;
+      const { value: confirmPassword } = e.target.confirmPassword;
+      const body = new URLSearchParams({
+        oldPassword,
+        newPassword,
+        confirmPassword,
+      }).toString();
+      const { data } = await http(token).post("/change-password", body);
+
+      setSuccessMessage(data.message);
+      if (data.message) {
+        setEyeOld(!oldPassword);
+        setOldPassword(!eyeOld);
+        setEyeNewPassword(!newPassword);
+        setNewPassword(!eyeNewPassword);
+        setEyeConfirmPassword(!confirmPassword);
+        setConfirmPassword(!eyeConfirmPassword);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 2000);
+      }
+    } catch (error) {
+      const message = error?.response?.data?.message;
+      setErrorMessage(message);
+    }
+  };
 
   const doLogout = () => {
     window.localStorage.removeItem("token");
@@ -135,44 +192,98 @@ const ChangePassword = () => {
             <div className="text-xl font-semibold tracking-wide mb-12">
               Change Password
             </div>
-            <form className="flex flex-col w-full gap-6 md:gap-8">
-              <div className="flex flex-col md:flex-row items-start md:items-center">
-                <label className="md:w-48 w-full mb-2.5 md:mb-0">
+            <form
+              onSubmit={doChangePassword}
+              className="flex flex-col w-full gap-6 md:gap-8"
+            >
+              {errorMessage && (
+                <div className="alert alert-error">{errorMessage}</div>
+              )}
+              {successMessage && (
+                <div className="alert alert-success">{successMessage}</div>
+              )}
+              <div className="flex flex-col md:flex-row items-start md:items-center relative">
+                <div className="md:w-48 w-full mb-2.5 md:mb-0">
                   Old Password
-                </label>
+                </div>
                 <input
                   className="w-full md:flex-1 h-14 px-7 outline-none border border-[#c1c5d0] rounded-lg"
-                  type="password"
-                  name="old-password"
-                  placeholder="Input Here"
+                  type={oldPassword ? "text" : "password"}
+                  name="oldPassword"
+                  placeholder="Old Password"
                 />
+                <button
+                  type="button"
+                  onClick={handleOldPassword}
+                  className="absolute top-[18px] right-4"
+                >
+                  {eyeOld ? (
+                    <i className="">
+                      <FiEyeOff size={20} />
+                    </i>
+                  ) : (
+                    <i className="">
+                      <FiEye size={20} />
+                    </i>
+                  )}
+                </button>
               </div>
-              <div className="flex flex-col md:flex-row items-start md:items-center">
-                <label className="md:w-48 w-full mb-2.5 md:mb-0">
+              <div className="flex flex-col md:flex-row items-start md:items-center relative">
+                <div className="md:w-48 w-full mb-2.5 md:mb-0">
                   New Password
-                </label>
+                </div>
                 <input
                   className="w-full md:flex-1 h-14 px-7 outline-none border border-[#c1c5d0] rounded-lg"
-                  type="password"
-                  name="new-password"
-                  placeholder="Input Here"
+                  type={newPassword ? "text" : "password"}
+                  name="newPassword"
+                  placeholder="New Password"
                 />
+                <button
+                  type="button"
+                  onClick={handleNewPassword}
+                  className="absolute top-[18px] right-4"
+                >
+                  {eyeNewPassword ? (
+                    <i className="">
+                      <FiEyeOff size={20} />
+                    </i>
+                  ) : (
+                    <i className="">
+                      <FiEye size={20} />
+                    </i>
+                  )}
+                </button>
               </div>
-              <div className="flex flex-col md:flex-row items-start md:items-center">
-                <label className="md:w-48 w-full mb-2.5 md:mb-0">
+              <div className="flex flex-col md:flex-row items-start md:items-center relative">
+                <div className="md:w-48 w-full mb-2.5 md:mb-0">
                   Confirm Password
-                </label>
+                </div>
                 <input
                   className="w-full md:flex-1 h-14 px-7 outline-none border border-[#c1c5d0] rounded-lg"
-                  type="password"
-                  name="confirm-password"
-                  placeholder="Input Here"
+                  type={confirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
                 />
+                <button
+                  type="button"
+                  onClick={handleConfirmPassword}
+                  className="absolute top-[18px] right-4"
+                >
+                  {eyeConfirmPassword ? (
+                    <i className="">
+                      <FiEyeOff size={20} />
+                    </i>
+                  ) : (
+                    <i className="">
+                      <FiEye size={20} />
+                    </i>
+                  )}
+                </button>
               </div>
               <div>
                 <button
                   className="bg-[#61764b] h-14 w-full rounded-2xl shadow-lg shadow-[#61764B] text-white"
-                  type="button"
+                  type="submit"
                 >
                   Update
                 </button>
