@@ -42,3 +42,24 @@ export const asyncSignUpAction = createAsyncThunk(
     }
   }
 );
+
+export const asyncForgotAction = createAsyncThunk(
+  "auth/forgot-password",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const body = new URLSearchParams(payload).toString();
+      const { data } = await http().post("/auth/forgot-password", body);
+      return data.results.token;
+    } catch (err) {
+      const results = err?.response?.data?.results;
+      const message = err?.response?.data?.message;
+      if (results) {
+        return rejectWithValue(results);
+      }
+      if (err.code === "ERR_NETWORK") {
+        return rejectWithValue("Error: No Connection from backend!");
+      }
+      return rejectWithValue(message);
+    }
+  }
+);
