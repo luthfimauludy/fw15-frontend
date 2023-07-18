@@ -11,8 +11,8 @@ const Footer = () => {
               <div className="flex items-center text-2xl mb-4 md:mb-8 gap-2 font-semibold">
                 <HiTicket className="text-primary" size={35} />
                 <a href="/index.html">
-                  <span className="text-[#61764B]">21</span>
-                  <span className="text-[#FF3D71]">Cinetix</span>
+                  <span className="text-[#61764B]">Even</span>
+                  <span className="text-[#FF3D71]">Tix</span>
                 </a>
               </div>
               <div className="text-sm mb-4">Find events you love with our</div>
@@ -33,7 +33,7 @@ const Footer = () => {
             </div>
             <div>
               <ul className="flex flex-col gap-4">
-                <li className="font-semibold">21Cinetix</li>
+                <li className="font-semibold">EvenTix</li>
                 <li className="text-sm text-[#C1C5D0]">
                   <a>About Us</a>
                 </li>
@@ -90,7 +90,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="text-base font-semibold text-[#5A7184] md:w-[860px]">
-            © 2023 21Cinetix All Rights Reserved
+            © 2023 EvenTix All Rights Reserved
           </p>
         </div>
       </footer>

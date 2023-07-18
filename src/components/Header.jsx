@@ -34,8 +34,8 @@ const Header = () => {
             <HiTicket className="text-primary" size={35} />
             <div className="text-2xl">
               <Link to="/">
-                <span className="text-primary">21</span>
-                <span className="text-secondary">Cinetix</span>
+                <span className="text-primary">Even</span>
+                <span className="text-secondary">Tix</span>
               </Link>
             </div>
           </div>
