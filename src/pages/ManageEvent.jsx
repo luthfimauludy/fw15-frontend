@@ -27,8 +27,8 @@ const ManageEvent = () => {
 
   React.useEffect(() => {
     async function getData() {
-      const { data } = await http().get("/events", {
-        params: { limit: 1000 },
+      const { data } = await http(token).get("/events/manage", {
+        params: { limit: 1000, sortBy: "DESC" },
       });
       setEvents(data.results);
     }
@@ -39,7 +39,7 @@ const ManageEvent = () => {
       setProfile(data.results);
     };
     getProfile();
-  }, []);
+  }, [token]);
 
   const doLogout = () => {
     window.localStorage.removeItem("token");
