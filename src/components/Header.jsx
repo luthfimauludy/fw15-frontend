@@ -61,7 +61,7 @@ const Header = () => {
             <li className="flex justify-center items-center min-w-[100px]">
               <Link
                 className="hover:text-primary pb-2.5 border-b border-transparent hover:border-primary"
-                to="/create-event"
+                to="/manage-event"
               >
                 Create Event
               </Link>

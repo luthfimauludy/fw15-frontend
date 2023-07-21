@@ -15,8 +15,6 @@ import ChangePassword from "./pages/ChangePassword";
 import ManageEvent from "./pages/ManageEvent";
 import MyBooking from "./pages/MyBooking";
 import MyWishlist from "./pages/MyWishlist";
-import CreateEvent from "./pages/CreateEvent";
-import UpdateEvent from "./pages/UpdateEvent";
 import PrivateRoute from "./components/PrivateRoute";
 import SearchResults from "./pages/SearchResults";
 
@@ -66,8 +64,6 @@ const App = () => {
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/manage-event" element={<ManageEvent />} />
             <Route path="/my-wishlist" element={<MyWishlist />} />
-            <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/update-event" element={<UpdateEvent />} />
             <Route path="/search" element={<SearchResults />} />
           </Routes>
         </BrowserRouter>
