@@ -36,7 +36,7 @@ const DetailEvent = () => {
               {event?.picture && (
                 <img
                   className="w-full h-full object-cover"
-                  src={`http://localhost:8888/uploads/${event?.picture}`}
+                  src={event.picture.startsWith("https") ? event.picture : `http://localhost:8888/uploads/${event?.picture}`}
                   alt="Event Banner"
                 />
               )}
