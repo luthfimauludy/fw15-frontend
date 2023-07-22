@@ -13,7 +13,6 @@ import { Formik } from "formik";
 
 const Home = () => {
   const navigate = useNavigate();
-  // const [searchParams, setSearchParams] = useSearchParams;
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [cities, setCities] = React.useState([]);
@@ -25,15 +24,15 @@ const Home = () => {
     const { data } = await http().get("/events", {
       params: { category: name },
     });
-    setEventCategories(data.results);
+    setEventCategories(data.results.rows);
   }
 
   React.useEffect(() => {
     async function getData() {
       const { data } = await http().get("/events", {
-        params: { limit: 1000 },
+        params: { limit: 1000, sort: "date" },
       });
-      setEvents(data.results);
+      setEvents(data.results.rows);
     }
     getData();
 
@@ -57,12 +56,11 @@ const Home = () => {
       setPartners(data.results);
     }
     getPartnersData();
-  }, []);
+  }, [token]);
 
   const onSearch = (values) => {
     const qs = new URLSearchParams(values).toString();
     navigate(`/search?${qs}`);
-    // setSearchParams(values, "/search");
   };
 
   return (
@@ -182,7 +180,7 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section className="overflow-x-scroll md:ml-[120px] ml-2.5 md:pr-[120px] pr-2.5">
+        <section className="overflow-x-scroll md:ml-[70px] ml-2.5 md:pr-[120px] pr-2.5">
           <div id="eventWrapper" className="inline-flex gap-5">
             {events.map((event) => {
               return (
@@ -338,7 +336,11 @@ const Home = () => {
                       <div className="flex-2 overflow-hidden">
                         <img
                           className="w-full h-full object-cover"
-                          src={`http://localhost:8888/uploads/${event.picture}`}
+                          src={
+                            event.picture.startsWith("https")
+                              ? event.picture
+                              : `http://localhost:8888/uploads/${event.picture}`
+                          }
                           alt="banner1"
                         />
                       </div>
