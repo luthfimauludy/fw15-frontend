@@ -334,14 +334,6 @@ const ManageEvent = () => {
               <div className="text-xl font-semibold tracking-wide md:mb-12">
                 Manage Event
               </div>
-              {/* <div className="flex">
-                <button
-                  onClick={() => handleModalEvent("", "create")}
-                  className="flex justify-center items-center w-[125px] h-[50px] text-xs text-[#61764B] rounded-2xl bg-[#E9EDC9]"
-                >
-                  Create
-                </button>
-              </div> */}
               <div className="w-32 h-14 rounded-2xl flex justify-center items-center">
                 <button
                   onClick={() => handleModalEvent("", "create")}
