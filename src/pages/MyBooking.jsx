@@ -34,11 +34,11 @@ const MyBooking = () => {
     getProfile();
 
     const getHistoryData = async () => {
-      const { data } = await http(token).get("/my-booking");
+      const { data } = await http(token).get("/history");
       setHistories(data.results);
     };
     getHistoryData();
-  }, []);
+  }, [token]);
 
   const doLogout = () => {
     window.localStorage.removeItem("token");
@@ -144,16 +144,20 @@ const MyBooking = () => {
               </div>
               <div className="flex w-32 h-12 justify-center items-center rounded-2xl text-[#61764B] gap-4 bg-[#E9EDC9]">
                 <FiCalendar size={25} />
-                <p>March</p>
+                <p>April</p>
               </div>
             </div>
             <div className="flex flex-col gap-6 mt-10">
               {histories.map((history) => {
                 return (
-                  <div key={`history-list-${histories.id}`} className="flex">
+                  <div key={`history-list-${history.id}`} className="flex">
                     <div className="flex flex-col items-center mr-8">
-                      <p className="text-sm text-[#FF8900] pt-3">15</p>
-                      <p className="text-xs">Wed</p>
+                      <p className="text-sm text-[#FF8900] pt-3">
+                        {moment(history.date).format("DD")}
+                      </p>
+                      <p className="text-xs">
+                        {moment(history.date).format("ddd")}
+                      </p>
                     </div>
                     <div className="grow border-b">
                       <div>
@@ -172,25 +176,15 @@ const MyBooking = () => {
                   </div>
                 );
               })}
-              <div className="flex">
-                <div className="flex flex-col items-center mr-8">
-                  <p className="text-sm text-[#FF8900] pt-3">15</p>
-                  <p className="text-xs">Wed</p>
-                </div>
-                <div className="grow border-b">
-                  <div>
-                    <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                      Sights & Sounds Exhibition
-                    </p>
-                    <p className="text-xs">Jakarta, Indonesia</p>
-                    <p className="text-xs my-2">Wed, 15 Nov, 4:00 PM</p>
-                    <Link className="text-xs text-[#61764B]" to="/event">
-                      Detail
-                    </Link>
-                  </div>
+            </div>
+            {histories.length < 1 && (
+              <div>
+                <div className=' h-full flex flex-col items-center justify-center gap-7 '>
+                  <div className='font-semibold text-2xl text-[#61764B]'>No Tickets Found</div>
+                  <div className='font-medium text base max-w-[300px] text-center'>It appears you haven&apos;t bought any Tickets yet. Maybe try searching these?</div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
           {/* Right Content End */}
         </div>
