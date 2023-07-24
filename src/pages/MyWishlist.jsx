@@ -16,12 +16,14 @@ import {
 } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
+import moment from "moment";
 
 const MyWishlist = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const [profile, setProfile] = React.useState({});
+  const [wishlists, setWishlists] = React.useState([]);
 
   React.useEffect(() => {
     const getProfile = async () => {
@@ -29,7 +31,13 @@ const MyWishlist = () => {
       setProfile(data.results);
     };
     getProfile();
-  }, []);
+
+    const getWishlistData = async () => {
+      const { data } = await http(token).get("/wishlists");
+      setWishlists(data.results);
+    };
+    getWishlistData();
+  }, [token]);
 
   const doLogout = () => {
     window.localStorage.removeItem("token");
@@ -64,8 +72,8 @@ const MyWishlist = () => {
                 </div>
               </div>
               <div className="flex flex-col justify-between text-black">
-                <div className="text-sm font-semibold">Jhon Tomson</div>
-                <div className="text-xs">Entrepreneur, ID</div>
+                <div className="text-sm font-semibold">{profile?.fullName}</div>
+                <div className="text-xs">{profile?.profession}, {profile?.nasionality}</div>
               </div>
             </div>
             <ul className="text-sm text-black font-semibold">
@@ -136,107 +144,41 @@ const MyWishlist = () => {
               <p>My Wishlist</p>
             </div>
             <div className="flex flex-col gap-6">
-              <div>
-                <div className="flex relative">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
+              {wishlists.map((wishlist) => {
+                return (
+                  <div key={`wishlist-${wishlist.id}`} className="flex relative">
+                    <div className="flex flex-col items-center mr-8">
+                      <p className="text-sm text-[#FF8900] pt-3">
+                        {moment(wishlist.date).format("DD")}
                       </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                    </div>
-                  </div>
-                  <div className="md:static absolute left-0 bottom-2">
-                    <FiHeart size={25} className="text-primary" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex relative">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
+                      <p className="text-xs">
+                        {moment(wishlist.date).format("ddd")}
                       </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
                     </div>
-                  </div>
-                  <div className="md:static absolute left-0 bottom-2">
-                    <FiHeart size={25} className="text-primary" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex relative">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
+                    <div className="grow">
+                      <div>
+                        <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
+                          {wishlist.title}
+                        </p>
+                        <p className="text-xs mb-2">{wishlist.location}, Indonesia</p>
+                        <p className="text-xs">{moment(wishlist.date).format("ddd, DD MMM, LT")}</p>
+                      </div>
                     </div>
+                    <button className="md:static absolute left-0 bottom-2">
+                      <FiHeart size={25} className="text-primary" />
+                    </button>
                   </div>
-                  <div className="md:static absolute left-0 bottom-2">
-                    <FiHeart size={25} className="text-primary" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex relative">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                    </div>
-                  </div>
-                  <div className="md:static absolute left-0 bottom-2">
-                    <FiHeart size={25} className="text-primary" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex relative">
-                  <div className="flex flex-col items-center mr-8">
-                    <p className="text-sm text-[#FF8900] pt-3">15</p>
-                    <p className="text-xs">Wed</p>
-                  </div>
-                  <div className="grow border-t">
-                    <div>
-                      <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
-                        Sights & Sounds Exhibition
-                      </p>
-                      <p className="text-xs mb-2">Jakarta, Indonesia</p>
-                      <p className="text-xs">Wed, 15 Nov, 4:00 PM</p>
-                    </div>
-                  </div>
-                  <div className="md:static absolute left-0 bottom-2">
-                    <FiHeart size={25} className="text-primary" />
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
+            {wishlists.length < 1 && (
+              <div>
+                <div className=' h-full flex flex-col items-center justify-center gap-7 '>
+                  <div className='font-semibold text-2xl text-[#61764B]'>No Tickets Found</div>
+                  <div className='font-medium text base max-w-[300px] text-center'>It appears you haven&apos;t bought any Tickets yet. Maybe try searching these?</div>
+                </div>
+              </div>
+            )}
           </div>
           {/* Right Content End */}
         </div>
