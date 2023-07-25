@@ -3,7 +3,7 @@ import moment from "moment";
 import http from "../helpers/http";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import defaultProfile from "../assets/images/default-profile-picture.jpg";
+import defaultPicture from "../assets/images/default-profile-picture.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import {
@@ -38,7 +38,7 @@ const Profile = () => {
       setProfile(data.results);
     };
     getProfile();
-  }, []);
+  }, [token]);
 
   React.useEffect(() => {
     console.log(selectedPicture);
@@ -94,13 +94,20 @@ const Profile = () => {
               <div className="flex gap-3.5 mb-14">
                 <div className="flex gap-3.5">
                   <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-primary to-[#A0D995]">
-                    {profile?.picture && (
+                    {profile.picture === null ? (
+                      <img
+                        className="w-11 h-11 object-cover rounded-full border-2 border-white"
+                        src={defaultPicture}
+                      />
+                    ) : (
                       <img
                         className="w-11 h-11 object-cover rounded-full border-2 border-white"
                         src={
-                          profile.picture.startsWith("https")
+                          profile?.picture?.startsWith("https")
                             ? profile.picture
-                            : `http://localhost:8888/uploads/${profile.picture}`
+                            : `http://${
+                                import.meta.env.VITE_BACKEND_URL
+                              }/uploads/${profile.picture}`
                         }
                         alt={profile?.fullName}
                       />
@@ -112,7 +119,13 @@ const Profile = () => {
                     {profile?.fullName}
                   </div>
                   <div className="text-xs">
-                    {profile?.profession}, {profile?.nasionality}
+                    {profile?.profession === null ? (
+                      <p className="text-center">-</p>
+                    ) : (
+                      <p>
+                        {profile?.profession}, {profile?.nasionality}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -195,14 +208,7 @@ const Profile = () => {
                 onSubmit={editProfile}
                 enableReinitialize
               >
-                {({
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  errors,
-                  touched,
-                  values,
-                }) => (
+                {({ handleChange, handleBlur, handleSubmit, values }) => (
                   <form
                     onSubmit={handleSubmit}
                     className="bg-white md:min-h-[825px] md:px-12 md:py-11 rounded-2xl"
@@ -390,17 +396,20 @@ const Profile = () => {
                       </div>
                       <div className="md:h-[303px] md:ml-12 md:pl-24 md:mt-[76px] md:border-l border-[#C1C5D040]">
                         <div className="inline-block rounded-full p-[2px] mb-6 ml-12 bg-gradient-to-r from-primary to-[#A0D995]">
-                          {profile?.picture && (
+                          {profile.picture === null ? (
+                            <img
+                              className="w-[137px] h-[137px] object-cover rounded-full border-8 border-white"
+                              src={defaultPicture}
+                            />
+                          ) : (
                             <img
                               className="w-[137px] h-[137px] object-cover rounded-full border-8 border-white"
                               src={
                                 profile?.picture?.startsWith("https")
-                                  ? profile?.picture
-                                  : profile?.picture === null
-                                  ? defaultProfile
+                                  ? profile.picture
                                   : `http://${
                                       import.meta.env.VITE_BACKEND_URL
-                                    }/uploads/${profile?.picture}`
+                                    }/uploads/${profile.picture}`
                               }
                               alt={profile?.fullName}
                             />

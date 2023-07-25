@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
 import { FiMenu } from "react-icons/fi";
+import defaultPicture from "../assets/images/default-profile-picture.jpg";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Header = () => {
       setProfile(data.results);
     }
     getProfileData();
-  }, []);
+  }, [token]);
 
   const doLogout = () => {
     window.localStorage.removeItem("token");
@@ -79,13 +80,20 @@ const Header = () => {
             {token ? (
               <div className="text-[#373A42] flex items-center gap-3">
                 <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-primary to-[#A0D995]">
-                  {profile?.picture && (
+                  {profile.picture === null ? (
+                    <img
+                      className="w-11 h-11 object-cover rounded-full border-2 border-white"
+                      src={defaultPicture}
+                    />
+                  ) : (
                     <img
                       className="w-11 h-11 object-cover rounded-full border-2 border-white"
                       src={
-                        profile.picture.startsWith("https")
+                        profile?.picture?.startsWith("https")
                           ? profile.picture
-                          : `http://localhost:8888/uploads/${profile.picture}`
+                          : `http://${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/uploads/${profile.picture}`
                       }
                       alt={profile?.fullName}
                     />

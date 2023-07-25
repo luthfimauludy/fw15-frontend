@@ -2,6 +2,7 @@ import React from "react";
 import http from "../helpers/http";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import defaultPicture from "../assets/images/default-profile-picture.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiUser,
@@ -54,7 +55,7 @@ const ChangePassword = () => {
       setProfile(data.results);
     };
     getProfile();
-  }, []);
+  }, [token]);
 
   const doChangePassword = async (e) => {
     e.preventDefault();
@@ -107,13 +108,20 @@ const ChangePassword = () => {
             <div className="flex gap-3.5 mb-14">
               <div className="flex gap-3.5">
                 <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
-                  {profile?.picture && (
+                  {profile.picture === null ? (
+                    <img
+                      className="w-11 h-11 object-cover rounded-full border-2 border-white"
+                      src={defaultPicture}
+                    />
+                  ) : (
                     <img
                       className="w-11 h-11 object-cover rounded-full border-2 border-white"
                       src={
-                        profile.picture.startsWith("https")
+                        profile?.picture?.startsWith("https")
                           ? profile.picture
-                          : `http://localhost:8888/uploads/${profile.picture}`
+                          : `http://${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/uploads/${profile.picture}`
                       }
                       alt={profile?.fullName}
                     />
@@ -122,7 +130,15 @@ const ChangePassword = () => {
               </div>
               <div className="flex flex-col justify-between text-black">
                 <div className="text-sm font-semibold">{profile?.fullName}</div>
-                <div className="text-xs">Entrepreneur, ID</div>
+                <div className="text-xs">
+                  {profile?.profession === null ? (
+                    <p className="text-center">-</p>
+                  ) : (
+                    <p>
+                      {profile?.profession}, {profile?.nasionality}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
             <ul className="text-sm text-black font-semibold">

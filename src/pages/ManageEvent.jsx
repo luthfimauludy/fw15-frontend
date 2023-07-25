@@ -3,6 +3,7 @@ import http from "../helpers/http";
 import moment from "moment";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import defaultPicture from "../assets/images/default-profile-picture.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiUser,
@@ -17,7 +18,11 @@ import {
 } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
-import { AiOutlineCloseCircle, AiOutlineLoading3Quarters, AiOutlinePicture } from "react-icons/ai";
+import {
+  AiOutlineCloseCircle,
+  AiOutlineLoading3Quarters,
+  AiOutlinePicture,
+} from "react-icons/ai";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -248,13 +253,20 @@ const ManageEvent = () => {
             <div className="flex gap-3.5 mb-14">
               <div className="flex gap-3.5">
                 <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
-                  {profile?.picture && (
+                  {profile.picture === null ? (
+                    <img
+                      className="w-11 h-11 object-cover rounded-full border-2 border-white"
+                      src={defaultPicture}
+                    />
+                  ) : (
                     <img
                       className="w-11 h-11 object-cover rounded-full border-2 border-white"
                       src={
-                        profile.picture.startsWith("https")
+                        profile?.picture?.startsWith("https")
                           ? profile.picture
-                          : `http://localhost:8888/uploads/${profile.picture}`
+                          : `http://${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/uploads/${profile.picture}`
                       }
                       alt={profile?.fullName}
                     />
@@ -262,8 +274,16 @@ const ManageEvent = () => {
                 </div>
               </div>
               <div className="flex flex-col justify-between text-black">
-                <div className="text-sm font-semibold">Jhon Tomson</div>
-                <div className="text-xs">Entrepreneur, ID</div>
+                <div className="text-sm font-semibold">{profile?.fullName}</div>
+                <div className="text-xs">
+                  {profile?.profession === null ? (
+                    <p className="text-center">-</p>
+                  ) : (
+                    <p>
+                      {profile?.profession}, {profile?.nasionality}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
             <ul className="text-sm text-black font-semibold">
@@ -495,15 +515,15 @@ const ManageEvent = () => {
                                     </div>
                                     {errors.categoryId &&
                                       touched.categoryId && (
-                                      <label
-                                        htmlFor="categoryId"
-                                        className="label"
-                                      >
-                                        <span className="label-text-alt text-error">
-                                          {errors.categoryId}
-                                        </span>
-                                      </label>
-                                    )}
+                                        <label
+                                          htmlFor="categoryId"
+                                          className="label"
+                                        >
+                                          <span className="label-text-alt text-error">
+                                            {errors.categoryId}
+                                          </span>
+                                        </label>
+                                      )}
                                   </div>
                                   <div className="flex flex-col align-start justify-start gap-3.5 w-full">
                                     <div className="text-sm tracking-[1px] capitalize">
@@ -647,9 +667,7 @@ const ManageEvent = () => {
                                 </div>
                                 <div className="w-full">
                                   <div className="w-full text-lg font-semibold capitalize">
-                                    {moment(detailEvents?.date).format(
-                                      "LLLL"
-                                    )}
+                                    {moment(detailEvents?.date).format("LLLL")}
                                   </div>
                                 </div>
                               </div>
@@ -812,15 +830,15 @@ const ManageEvent = () => {
                                     </div>
                                     {errors.categoryId &&
                                       touched.categoryId && (
-                                      <label
-                                        htmlFor="categoryId"
-                                        className="label"
-                                      >
-                                        <span className="label-text-alt text-error">
-                                          {errors.categoryId}
-                                        </span>
-                                      </label>
-                                    )}
+                                        <label
+                                          htmlFor="categoryId"
+                                          className="label"
+                                        >
+                                          <span className="label-text-alt text-error">
+                                            {errors.categoryId}
+                                          </span>
+                                        </label>
+                                      )}
                                   </div>
                                   <div className="flex flex-col align-start justify-start gap-3.5 w-full">
                                     <div className="text-sm  tracking-[1px] capitalize">
@@ -834,9 +852,9 @@ const ManageEvent = () => {
                                               Not set
                                             </span>
                                           ) : (
-                                            moment(
-                                              detailEvents?.date
-                                            ).format("DD/MM/YYYY")
+                                            moment(detailEvents?.date).format(
+                                              "DD/MM/YYYY"
+                                            )
                                           )}
                                         </span>
                                       )}
@@ -995,9 +1013,21 @@ const ManageEvent = () => {
                           {moment(event.date).format("ddd, DD MMM, LT")}
                         </p>
                         <div className="flex gap-3.5 text-xs text-[#61764B]">
-                          <button onClick={() => handleModalEvent(event.id, "detail")}>Detail</button>
-                          <button onClick={() => handleModalEvent(event.id, "update")}>Update</button>
-                          <button onClick={() => handleModalEvent(event.id, "delete")}>Delete</button>
+                          <button
+                            onClick={() => handleModalEvent(event.id, "detail")}
+                          >
+                            Detail
+                          </button>
+                          <button
+                            onClick={() => handleModalEvent(event.id, "update")}
+                          >
+                            Update
+                          </button>
+                          <button
+                            onClick={() => handleModalEvent(event.id, "delete")}
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -1007,21 +1037,32 @@ const ManageEvent = () => {
             </div>
             {events.length < 1 && (
               <div>
-                <div className=' h-full flex flex-col items-center justify-center gap-7 '>
-                  <div className='font-semibold text-2xl text-[#61764B]'>No Event Found</div>
-                  <div className='font-medium text base max-w-[300px] text-center'>It appears you haven&apos;t added any Events yet. Maybe try searching these?</div>
+                <div className=" h-full flex flex-col items-center justify-center gap-7 ">
+                  <div className="font-semibold text-2xl text-[#61764B]">
+                    No Event Found
+                  </div>
+                  <div className="font-medium text base max-w-[300px] text-center">
+                    It appears you haven&apos;t added any Events yet. Maybe try
+                    searching these?
+                  </div>
                 </div>
               </div>
             )}
             {events.length >= 1 && (
-              <div className='flex justify-start items-center gap-4 absolute right-12 bottom-12'>
-                <div className='text-primary'>
+              <div className="flex justify-start items-center gap-4 absolute right-12 bottom-12">
+                <div className="text-primary">
                   Page {currentPage} of {totalPage}
                 </div>
-                <button onClick={handlePrevious} className='btn btn-secondary text-white capitalize'>
+                <button
+                  onClick={handlePrevious}
+                  className="btn btn-secondary text-white capitalize"
+                >
                   Prev
                 </button>
-                <button onClick={handleNext} className='btn btn-primary text-white capitalize'>
+                <button
+                  onClick={handleNext}
+                  className="btn btn-primary text-white capitalize"
+                >
                   Next
                 </button>
               </div>

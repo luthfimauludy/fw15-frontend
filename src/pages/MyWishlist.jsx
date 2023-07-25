@@ -2,6 +2,7 @@ import React from "react";
 import http from "../helpers/http";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import defaultPicture from "../assets/images/default-profile-picture.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiUser,
@@ -58,13 +59,20 @@ const MyWishlist = () => {
             <div className="flex gap-3.5 mb-14">
               <div className="flex gap-3.5">
                 <div className="inline-block rounded-full p-[2px] bg-gradient-to-r from-[#61764B] to-[#A0D995]">
-                  {profile?.picture && (
+                  {profile.picture === null ? (
+                    <img
+                      className="w-11 h-11 object-cover rounded-full border-2 border-white"
+                      src={defaultPicture}
+                    />
+                  ) : (
                     <img
                       className="w-11 h-11 object-cover rounded-full border-2 border-white"
                       src={
-                        profile.picture.startsWith("https")
+                        profile?.picture?.startsWith("https")
                           ? profile.picture
-                          : `http://localhost:8888/uploads/${profile.picture}`
+                          : `http://${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/uploads/${profile.picture}`
                       }
                       alt={profile?.fullName}
                     />
@@ -73,7 +81,15 @@ const MyWishlist = () => {
               </div>
               <div className="flex flex-col justify-between text-black">
                 <div className="text-sm font-semibold">{profile?.fullName}</div>
-                <div className="text-xs">{profile?.profession}, {profile?.nasionality}</div>
+                <div className="text-xs">
+                  {profile?.profession === null ? (
+                    <p className="text-center">-</p>
+                  ) : (
+                    <p>
+                      {profile?.profession}, {profile?.nasionality}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
             <ul className="text-sm text-black font-semibold">
@@ -146,7 +162,10 @@ const MyWishlist = () => {
             <div className="flex flex-col gap-6">
               {wishlists.map((wishlist) => {
                 return (
-                  <div key={`wishlist-${wishlist.id}`} className="flex relative">
+                  <div
+                    key={`wishlist-${wishlist.id}`}
+                    className="flex relative"
+                  >
                     <div className="flex flex-col items-center mr-8">
                       <p className="text-sm text-[#FF8900] pt-3">
                         {moment(wishlist.date).format("DD")}
@@ -160,8 +179,12 @@ const MyWishlist = () => {
                         <p className="md:text-2xl text-lg font-semibold mb-4 tracking-widest">
                           {wishlist.title}
                         </p>
-                        <p className="text-xs mb-2">{wishlist.location}, Indonesia</p>
-                        <p className="text-xs">{moment(wishlist.date).format("ddd, DD MMM, LT")}</p>
+                        <p className="text-xs mb-2">
+                          {wishlist.location}, Indonesia
+                        </p>
+                        <p className="text-xs">
+                          {moment(wishlist.date).format("ddd, DD MMM, LT")}
+                        </p>
                       </div>
                     </div>
                     <button className="md:static absolute left-0 bottom-2">
@@ -173,9 +196,14 @@ const MyWishlist = () => {
             </div>
             {wishlists.length < 1 && (
               <div>
-                <div className=' h-full flex flex-col items-center justify-center gap-7 '>
-                  <div className='font-semibold text-2xl text-[#61764B]'>No Tickets Found</div>
-                  <div className='font-medium text base max-w-[300px] text-center'>It appears you haven&apos;t bought any Tickets yet. Maybe try searching these?</div>
+                <div className=" h-full flex flex-col items-center justify-center gap-7 ">
+                  <div className="font-semibold text-2xl text-[#61764B]">
+                    No Tickets Found
+                  </div>
+                  <div className="font-medium text base max-w-[300px] text-center">
+                    It appears you haven&apos;t bought any Tickets yet. Maybe
+                    try searching these?
+                  </div>
                 </div>
               </div>
             )}
