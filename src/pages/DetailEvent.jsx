@@ -6,21 +6,60 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import http from "../helpers/http";
 import { useParams, Link } from "react-router-dom";
-import { FiHeart, FiMapPin, FiClock } from "react-icons/fi";
+import { FiMapPin, FiClock } from "react-icons/fi";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import ScrollToTop from "../components/ScrollToTop";
+import { useSelector } from "react-redux";
 
 const DetailEvent = () => {
   const { id } = useParams();
+  const token = useSelector((state) => state.auth.token);
   const [event, setEvent] = React.useState({});
+  const [wishlistBtn, setWishlistBtn] = React.useState(false);
+
   React.useEffect(() => {
-    async function getEventData(id) {
+    const getEventData = async () => {
       const { data } = await http().get(`/events/${id}`);
       setEvent(data.results);
-    }
+    };
     if (id) {
       getEventData(id);
     }
   }, [id]);
+
+  React.useCallback(() => {
+    const eventId = {eventId: id};
+    const qs = new URLSearchParams(eventId).toString();
+    const fetchData = async () => {
+      const {data} = await http(token).get(`/wishlists/check?${qs}`);
+      const btnStatus = data.results;
+      if (btnStatus) {
+        setWishlistBtn(true);
+      } else {
+        setWishlistBtn(false);
+      }
+    };
+    fetchData();
+  }, [token, id]);
+
+  const addRemoveWishlist = async () => {
+    try {
+      const eventId = {eventId: id};
+      const qs = new URLSearchParams(eventId).toString();
+      const {data} = await http(token).post("/wishlists", qs);
+      console.log(data);
+      if (wishlistBtn) {
+        setWishlistBtn(false);
+      } else {
+        setWishlistBtn(true);
+      }
+    } catch (err) {
+      const message = err?.response?.data?.message;
+      if (message) {
+        console.log(message);
+      }
+    }
+  };
 
   return (
     <>
@@ -43,7 +82,13 @@ const DetailEvent = () => {
               <div className="absolute w-full h-full bottom-0 bg-gradient-to-b from-[rgba(0,0,0,0.1)] to-[rgba(0,0,0,0.8)]"></div>
             </div>
             <div className="flex justify-center items-center text-xl font-semibold gap-2">
-              <FiHeart className="md:static absolute top-24 right-5 text-[#C1C5D0]" />
+              <button type="button" onClick={addRemoveWishlist}>
+                {wishlistBtn === true ? (
+                  <FaHeart className="md:static absolute top-24 right-5 text-[#C1C5D0]" color="red" />
+                ) : (
+                  <FaRegHeart className="md:static absolute top-24 right-5 text-[#C1C5D0]" />
+                )}
+              </button>
               <div className="hidden md:block text-black">Add to Wishlist</div>
             </div>
           </aside>
