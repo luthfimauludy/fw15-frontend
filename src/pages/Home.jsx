@@ -418,7 +418,7 @@ const Home = () => {
                 return (
                   <div key={partner.id}>
                     <img
-                      src={`http://localhost:8888/uploads/${partner.picture}`}
+                      src={`https://res.cloudinary.com/dxs0yxeyr/image/upload/v1688791940/${partner.picture}`}
                       alt="Sponsor"
                     />
                   </div>
