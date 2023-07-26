@@ -4,7 +4,7 @@ import { HiTicket } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout as logoutAction } from "../redux/reducers/auth";
-import { FiMenu } from "react-icons/fi";
+import { FiHeart, FiList, FiMenu, FiPlusCircle } from "react-icons/fi";
 import defaultPicture from "../assets/images/default-profile-picture.jpg";
 
 const Header = () => {
@@ -110,6 +110,24 @@ const Header = () => {
                     tabIndex={0}
                     className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
                   >
+                    <li>
+                      <Link to="/manage-event" className="flex gap-4 mb-8">
+                        <FiPlusCircle size={25} color="#C1C5D0" />
+                        Create Event
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/my-booking" className="flex gap-4 mb-8">
+                        <FiList size={25} color="#C1C5D0" />
+                        My Booking
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/my-wishlist" className="flex gap-4 mb-8">
+                        <FiHeart size={25} color="#C1C5D0" />
+                        My Wishlist
+                      </Link>
+                    </li>
                     <li>
                       <button
                         onClick={doLogout}
