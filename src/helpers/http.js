@@ -7,7 +7,7 @@ const http = (token) => {
   }
   return axios.create({
     headers,
-    baseURL: import.meta.env.VITE_BACKEND_URL,
+    baseURL: "https://gray-clumsy-walrus.cyclic.app",
   });
 };
 
