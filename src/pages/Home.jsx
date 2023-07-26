@@ -271,7 +271,7 @@ const Home = () => {
                   key={city.id}
                 >
                   <img
-                    src={`http://localhost:8888/uploads/${city.picture}`}
+                    src={`https://res.cloudinary.com/dxs0yxeyr/image/upload/v1688791940/${city.picture}`}
                     alt="Jakarta City"
                   />
                   {city.name}
