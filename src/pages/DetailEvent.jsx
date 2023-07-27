@@ -27,11 +27,11 @@ const DetailEvent = () => {
     }
   }, [id]);
 
-  React.useCallback(() => {
-    const eventId = {eventId: id};
+  React.useEffect(() => {
+    const eventId = { eventId: id };
     const qs = new URLSearchParams(eventId).toString();
     const fetchData = async () => {
-      const {data} = await http(token).get(`/wishlists/check?${qs}`);
+      const { data } = await http(token).get(`/wishlists/check?${qs}`);
       const btnStatus = data.results;
       if (btnStatus) {
         setWishlistBtn(true);
@@ -44,10 +44,9 @@ const DetailEvent = () => {
 
   const addRemoveWishlist = async () => {
     try {
-      const eventId = {eventId: id};
+      const eventId = { eventId: id };
       const qs = new URLSearchParams(eventId).toString();
-      const {data} = await http(token).post("/wishlists", qs);
-      console.log(data);
+      await http(token).post("/wishlists", qs);
       if (wishlistBtn) {
         setWishlistBtn(false);
       } else {
@@ -75,7 +74,11 @@ const DetailEvent = () => {
               {event?.picture && (
                 <img
                   className="w-full h-full object-cover"
-                  src={event.picture.startsWith("https") ? event.picture : `http://localhost:8888/uploads/${event?.picture}`}
+                  src={
+                    event.picture.startsWith("https")
+                      ? event.picture
+                      : `http://localhost:8888/uploads/${event?.picture}`
+                  }
                   alt="Event Banner"
                 />
               )}
@@ -84,7 +87,10 @@ const DetailEvent = () => {
             <div className="flex justify-center items-center text-xl font-semibold gap-2">
               <button type="button" onClick={addRemoveWishlist}>
                 {wishlistBtn === true ? (
-                  <FaHeart className="md:static absolute top-24 right-5 text-[#C1C5D0]" color="red" />
+                  <FaHeart
+                    className="md:static absolute top-24 right-5 text-[#C1C5D0]"
+                    color="red"
+                  />
                 ) : (
                   <FaRegHeart className="md:static absolute top-24 right-5 text-[#C1C5D0]" />
                 )}
