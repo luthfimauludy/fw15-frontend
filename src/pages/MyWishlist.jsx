@@ -40,10 +40,20 @@ const MyWishlist = () => {
     getWishlistData();
   }, [token]);
 
+  const updateDataWishlist = React.useCallback(async () => {
+    const { data } = await http(token).get("/wishlists");
+    setWishlists(data.results);
+  }, [token]);
+
   const doLogout = () => {
     window.localStorage.removeItem("token");
     dispatch(logoutAction(""));
     navigate("/login");
+  };
+
+  const deleteWishlist = async (id) => {
+    await http(token).delete(`/wishlists/${id}`);
+    updateDataWishlist();
   };
 
   return (
@@ -163,7 +173,7 @@ const MyWishlist = () => {
               {wishlists.map((wishlist) => {
                 return (
                   <div
-                    key={`wishlist-${wishlist.id}`}
+                    key={`wishlist-${wishlist.wishlistId}`}
                     className="flex relative"
                   >
                     <div className="flex flex-col items-center mr-8">
@@ -187,8 +197,11 @@ const MyWishlist = () => {
                         </p>
                       </div>
                     </div>
-                    <button className="md:static absolute left-0 bottom-2">
-                      <FiHeart size={25} className="text-primary" />
+                    <button
+                      onClick={() => deleteWishlist(wishlist.wishlistId)}
+                      className="md:static absolute left-0 bottom-2"
+                    >
+                      <FiHeart size={25} color="red" className="text-primary" />
                     </button>
                   </div>
                 );
