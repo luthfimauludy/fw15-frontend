@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import http from "../helpers/http";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -12,10 +12,9 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const SearchResults = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchResults, setSearchResults] = React.useState([]);
   const [cities, setCities] = React.useState([]);
-  const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
 
   const limitItem = async (event) => {
@@ -31,23 +30,26 @@ const SearchResults = () => {
     };
 
     const getCities = async () => {
-      const {data} = await http(token).get("/cities?limit=10");
+      const { data } = await http(token).get("/cities?limit=10");
       setCities(data.results);
     };
     getEventBySearch();
     getCities();
-  }, [token, searchParams]);
+  }, []);
 
   const pagination = async (page = 1) => {
-    const {data} = await http(token).get("/events", {
-      params: {page: page},
+    const { data } = await http(token).get("/events", {
+      params: { page: page },
     });
     setSearchResults(data);
   };
 
-  const onSearch = (values) => {
+  const onSearch = async (values) => {
     const qs = new URLSearchParams(values).toString();
-    navigate(`/search?${qs}`);
+    const { data } = await http().get("/events", { params: values });
+    setSearchResults(data);
+    setSearchParams(qs);
+    // navigate(`/search?${qs}`);
   };
 
   return (
@@ -58,7 +60,10 @@ const SearchResults = () => {
           <div className="min-w-[35%] px-10 pt-10">
             <label className="text-white">
               Show{"  "}
-              <select onChange={limitItem} className="text-black p-1 rounded-md">
+              <select
+                onChange={limitItem}
+                className="text-black p-1 rounded-md"
+              >
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -69,10 +74,7 @@ const SearchResults = () => {
               entries
             </label>
           </div>
-          <Formik
-            initialValues={{ search: "", city: "" }}
-            onSubmit={onSearch}
-          >
+          <Formik initialValues={{ search: "", city: "" }} onSubmit={onSearch}>
             {({ handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit} className="block md:w-full pt-10">
                 <div className="inline-flex items-center md:min-w-[450px] h-16 py-2 px-3 bg-white border rounded-xl">
@@ -121,31 +123,42 @@ const SearchResults = () => {
         </div>
         <div className="flex justify-center items-center gap-5 pt-5">
           <button
-            disabled={searchResults.results?.pageInfo?.page <= 1}
-            onClick={() => pagination(searchResults.results?.pageInfo?.page - 1)}
+            disabled={searchResults.pageInfo?.page <= 1}
+            onClick={() => pagination(searchResults.pageInfo?.page - 1)}
             className="btn bg-secondary text-white border-none normal-case hover:bg-primary"
           >
             <FaArrowLeft size={25} />
           </button>
           <button
-            disabled={searchResults.results?.pageInfo?.page === searchResults.results?.pageInfo?.totalPage}
-            onClick={() => pagination(searchResults.results?.pageInfo?.page + 1)}
+            disabled={
+              searchResults.pageInfo?.page === searchResults.pageInfo?.totalPage
+            }
+            onClick={() => pagination(searchResults.pageInfo?.page + 1)}
             className="btn bg-secondary text-white border-none normal-case hover:bg-primary"
           >
             <FaArrowRight size={25} />
           </button>
         </div>
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 p-10 mb-20">
-          {searchResults?.results?.rows?.length === 0 ? (
-            <div></div>
+          {searchResults?.results?.length === 0 ? (
+            <div className="flex items-center text-center font-semibold text-3xl text-white">
+              No Event Data
+            </div>
           ) : (
-            searchResults?.results?.rows?.map((event) => {
+            searchResults?.results?.map((event) => {
               return (
-                <Link to={`/detail-event/${event.id}`} key={`event-${event.id}`}>
+                <Link
+                  to={`/detail-event/${event.id}`}
+                  key={`event-${event.id}`}
+                >
                   <div className="relative max-w-64 h-[376px] rounded-3xl overflow-hidden">
                     <img
                       className="w-auto h-full object-cover"
-                      src={event.picture.startsWith("https") ? event.picture : `http://localhost:8888/uploads/${event.picture}`}
+                      src={
+                        event.picture.startsWith("https")
+                          ? event.picture
+                          : `http://localhost:8888/uploads/${event.picture}`
+                      }
                       alt="banner1"
                     />
                     <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
