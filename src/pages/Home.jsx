@@ -24,7 +24,7 @@ const Home = () => {
     const { data } = await http().get("/events", {
       params: { category: name },
     });
-    setEventCategories(data.results.rows);
+    setEventCategories(data.results);
   }
 
   React.useEffect(() => {
@@ -32,7 +32,7 @@ const Home = () => {
       const { data } = await http().get("/events", {
         params: { limit: 1000, sort: "date" },
       });
-      setEvents(data.results.rows);
+      setEvents(data.results);
     }
     getData();
 
@@ -185,25 +185,25 @@ const Home = () => {
             {events.map((event) => {
               return (
                 <Link
-                  to={`/detail-event/${event.id}`}
-                  key={`event-${event.id}`}
+                  to={`/detail-event/${event?.id}`}
+                  key={`event-${event?.id}`}
                 >
                   <div className="relative w-64 h-[376px] rounded-3xl overflow-hidden">
                     {event?.picture && (
                       <img
                         className="w-auto h-full object-cover"
                         src={
-                          event.picture.startsWith("https")
-                            ? event.picture
-                            : `http://localhost:8888/uploads/${event.picture}`
+                          event?.picture.startsWith("https")
+                            ? event?.picture
+                            : `http://localhost:8888/uploads/${event?.picture}`
                         }
-                        alt={event.name}
+                        alt={event?.name}
                       />
                     )}
                     <div className="absolute bottom-0 w-full text-white flex flex-col gap-1 p-5 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-[rgba(0,0,0,0.5)]">
-                      <div>{moment(event.date).format("ddd, DD MMM, LT")}</div>
+                      <div>{moment(event?.date).format("ddd, DD MMM, LT")}</div>
                       <div className="font-semibold text-2xl tracking-widest">
-                        {event.title}
+                        {event?.title}
                       </div>
                       <div className="flex ml-2">
                         <div className="w-7 h-7 rounded-full overflow-hidden border-2 -ml-2">
